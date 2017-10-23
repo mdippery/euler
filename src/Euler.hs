@@ -1,7 +1,8 @@
 module Euler where
 
 import Data.List (permutations, sort)
-import Euler.Math (binomialCoefficient, sumOfPowers)
+import Euler.Math (binomialCoefficient, sumOfFactorials, sumOfPowers)
+import Euler.Util (pairHasEqualElements, pairWithFunc)
 
 problem15 = binomialCoefficient 20
 
@@ -12,7 +13,13 @@ problem24 =
 
 problem30 =
     let nums      = [2..355000]
-        pair x    = (x, sumOfPowers 5 x)
-        equalSums = filter (\(x, y) -> x == y)
+        pair      = pairWithFunc (sumOfPowers 5)
+        equalSums = filter pairHasEqualElements
         extract   = map fst
-    in sum $ extract $ equalSums $ map pair nums
+     in sum $ extract $ equalSums $ map pair nums
+
+problem34 =
+    let nums            = [3..2540160]
+        equalFactorials = filter pairHasEqualElements
+        extract         = map fst
+     in sum $ extract $ equalFactorials $ map (pairWithFunc sumOfFactorials) nums
