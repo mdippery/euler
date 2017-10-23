@@ -6,6 +6,6 @@ factorial = product . (enumFromTo 1)
 
 binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 
-digitPowers exp n = map (^ exp) (digits n)
+digitPowers exp = (map (^ exp)) . digits
 
-sumOfPowers exp = (sum . digitPowers exp)
+sumOfPowers exp = sum . (digitPowers exp)
