@@ -2,7 +2,7 @@ module Euler.Math where
 
 import Euler.Text (digits)
 
-factorial n = product [1..n]
+factorial = product . (enumFromTo 1)
 
 binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 
