@@ -14,7 +14,12 @@ cabal-version:       >=1.10
 -- extra-source-files:  README.md
 
 library
-  exposed-modules:     Euler, Euler.Math, Euler.Text, Euler.Util
+  exposed-modules:
+    Euler,
+    Euler.List,
+    Euler.Math,
+    Euler.Text,
+    Euler.Util
   hs-source-dirs:      src
   default-language:    Haskell2010
   build-depends:
