@@ -50,3 +50,9 @@ digitFactorials = mapDigits factorial
 
 sumOfFactorials :: Integer -> Integer
 sumOfFactorials = sumDigits digitFactorials
+
+collatz :: Integer -> [Integer]
+collatz 1 = [1]
+collatz n
+  | isEven n = n : collatz (n `div` 2)
+  | isOdd n  = n : collatz (3 * n + 1)
