@@ -6,11 +6,15 @@ factorial = product . (enumFromTo 1)
 
 binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 
-digitPowers exp = (map (^ exp)) . digits
+mapDigits f = (map f) . digits
 
-sumOfPowers exp = sum . (digitPowers exp)
+sumDigits f = sum . f
+
+digitPowers exp = mapDigits (^ exp)
+
+sumOfPowers exp = sumDigits (digitPowers exp)
 
 digitFactorials :: Integer -> [Integer]
-digitFactorials = (map factorial) . digits
+digitFactorials = mapDigits factorial
 
-sumOfFactorials = sum . digitFactorials
+sumOfFactorials = sumDigits digitFactorials
