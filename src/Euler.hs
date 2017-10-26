@@ -8,7 +8,7 @@ notSolved = 0
 
 problem1 = sum $ filter (\n -> 3 `divides` n || 5 `divides` n) [1..999]
 
-problem2 = notSolved
+problem2 = sum $ filter isEven $ takeWhile (<= 4000000) (map fibonacci [1..])
 
 problem3 = notSolved
 
