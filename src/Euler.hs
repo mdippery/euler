@@ -16,7 +16,11 @@ problem4 = (head . reverse . sort . filter isPalindrome) [x * y | x <- [100..999
 
 problem5 = notSolved
 
-problem6 = notSolved
+problem6 =
+  let ns           = [1..100]
+      sumOfSquares = (sum . map (^ 2)) ns
+      squareOfSums = sum ns ^ 2
+   in squareOfSums - sumOfSquares
 
 problem7 = notSolved
 
