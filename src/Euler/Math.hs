@@ -5,6 +5,9 @@ import Euler.Text (digits)
 isEven :: Integer -> Bool
 isEven n = n `rem` 2 == 0
 
+isPalindrome :: Integer -> Bool
+isPalindrome n = show n == (reverse . show) n
+
 factorial :: Integer -> Integer
 factorial = product . (enumFromTo 1)
 

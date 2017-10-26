@@ -12,7 +12,7 @@ problem2 = sum $ filter isEven $ takeWhile (<= 4000000) (map fibonacci [1..])
 
 problem3 = notSolved
 
-problem4 = notSolved
+problem4 = (head . reverse . sort . filter isPalindrome) [x * y | x <- [100..999], y <- [100..999]]
 
 problem5 = notSolved
 
