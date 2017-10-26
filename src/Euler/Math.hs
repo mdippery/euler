@@ -14,6 +14,9 @@ factorial = product . (enumFromTo 1)
 divides :: Integer -> Integer -> Bool
 divides a b = b `rem` a == 0
 
+divisibleBy :: [Integer] -> Integer -> Bool
+divisibleBy ns n = all (flip divides n) ns
+
 fibonacci :: Integer -> Integer
 fibonacci n =
   let s   = sqrt 5
