@@ -1,4 +1,5 @@
 import Euler
+import Euler.List
 import Test.Hspec
 
 
@@ -135,3 +136,24 @@ main = hspec $ do
   describe "Verify that problem 67" $ do
     it "is correct" $ do
       problem67 `shouldBe` 7273
+
+  describe "Verify that `zipWithIndex`" $ do
+    it "produces an empty list when given an empty list" $ do
+      length (zipWithIndex []) == 0
+
+    it "produces a list with indices" $ do
+      zipWithIndex [2..10] == [(0,2), (1,3), (2,4), (3,5), (4,6), (5,7), (6,8), (7,9), (8,10)]
+
+  describe "Verify that `unzipWithIndex`" $ do
+    it "produces an empty list when given an empty list" $ do
+      length (unzipWithIndex []) == 0
+
+    it "removes indices from a list" $ do
+      unzipWithIndex [(0,2), (1,3), (2,4), (3,5), (4,6), (5,7), (6,8), (7,9), (8,10)] == [2..10]
+
+  describe "Verify that `dropNth`" $ do
+    it "produces an empty list when given an empty list" $ do
+      length (dropNth 2 []) == 0
+
+    it "drops the correct elements from a list" $ do
+      dropNth 2 [0..10] == [1,3..10]
