@@ -1,12 +1,12 @@
 module Euler where
 
 import Data.List (permutations, sort)
-import Euler.Math (binomialCoefficient, sumOfFactorials, sumOfPowers)
-import Euler.Util (pairHasEqualElements, pairWithFunc)
+import Euler.Math
+import Euler.Util
 
 notSolved = 0
 
-problem1 = notSolved
+problem1 = sum $ filter (\n -> 3 `divides` n || 5 `divides` n) [1..999]
 
 problem2 = notSolved
 
