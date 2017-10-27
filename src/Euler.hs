@@ -1,6 +1,6 @@
 module Euler where
 
-import Data.List (permutations, sort)
+import Data.List (nub, permutations, sort)
 import Euler.Math
 import Euler.Text
 import Euler.Util
@@ -62,7 +62,7 @@ problem24 =
 
 problem25 = notSolved
 
-problem29 = notSolved
+problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 
 problem30 =
     let nums      = [2..355000]
