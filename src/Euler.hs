@@ -85,7 +85,9 @@ problem36 =
       ns  = [1..999999]
    in (sum . filter p) ns
 
-problem48 = notSolved
+problem48 =
+  let p = 10 ^ 10
+   in modSum p $ map (\n -> modPower p n n) [1..1000]
 
 problem53 = notSolved
 
