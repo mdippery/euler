@@ -49,7 +49,7 @@ problem18 = notSolved
 
 problem19 = notSolved
 
-problem20 = notSolved
+problem20 = (sum . digits . factorial) 100
 
 problem21 = notSolved
 
