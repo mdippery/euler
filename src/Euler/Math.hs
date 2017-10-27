@@ -40,6 +40,27 @@ binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 numDigits :: Integer -> Int
 numDigits = length . digits
 
+modMult :: Integer -> Integer -> Integer -> Integer
+modMult m a b = (a * b) `mod` m
+
+modProduct :: Integer -> [Integer] -> Integer
+modProduct m ns = foldl (modMult m) 1 (map (flip mod m) ns)
+
+modPower :: Integer -> Integer -> Integer -> Integer
+modPower m a b = modProduct m $ take (fromIntegral b) $ repeat a
+
+modAdd :: Integer -> Integer -> Integer -> Integer
+modAdd m a b = (a + b) `mod` m
+
+modSum :: Integer -> [Integer] -> Integer
+modSum m ns = foldl (modAdd m) 0 (map (flip mod m) ns)
+
+collatz :: Integer -> [Integer]
+collatz 1 = [1]
+collatz n
+  | isEven n = n : collatz (n `div` 2)
+  | isOdd n  = n : collatz (3 * n + 1)
+
 mapDigits :: (Integer -> a) -> Integer -> [a]
 mapDigits f = (map f) . digits
 
@@ -57,9 +78,3 @@ digitFactorials = mapDigits factorial
 
 sumOfFactorials :: Integer -> Integer
 sumOfFactorials = sumDigits digitFactorials
-
-collatz :: Integer -> [Integer]
-collatz 1 = [1]
-collatz n
-  | isEven n = n : collatz (n `div` 2)
-  | isOdd n  = n : collatz (3 * n + 1)
