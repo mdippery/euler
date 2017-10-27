@@ -80,7 +80,10 @@ problem34 =
 
 problem35 = notSolved
 
-problem36 = notSolved
+problem36 =
+  let p n = isPalindromeIn 10 n && isPalindromeIn 2 n
+      ns  = [1..999999]
+   in (sum . filter p) ns
 
 problem48 = notSolved
 

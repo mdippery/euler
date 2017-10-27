@@ -1,6 +1,7 @@
 module Euler.Math where
 
-import Euler.Data (digits)
+import qualified Data.Digits as D
+import           Euler.Data (digits)
 
 isEven :: Integer -> Bool
 isEven n = n `rem` 2 == 0
@@ -9,7 +10,10 @@ isOdd :: Integer -> Bool
 isOdd = not . isEven
 
 isPalindrome :: Integer -> Bool
-isPalindrome n = show n == (reverse . show) n
+isPalindrome = isPalindromeIn 10
+
+isPalindromeIn :: Integer -> Integer -> Bool
+isPalindromeIn base n = D.digits base n == reverse (D.digits base n)
 
 factorial :: Integer -> Integer
 factorial = product . (enumFromTo 1)
