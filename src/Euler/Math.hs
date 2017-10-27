@@ -1,6 +1,6 @@
 module Euler.Math where
 
-import Euler.Text (digits)
+import Euler.Data (digits)
 
 isEven :: Integer -> Bool
 isEven n = n `rem` 2 == 0

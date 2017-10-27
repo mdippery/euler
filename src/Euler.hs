@@ -1,6 +1,7 @@
 module Euler where
 
 import Data.List (nub, permutations, sort)
+import Euler.Data
 import Euler.Math
 import Euler.Text
 import Euler.Util
