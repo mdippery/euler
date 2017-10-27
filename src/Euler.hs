@@ -2,6 +2,7 @@ module Euler where
 
 import Data.List (permutations, sort)
 import Euler.Math
+import Euler.Text
 import Euler.Util
 
 notSolved = 0
@@ -40,7 +41,7 @@ problem14 = notSolved
 
 problem15 = binomialCoefficient 20
 
-problem16 = notSolved
+problem16 = (sum . digits) (2 ^ 1000)
 
 problem17 = notSolved
 
