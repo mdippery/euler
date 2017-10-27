@@ -64,20 +64,8 @@ collatz n
   | isEven n = n : collatz (n `div` 2)
   | isOdd n  = n : collatz (3 * n + 1)
 
-mapDigits :: Integral b => (b -> a) -> b -> [a]
-mapDigits f = (map f) . digits
-
-sumDigits :: Integral b => (a -> [b]) -> a -> b
-sumDigits = (.) sum
-
-digitPowers :: Integral a => a -> a -> [a]
-digitPowers exp = mapDigits (^ exp)
-
 sumOfPowers :: Integral a => a -> a -> a
-sumOfPowers exp = sumDigits (digitPowers exp)
-
-digitFactorials :: Integral a => a -> [a]
-digitFactorials = mapDigits factorial
+sumOfPowers exp = sum . map (^ exp) . digits
 
 sumOfFactorials :: Integral a => a -> a
-sumOfFactorials = sumDigits digitFactorials
+sumOfFactorials = sum . map factorial . digits
