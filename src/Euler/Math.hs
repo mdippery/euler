@@ -55,6 +55,9 @@ modAdd m a b = (a + b) `mod` m
 modSum :: Integer -> [Integer] -> Integer
 modSum m ns = foldl (modAdd m) 0 (map (flip mod m) ns)
 
+choose :: Integer -> Integer -> Integer
+choose n r = factorial n `div` (factorial r * factorial (n - r))
+
 collatz :: Integer -> [Integer]
 collatz 1 = [1]
 collatz n
