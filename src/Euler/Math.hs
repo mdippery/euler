@@ -33,6 +33,9 @@ fibonacci n =
 binomialCoefficient :: Integer -> Integer
 binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 
+numDigits :: Integer -> Int
+numDigits = length . digits
+
 mapDigits :: (Integer -> a) -> Integer -> [a]
 mapDigits f = (map f) . digits
 
