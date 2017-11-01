@@ -16,7 +16,7 @@ problem3 = notSolved
 
 problem4 = (head . reverse . sort . filter isPalindrome) [x * y | x <- [100..999], y <- [100..999]]
 
-problem5 = notSolved
+problem5 = head $ dropWhile (not . divisibleBy [1..20]) [20,40..]
 
 problem6 =
   let ns           = [1..100]
