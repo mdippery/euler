@@ -1,5 +1,9 @@
 module Euler.List where
 
+isEmpty :: [a] -> Bool
+isEmpty [] = True
+isEmpty _  = False
+
 zipWithIndex :: (Enum b, Num b) => [a] -> [(b, a)]
 zipWithIndex = zip [0..]
 
