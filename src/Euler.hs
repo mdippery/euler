@@ -24,7 +24,7 @@ problem6 =
       squareOfSums = sum ns ^ 2
    in squareOfSums - sumOfSquares
 
-problem7 = notSolved
+problem7 = (head . drop 10000 . filter isPrime) [2..]
 
 problem8 = notSolved
 

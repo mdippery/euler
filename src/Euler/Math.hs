@@ -2,12 +2,22 @@ module Euler.Math where
 
 import qualified Data.Digits as D
 import           Euler.Data (digits)
+import           Euler.List (isEmpty)
+
+
+sqrtI :: Integral a => a -> a
+sqrtI = round . sqrt . fromIntegral
 
 isEven :: Integral a => a -> Bool
 isEven n = n `rem` 2 == 0
 
 isOdd :: Integral a => a -> Bool
 isOdd = not . isEven
+
+isPrime :: (Integral a) => a -> Bool
+isPrime 1 = False
+isPrime 2 = True
+isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
 
 isPalindrome :: Integral a => a -> Bool
 isPalindrome = isPalindromeIn 10
