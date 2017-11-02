@@ -9,7 +9,7 @@ sqrtI :: Integral a => a -> a
 sqrtI = round . sqrt . fromIntegral
 
 isEven :: Integral a => a -> Bool
-isEven n = n `rem` 2 == 0
+isEven = divides 2
 
 isOdd :: Integral a => a -> Bool
 isOdd = not . isEven
