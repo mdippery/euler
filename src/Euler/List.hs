@@ -11,7 +11,7 @@ zipWithIndex :: (Enum b, Num b) => [a] -> [(b, a)]
 zipWithIndex = zip [0..]
 
 unzipWithIndex :: [(b, a)] -> [a]
-unzipWithIndex = map (\(i, x) -> x)
+unzipWithIndex = map snd
 
 dropNth :: Integral b => b -> [a] -> [a]
 dropNth n =
