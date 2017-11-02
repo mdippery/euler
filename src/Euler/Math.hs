@@ -1,6 +1,7 @@
 module Euler.Math where
 
 import qualified Data.Digits as D
+import           Data.List.Ordered (minus, unionAll)
 import           Euler.Data (digits)
 import           Euler.List (isEmpty)
 
@@ -17,6 +18,15 @@ isPrime :: (Integral a) => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
+
+primes :: [Integer]
+primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
+
+primesBelow :: Integer -> [Integer]
+primesBelow n = primesTo (n - 1)
+
+primesTo :: Integer -> [Integer]
+primesTo n = takeWhile (<= n) primes
 
 isPalindrome :: Integral a => a -> Bool
 isPalindrome = isPalindromeIn 10
