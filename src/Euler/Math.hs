@@ -46,6 +46,9 @@ factorial = product . (enumFromTo 1)
 divides :: Integral a => a -> a -> Bool
 divides a b = b `rem` a == 0
 
+divisors :: Integral a => a -> [a]
+divisors n = filter (flip divides n) [1..n]
+
 divisibleBy :: Integral a => [a] -> a -> Bool
 divisibleBy ns n = all (flip divides n) ns
 
