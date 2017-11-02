@@ -41,7 +41,7 @@ isPalindromeIn :: Integral a => a -> a -> Bool
 isPalindromeIn base n = D.digits base n == reverse (D.digits base n)
 
 factorial :: (Enum a, Num a) => a -> a
-factorial = product . (enumFromTo 1)
+factorial = product . enumFromTo 1
 
 divides :: Integral a => a -> a -> Bool
 divides a b = b `rem` a == 0
