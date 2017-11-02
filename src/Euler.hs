@@ -10,9 +10,11 @@ notSolved = 0
 
 problem1 = sum $ filter (\n -> 3 `divides` n || 5 `divides` n) [1..999]
 
-problem2 = sum $ filter isEven $ takeWhile (<= 4000000) (map fibonacci [1..])
+problem2 = (sum . filter isEven . takeWhile (<= 4000000) . map fibonacci) [1..]
 
-problem3 = notSolved
+problem3 =
+  let n = 600851475143
+   in (head . reverse . filter (flip divides n) . primesTo . sqrtI) n
 
 problem4 = (head . reverse . sort . filter isPalindrome) [x * y | x <- [100..999], y <- [100..999]]
 
