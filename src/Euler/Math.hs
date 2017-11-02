@@ -19,6 +19,12 @@ isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
 
+triangleNumber :: (Num a, Enum a) => Int -> a
+triangleNumber n = (sum . take n) [1..]
+
+triangleNumbers :: (Num a, Enum a) => [a]
+triangleNumbers = map triangleNumber [1..]
+
 primes :: [Integer]
 primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
 
