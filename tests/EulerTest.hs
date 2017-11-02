@@ -60,8 +60,7 @@ main = hspec $ do
 
   describe "Verify that problem 13" $ do
     it "is correct" $ do
-      pending
-      -- problem13 `shouldBe` 5537376230
+      problem13 `shouldBe` "5537376230"
 
   describe "Verify that problem 14" $ do
     it "is correct" $ do
