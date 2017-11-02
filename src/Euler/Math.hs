@@ -3,7 +3,7 @@ module Euler.Math where
 import qualified Data.Digits as D
 import           Data.List.Ordered (minus, unionAll)
 import           Euler.Data (digits)
-import           Euler.List (isEmpty)
+import           Euler.List ((<:), isEmpty)
 
 sqrtI :: Integral a => a -> a
 sqrtI = round . sqrt . fromIntegral
@@ -47,7 +47,7 @@ divides :: Integral a => a -> a -> Bool
 divides a b = b `rem` a == 0
 
 divisors :: Integral a => a -> [a]
-divisors n = 1 : filter (flip divides n) [2..n `div` 2] ++ [n]
+divisors n = 1 : filter (flip divides n) [2..n `div` 2] <: n
 
 divisibleBy :: Integral a => [a] -> a -> Bool
 divisibleBy ns n = all (flip divides n) ns

@@ -1,5 +1,8 @@
 module Euler.List where
 
+(<:) :: [a] -> a -> [a]
+as <: b = as ++ [b]
+
 isEmpty :: [a] -> Bool
 isEmpty [] = True
 isEmpty _  = False
