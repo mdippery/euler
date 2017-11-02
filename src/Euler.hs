@@ -30,7 +30,7 @@ problem8 = notSolved
 
 problem9 = notSolved
 
-problem10 = notSolved
+problem10 = (sum . primesBelow) 2000000
 
 problem11 = notSolved
 
