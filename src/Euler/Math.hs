@@ -4,12 +4,6 @@ import qualified Data.Digits as D
 import           Euler.Data (digits)
 import           Euler.List (isEmpty)
 
-pythagoreanTriples :: [(Integer, Integer, Integer)]
-pythagoreanTriples =
-  let ns = [(m, n) | n <- [0..], m <- [n..]]
-      f (m, n) = (m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2)
-   in map f ns
-
 sqrtI :: Integral a => a -> a
 sqrtI = round . sqrt . fromIntegral
 
