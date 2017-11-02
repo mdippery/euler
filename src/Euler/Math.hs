@@ -19,10 +19,10 @@ isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
 
-triangleNumber :: (Num a, Enum a) => Int -> a
-triangleNumber n = (sum . take n) [1..]
+triangleNumber :: Integral a => a -> a
+triangleNumber n = n * (n + 1) `div` 2
 
-triangleNumbers :: (Num a, Enum a) => [a]
+triangleNumbers :: Integral a => [a]
 triangleNumbers = map triangleNumber [1..]
 
 primes :: [Integer]
