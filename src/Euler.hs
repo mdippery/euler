@@ -149,7 +149,7 @@ problem15 = binomialCoefficient 20
 
 problem16 = (sum . digits) (2 ^ 1000)
 
-problem17 = (countLetters . foldr (++) "" . map toWord) [1..1000]
+problem17 = (countLetters . foldl (++) "" . map toWord) [1..1000]
 
 problem18 = notSolved
 
