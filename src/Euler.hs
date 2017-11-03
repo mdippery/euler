@@ -162,9 +162,8 @@ problem21 = notSolved
 problem22 = notSolved
 
 problem24 =
-    let ps        = sort . permutations
-        millionth = drop 999999
-     in (head . millionth . ps) "0123456789"
+    let millionth = drop 999999
+     in (head . millionth . sort . permutations) "0123456789"
 
 problem25 = notSolved
 
@@ -175,7 +174,7 @@ problem30 =
         pair      = pairWithFunc (sumOfPowers 5)
         equalSums = filter pairHasEqualElements
         extract   = map fst
-     in sum $ extract $ equalSums $ map pair nums
+     in (sum . extract . equalSums . map pair) nums
 
 problem34 =
     let nums            = [3..2540160]
@@ -192,7 +191,8 @@ problem36 =
 
 problem48 =
   let p = 10 ^ 10
-   in modSum p $ map (\n -> modPower p n n) [1..1000]
+      mp n = modPower p n n
+   in (modSum p . map mp) [1..1000]
 
 problem53 = notSolved
 
