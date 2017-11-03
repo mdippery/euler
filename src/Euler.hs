@@ -54,7 +54,12 @@ problem8 =
            "71636269561882670428252483600823257530420752963450"
    in (head . reverse . sort . map product . windows 13 . ints) ds
 
-problem9 = notSolved
+problem9 =
+  let triples = [(m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2) | n <- [1000,999..1], m <- [1000,999..n]]
+      eq (a,b,c) = a + b + c == 1000
+      ans = (head . filter eq)
+      f (a,b,c) = a * b * c
+   in (f . ans) triples
 
 problem10 = (sum . primesBelow) 2000000
 
