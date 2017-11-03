@@ -8,7 +8,9 @@ import Euler.Util
 
 notSolved = 0
 
-problem1 = sum $ filter (\n -> 3 `divides` n || 5 `divides` n) [1..999]
+problem1 =
+  let d35 n = 3 `divides` n || 5 `divides` n
+   in (sum . filter d35) [1..999]
 
 problem2 = (sum . filter isEven . takeWhile (<= 4000000) . map fibonacci) [1..]
 
