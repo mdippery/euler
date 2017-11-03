@@ -1,4 +1,5 @@
 import Euler
+import Euler.Grid
 import Euler.List
 import Test.Hspec
 
@@ -151,28 +152,122 @@ main = hspec $ do
 
   describe "Verify that `zipWithIndex`" $ do
     it "produces an empty list when given an empty list" $ do
-      length (zipWithIndex []) == 0
+      length (zipWithIndex []) `shouldBe` 0
 
     it "produces a list with indices" $ do
-      zipWithIndex [2..10] == [(0,2), (1,3), (2,4), (3,5), (4,6), (5,7), (6,8), (7,9), (8,10)]
+      zipWithIndex [2..10] `shouldBe` [(0,2), (1,3), (2,4), (3,5), (4,6), (5,7), (6,8), (7,9), (8,10)]
 
   describe "Verify that `unzipWithIndex`" $ do
     it "produces an empty list when given an empty list" $ do
-      length (unzipWithIndex []) == 0
+      length (unzipWithIndex []) `shouldBe` 0
 
     it "removes indices from a list" $ do
       unzipWithIndex [(0,2), (1,3), (2,4), (3,5), (4,6), (5,7), (6,8), (7,9), (8,10)] == [2..10]
 
   describe "Verify that `dropNth`" $ do
     it "produces an empty list when given an empty list" $ do
-      length (dropNth 2 []) == 0
+      length (dropNth 2 []) `shouldBe` 0
 
     it "drops the correct elements from a list" $ do
-      dropNth 2 [0..10] == [1,3..10]
+      dropNth 2 [0..10] `shouldBe` [1,3..10]
 
   describe "Verify that `windows`" $ do
     it "produces an empty list when given an empty list" $ do
-      length (windows 4 []) == 0
+      length (windows 4 []) `shouldBe` 0
 
     it "produces successive windows of size 4" $ do
-      windows 4 "abcdefgh" == ["abcd", "bcde", "cdef", "defg", "efgh"]
+      windows 4 "abcdefgh" `shouldBe` ["abcd", "bcde", "cdef", "defg", "efgh"]
+
+  describe "Ensure Grid" $ do
+    {-  0  1  2 3
+        4  5  6 7
+        8  9 10 11
+       12 13 14 15
+    -}
+    let g = Grid (4,4) [0..15]
+        e = Grid (0,0) []
+
+    it "returns nothing for the current cell if the grid is empty" $ do
+      cell 0 GCurrent e `shouldBe` Nothing
+
+    it "returns the current cell" $ do
+      cell 0 GCurrent g `shouldBe` Just 0
+      cell 1 GCurrent g `shouldBe` Just 1
+      cell 2 GCurrent g `shouldBe` Just 2
+      cell 3 GCurrent g `shouldBe` Just 3
+      cell 4 GCurrent g `shouldBe` Just 4
+      cell 5 GCurrent g `shouldBe` Just 5
+      cell 6 GCurrent g `shouldBe` Just 6
+      cell 7 GCurrent g `shouldBe` Just 7
+      cell 8 GCurrent g `shouldBe` Just 8
+      cell 9 GCurrent g `shouldBe` Just 9
+      cell 10 GCurrent g `shouldBe` Just 10
+      cell 11 GCurrent g `shouldBe` Just 11
+      cell 12 GCurrent g `shouldBe` Just 12
+      cell 13 GCurrent g `shouldBe` Just 13
+      cell 14 GCurrent g `shouldBe` Just 14
+      cell 15 GCurrent g `shouldBe` Just 15
+
+    it "returns the cell on the right" $ do
+      cell 0 GRight g `shouldBe` Just 1
+      cell 1 GRight g `shouldBe` Just 2
+      cell 2 GRight g `shouldBe` Just 3
+      cell 4 GRight g `shouldBe` Just 5
+      cell 5 GRight g `shouldBe` Just 6
+      cell 6 GRight g `shouldBe` Just 7
+      cell 8 GRight g `shouldBe` Just 9
+      cell 9 GRight g `shouldBe` Just 10
+      cell 10 GRight g `shouldBe` Just 11
+      cell 12 GRight g `shouldBe` Just 13
+      cell 13 GRight g `shouldBe` Just 14
+      cell 14 GRight g `shouldBe` Just 15
+
+    it "returns nothing if there are no more cells on the right" $ do
+      cell 3 GRight g `shouldBe` Nothing
+      cell 7 GRight g `shouldBe` Nothing
+      cell 11 GRight g `shouldBe` Nothing
+      cell 15 GRight g `shouldBe` Nothing
+
+    it "returns the cell below" $ do
+      cell 0 GDown g `shouldBe` Just 4
+      cell 1 GDown g `shouldBe` Just 5
+      cell 2 GDown g `shouldBe` Just 6
+      cell 3 GDown g `shouldBe` Just 7
+      cell 4 GDown g `shouldBe` Just 8
+      cell 5 GDown g `shouldBe` Just 9
+      cell 6 GDown g `shouldBe` Just 10
+      cell 7 GDown g `shouldBe` Just 11
+      cell 8 GDown g `shouldBe` Just 12
+      cell 9 GDown g `shouldBe` Just 13
+      cell 10 GDown g `shouldBe` Just 14
+      cell 11 GDown g `shouldBe` Just 15
+
+    it "returns nothing if there are no more cells below" $ do
+      cell 12 GDown g `shouldBe` Nothing
+      cell 13 GDown g `shouldBe` Nothing
+      cell 14 GDown g `shouldBe` Nothing
+      cell 15 GDown g `shouldBe` Nothing
+
+    it "returns the cell diagonally" $ do
+      cell 0 GDiagonal g `shouldBe` Just 5
+      cell 1 GDiagonal g `shouldBe` Just 6
+      cell 2 GDiagonal g `shouldBe` Just 7
+      cell 4 GDiagonal g `shouldBe` Just 9
+      cell 5 GDiagonal g `shouldBe` Just 10
+      cell 6 GDiagonal g `shouldBe` Just 11
+      cell 8 GDiagonal g `shouldBe` Just 13
+      cell 9 GDiagonal g `shouldBe` Just 14
+      cell 10 GDiagonal g `shouldBe` Just 15
+
+    it "returns nothing if there are no more diagonal cells" $ do
+      cell 3 GDiagonal g `shouldBe` Nothing
+      cell 7 GDiagonal g `shouldBe` Nothing
+      cell 11 GDiagonal g `shouldBe` Nothing
+      cell 12 GDiagonal g `shouldBe` Nothing
+      cell 13 GDiagonal g `shouldBe` Nothing
+      cell 14 GDiagonal g `shouldBe` Nothing
+      cell 15 GDiagonal g `shouldBe` Nothing
+
+  describe "Ensure GridLine" $ do
+    it "can be muliplied to calculate a product" $ do
+      gridLineProduct (GridLine4 2 3 5 10) `shouldBe` 300

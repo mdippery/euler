@@ -17,6 +17,7 @@ library
   exposed-modules:
     Euler,
     Euler.Data,
+    Euler.Grid,
     Euler.List,
     Euler.Math,
     Euler.Text,
