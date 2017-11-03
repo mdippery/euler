@@ -13,6 +13,9 @@ countLetters = (sum . map cl)
   where cl ch | ch `elem` ['a'..'z'] = 1
               | otherwise            = 0
 
+ints :: String -> [Int]
+ints = map (read . (:""))
+
 toWord :: Integer -> String
 toWord 1    = "one"
 toWord 2    = "two"

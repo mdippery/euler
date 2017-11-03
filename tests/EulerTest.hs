@@ -35,8 +35,7 @@ main = hspec $ do
 
   describe "Verify that problem 8" $ do
     it "is correct" $ do
-      pending
-      -- problem8 `shouldBe` 23514624000
+      problem8 `shouldBe` 23514624000
 
   describe "Verify that problem 9" $ do
     it "is correct" $ do
@@ -171,3 +170,10 @@ main = hspec $ do
 
     it "drops the correct elements from a list" $ do
       dropNth 2 [0..10] == [1,3..10]
+
+  describe "Verify that `windows`" $ do
+    it "produces an empty list when given an empty list" $ do
+      length (windows 4 []) == 0
+
+    it "produces successive windows of size 4" $ do
+      windows 4 "abcdefgh" == ["abcd", "bcde", "cdef", "defg", "efgh"]
