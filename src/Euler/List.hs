@@ -23,3 +23,9 @@ windows n [] = []
 windows n ls
   | length ls >= n = take n ls : windows n (tail ls)
   | otherwise      = []
+
+splitEvery :: Int -> [a] -> [[a]]
+splitEvery _ [] = []
+splitEvery n ls =
+  let (h,rest) = splitAt n ls
+   in h : splitEvery n rest

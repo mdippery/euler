@@ -178,6 +178,15 @@ main = hspec $ do
     it "produces successive windows of size 4" $ do
       windows 4 "abcdefgh" `shouldBe` ["abcd", "bcde", "cdef", "defg", "efgh"]
 
+  describe "Verify that `splitEvery`" $ do
+    let ls = [0..15]
+
+    it "produces an empty list when given an empty list" $ do
+      length (splitEvery 4 []) `shouldBe` 0
+
+    it "produces chunks of a list of size 4" $ do
+      splitEvery 4 ls `shouldBe` [[0..3], [4..7], [8..11], [12..15]]
+
   describe "Ensure Grid" $ do
     {-  0  1  2 3
         4  5  6 7
