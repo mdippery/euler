@@ -217,6 +217,9 @@ main = hspec $ do
       cell 14 GCurrent g `shouldBe` Just 14
       cell 15 GCurrent g `shouldBe` Just 15
 
+    it "returns nothing if the current cell is out of bounds" $ do
+      cell 16 GCurrent g `shouldBe` Nothing
+
     it "returns the cell on the right" $ do
       cell 0 GRight g `shouldBe` Just 1
       cell 1 GRight g `shouldBe` Just 2

@@ -19,7 +19,9 @@ instance Show Grid where
 
 cell :: Int -> GridDirection -> Grid -> Maybe Int
 cell _ _ (Grid _ []) = Nothing
-cell i GCurrent (Grid _ d) = Just $ d !! i
+cell i GCurrent (Grid _ d)
+  | i < length d = Just $ d !! i
+  | otherwise    = Nothing
 cell i GRight (Grid (w,_) d)
   | hasRight i w = Just $ d !! (i + 1)
   | otherwise    = Nothing
