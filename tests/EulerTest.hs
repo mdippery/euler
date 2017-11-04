@@ -267,7 +267,3 @@ main = hspec $ do
       cell 13 GDiagonal g `shouldBe` Nothing
       cell 14 GDiagonal g `shouldBe` Nothing
       cell 15 GDiagonal g `shouldBe` Nothing
-
-  describe "Ensure GridLine" $ do
-    it "can be muliplied to calculate a product" $ do
-      gridLineProduct (GridLine4 2 3 5 10) `shouldBe` 300

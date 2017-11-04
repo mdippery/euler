@@ -4,12 +4,11 @@ module Euler.Grid
   , Grid (..)
   , GridDirection (..)
   , cell
-  , gridLineProduct
   ) where
 
 type GridDimensions = (Int, Int)
 
-data GridLine = GridLine4 Int Int Int Int deriving (Eq, Show)
+data GridLine = GridLine [Int] deriving (Eq, Show)
 
 data Grid = Grid GridDimensions [Int] deriving Eq
 
@@ -43,6 +42,3 @@ noRight i w = not $ hasRight i w
 
 noDown :: Int -> Int -> Int -> Bool
 noDown i h l = not $ hasDown i h l
-
-gridLineProduct :: GridLine -> Int
-gridLineProduct (GridLine4 a b c d) = a * b * c * d
