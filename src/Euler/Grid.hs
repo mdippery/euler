@@ -6,6 +6,12 @@ module Euler.Grid where
 
 import Euler.List (splitEvery, zipWithIndex)
 
+class Moveable a where
+  moveModifier :: a -> (Int, Int)
+
+class Skippable a where
+  skipModifier :: a -> Grid -> (Int -> Int)
+
 type GridDimensions = (Int, Int)
 
 type GridLine = [Int]
@@ -19,6 +25,18 @@ data GridDirection = GCurrent | GRight | GDown | GDiagonal
 instance Show Grid where
   show (Grid _ g) = show g
 
+instance Moveable GridDirection where
+  moveModifier GCurrent = (0,0)
+  moveModifier GRight = (0,1)
+  moveModifier GDown = (1,0)
+  moveModifier GDiagonal = (1,1)
+
+instance Skippable GridDirection where
+  skipModifier GCurrent _ = (+ 0)
+  skipModifier GRight _ = (+ 1)
+  skipModifier GDown (Grid (_,h) _) = (+ h)
+  skipModifier GDiagonal (Grid (_,h) _) = (+ h) . (+ 1)
+
 rows :: Grid -> [[Int]]
 rows (Grid (w,_) g) = splitEvery w g
 
@@ -28,16 +46,10 @@ rowIndex i (Grid (_,h) _) = i `div` h
 columnIndex :: Int -> Grid -> Int
 columnIndex i (Grid (w,_) _) = i `rem` w
 
-movementModifier :: GridDirection -> (Int, Int)
-movementModifier GCurrent = (0,0)
-movementModifier GRight = (0,1)
-movementModifier GDown = (1,0)
-movementModifier GDiagonal = (1,1)
-
 canMove :: Int -> GridDirection -> Grid -> Bool
 canMove current dir g =
   let rs = rows g
-      (rm,cm) = movementModifier dir
+      (rm,cm) = moveModifier dir
       r = rowIndex current g
       c = columnIndex current g
       r' = r + rm
@@ -50,18 +62,12 @@ cell i d g
   | not $ canMove i d g = Nothing
   | otherwise =
     let rs = rows g
-        (rm, cm) = movementModifier d
+        (rm, cm) = moveModifier d
         r = rowIndex i g
         c = columnIndex i g
         r' = r + rm
         c' = c + cm
      in Just $ rs !! r' !! c'
-
-skipModifier :: GridDirection -> Grid -> (Int -> Int)
-skipModifier GCurrent _ = (+ 0)
-skipModifier GRight _ = (+ 1)
-skipModifier GDown (Grid (_,h) _) = (+ h)
-skipModifier GDiagonal (Grid (_,h) _) = (+ h) . (+ 1)
 
 gridLine :: Int -> Int -> GridDirection -> Grid -> Maybe GridLine
 gridLine size at to g =
