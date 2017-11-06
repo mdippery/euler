@@ -10,9 +10,11 @@ type GridDimensions = (Int, Int)
 
 data GridLine = GridLine [Int] deriving (Eq, Show)
 
-data Grid = Grid GridDimensions [Int] deriving Eq
+data Grid = Grid GridDimensions [Int]
+  deriving Eq
 
-data GridDirection = GRight | GDown | GDiagonal | GCurrent deriving (Eq, Show)
+data GridDirection = GCurrent | GRight | GDown | GDiagonal
+  deriving (Enum, Eq, Show)
 
 instance Show Grid where
   show (Grid _ g) = show g
@@ -46,7 +48,7 @@ cell :: Int -> GridDirection -> Grid -> Maybe Int
 cell _ _ (Grid _ []) = Nothing
 cell i d g
   | not $ canMove i d g = Nothing
-  | otherwise           =
+  | otherwise =
     let rs = rows g
         (rm, cm) = movementModifier d
         r = rowIndex i g
