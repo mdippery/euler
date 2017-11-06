@@ -193,13 +193,86 @@ main = hspec $ do
         splitEvery 4 ls `shouldBe` [[0..3], [4..7], [8..11], [12..15]]
 
   describe "Euler.Grid" $ do
-    {-  0  1  2 3
-        4  5  6 7
+    {-  0  1  2  3
+        4  5  6  7
         8  9 10 11
        12 13 14 15
     -}
     let g = Grid (4,4) [0..15]
         e = Grid (0,0) []
+
+    describe "gridLine" $ do
+      it "returns the gridline to the right from a given point" $ do
+        gridLine 3 0 GRight g `shouldBe` Just [0,1,2]
+        gridLine 3 1 GRight g `shouldBe` Just [1,2,3]
+        gridLine 3 4 GRight g `shouldBe` Just [4,5,6]
+        gridLine 3 5 GRight g `shouldBe` Just [5,6,7]
+        gridLine 3 8 GRight g `shouldBe` Just [8,9,10]
+        gridLine 3 9 GRight g `shouldBe` Just [9,10,11]
+        gridLine 3 12 GRight g `shouldBe` Just [12,13,14]
+        gridLine 3 13 GRight g `shouldBe` Just [13,14,15]
+
+      it "returns nothing if there are no gridlines to the right" $ do
+        gridLine 3 2 GRight g `shouldBe` Nothing
+        gridLine 3 3 GRight g `shouldBe` Nothing
+        gridLine 3 6 GRight g `shouldBe` Nothing
+        gridLine 3 7 GRight g `shouldBe` Nothing
+        gridLine 3 10 GRight g `shouldBe` Nothing
+        gridLine 3 11 GRight g `shouldBe` Nothing
+        gridLine 3 14 GRight g `shouldBe` Nothing
+        gridLine 3 15 GRight g `shouldBe` Nothing
+
+      it "returns the gridline going down from a given point" $ do
+        gridLine 3 0 GDown g `shouldBe` Just [0,4,8]
+        gridLine 3 1 GDown g `shouldBe` Just [1,5,9]
+        gridLine 3 2 GDown g `shouldBe` Just [2,6,10]
+        gridLine 3 3 GDown g `shouldBe` Just [3,7,11]
+        gridLine 3 4 GDown g `shouldBe` Just [4,8,12]
+        gridLine 3 5 GDown g `shouldBe` Just [5,9,13]
+        gridLine 3 6 GDown g `shouldBe` Just [6,10,14]
+        gridLine 3 7 GDown g `shouldBe` Just [7,11,15]
+
+      it "returns nothing if there are no gridlines going down" $ do
+        gridLine 3 8 GDown g `shouldBe` Nothing
+        gridLine 3 9 GDown g `shouldBe` Nothing
+        gridLine 3 10 GDown g `shouldBe` Nothing
+        gridLine 3 11 GDown g `shouldBe` Nothing
+        gridLine 3 12 GDown g `shouldBe` Nothing
+        gridLine 3 13 GDown g `shouldBe` Nothing
+        gridLine 3 14 GDown g `shouldBe` Nothing
+        gridLine 3 15 GDown g `shouldBe` Nothing
+
+      it "returns the gridline diagonal from a given point" $ do
+        gridLine 3 0 GDiagonal g `shouldBe` Just [0,5,10]
+        gridLine 3 1 GDiagonal g `shouldBe` Just [1,6,11]
+        gridLine 3 4 GDiagonal g `shouldBe` Just [4,9,14]
+        gridLine 3 5 GDiagonal g `shouldBe` Just [5,10,15]
+
+      it "returns nothing if there are no diagonal gridlines" $ do
+        gridLine 3 2 GDiagonal g `shouldBe` Nothing
+        gridLine 3 3 GDiagonal g `shouldBe` Nothing
+        gridLine 3 6 GDiagonal g `shouldBe` Nothing
+        gridLine 3 7 GDiagonal g `shouldBe` Nothing
+        gridLine 3 8 GDiagonal g `shouldBe` Nothing
+        gridLine 3 9 GDiagonal g `shouldBe` Nothing
+        gridLine 3 10 GDiagonal g `shouldBe` Nothing
+        gridLine 3 11 GDiagonal g `shouldBe` Nothing
+        gridLine 3 12 GDiagonal g `shouldBe` Nothing
+        gridLine 3 13 GDiagonal g `shouldBe` Nothing
+        gridLine 3 14 GDiagonal g `shouldBe` Nothing
+        gridLine 3 15 GDiagonal g `shouldBe` Nothing
+
+    describe "gridLines" $ do
+      it "returns all the gridlines of a given size" $ do
+        gridLines 3 g `shouldBe` [ [0,1,2], [0,5,10], [0,4,8]
+                                 , [1,2,3], [1,6,11], [1,5,9]
+                                 , [4,5,6], [4,9,14], [4,8,12]
+                                 , [5,6,7], [5,10,15], [5,9,13]
+                                 , [8,9,10], [9,10,11]
+                                 ]
+
+      it "returns no gridlines for an empty grid" $ do
+        gridLines 3 e `shouldBe` []
 
     describe "rows" $ do
       it "returns the rows of the grid" $ do

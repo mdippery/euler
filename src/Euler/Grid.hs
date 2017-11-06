@@ -8,7 +8,7 @@ import Euler.List (splitEvery)
 
 type GridDimensions = (Int, Int)
 
-data GridLine = GridLine [Int] deriving (Eq, Show)
+type GridLine = [Int]
 
 data Grid = Grid GridDimensions [Int]
   deriving Eq
@@ -56,3 +56,19 @@ cell i d g
         r' = r + rm
         c' = c + cm
      in Just $ rs !! r' !! c'
+
+skipModifier :: GridDirection -> Grid -> (Int -> Int)
+skipModifier GCurrent _ = (+ 0)
+skipModifier GRight _ = (+ 1)
+skipModifier GDown (Grid (_,h) _) = (+ h)
+skipModifier GDiagonal (Grid (_,h) _) = (+ h) . (+ 1)
+
+gridLine :: Int -> Int -> GridDirection -> Grid -> Maybe GridLine
+gridLine size at to g =
+  let s = size - 1
+      f = skipModifier to g
+      cell' = flip (flip cell to) g
+   in sequence $ cell at GCurrent g : (map cell' $ take s [at,f(at)..])
+
+gridLines :: Int -> Grid -> [GridLine]
+gridLines size _ = []
