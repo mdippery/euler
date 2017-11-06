@@ -266,9 +266,12 @@ main = hspec $ do
       it "returns all the gridlines of a given size" $ do
         gridLines 3 g `shouldBe` [ [0,1,2], [0,5,10], [0,4,8]
                                  , [1,2,3], [1,6,11], [1,5,9]
+                                 , [2,6,10], [3,7,11]
                                  , [4,5,6], [4,9,14], [4,8,12]
                                  , [5,6,7], [5,10,15], [5,9,13]
+                                 , [6,10,14], [7,11,15]
                                  , [8,9,10], [9,10,11]
+                                 , [12,13,14], [13,14,15]
                                  ]
 
       it "returns no gridlines for an empty grid" $ do

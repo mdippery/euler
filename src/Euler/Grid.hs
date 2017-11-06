@@ -4,7 +4,7 @@
 
 module Euler.Grid where
 
-import Euler.List (splitEvery)
+import Euler.List (splitEvery, zipWithIndex)
 
 type GridDimensions = (Int, Int)
 
@@ -68,7 +68,14 @@ gridLine size at to g =
   let s = size - 1
       f = skipModifier to g
       cell' = flip (flip cell to) g
-   in sequence $ cell at GCurrent g : (map cell' $ take s [at,f(at)..])
+   in sequence $ cell at GCurrent g : (map cell' $ take s [at,f at..])
 
 gridLines :: Int -> Grid -> [GridLine]
-gridLines size _ = []
+gridLines size g@(Grid _ cs) =
+  let is = (map fst . zipWithIndex) cs
+      combos = [(i,d) | i <- is, d <- [GRight,GDiagonal,GDown]]
+      f (i,d) = gridLine size i d g
+      extract [] = []
+      extract (Nothing:rest) = extract rest
+      extract (Just x:rest) = x : extract rest
+   in extract $ map f combos
