@@ -1,10 +1,6 @@
-module Euler.Grid
-  ( GridDimensions
-  , GridLine (..)
-  , Grid (..)
-  , GridDirection (..)
-  , cell
-  ) where
+module Euler.Grid where
+
+import Euler.List (splitEvery)
 
 type GridDimensions = (Int, Int)
 
@@ -17,30 +13,40 @@ data GridDirection = GRight | GDown | GDiagonal | GCurrent deriving (Eq, Show)
 instance Show Grid where
   show (Grid _ g) = show g
 
+rows :: Grid -> [[Int]]
+rows (Grid (w,_) g) = splitEvery w g
+
+rowIndex :: Int -> Grid -> Int
+rowIndex i (Grid (_,h) _) = i `div` h
+
+columnIndex :: Int -> Grid -> Int
+columnIndex i (Grid (w,_) _) = i `rem` w
+
+movementModifier :: GridDirection -> (Int, Int)
+movementModifier GCurrent = (0,0)
+movementModifier GRight = (0,1)
+movementModifier GDown = (1,0)
+movementModifier GDiagonal = (1,1)
+
+canMove :: Int -> GridDirection -> Grid -> Bool
+canMove current dir g =
+  let rs = rows g
+      (rm,cm) = movementModifier dir
+      r = rowIndex current g
+      c = columnIndex current g
+      r' = r + rm
+      c' = c + cm
+   in r' < length rs && c' < length (rs !! r')
+
 cell :: Int -> GridDirection -> Grid -> Maybe Int
 cell _ _ (Grid _ []) = Nothing
-cell i GCurrent (Grid _ d)
-  | i < length d = Just $ d !! i
-  | otherwise    = Nothing
-cell i GRight (Grid (w,_) d)
-  | hasRight i w = Just $ d !! (i + 1)
-  | otherwise    = Nothing
-cell i GDown (Grid (_,h) d)
-  | hasDown i h (length d) = Just $ d !! (i + h)
-  | otherwise              = Nothing
-cell i GDiagonal (Grid (w,h) d)
-  | noRight i w           = Nothing
-  | noDown i h (length d) = Nothing
-  | otherwise             = Just $ d !! (i + h + 1)
-
-hasRight :: Int -> Int -> Bool
-hasRight i w = (i + 1) `rem` w /= 0
-
-hasDown :: Int -> Int -> Int -> Bool
-hasDown i h l = i + h < l
-
-noRight :: Int -> Int -> Bool
-noRight i w = not $ hasRight i w
-
-noDown :: Int -> Int -> Int -> Bool
-noDown i h l = not $ hasDown i h l
+cell i d g
+  | not $ canMove i d g = Nothing
+  | otherwise           =
+    let rs = rows g
+        (rm, cm) = movementModifier d
+        r = rowIndex i g
+        c = columnIndex i g
+        r' = r + rm
+        c' = c + cm
+     in Just $ rs !! r' !! c'
