@@ -32,10 +32,10 @@ instance Moveable GridDirection where
   moveModifier GDiagonal = (1,1)
 
 instance Skippable GridDirection where
-  skipModifier GCurrent _ = (+ 0)
-  skipModifier GRight _ = (+ 1)
-  skipModifier GDown (Grid (_,h) _) = (+ h)
-  skipModifier GDiagonal (Grid (_,h) _) = (+ h) . (+ 1)
+  skipModifier d (Grid (_,h) _) =
+    let (dm,rm) = moveModifier d
+        hm = dm * h
+     in (+ hm) . (+ rm)
 
 rows :: Grid -> [[Int]]
 rows (Grid (w,_) g) = splitEvery w g
