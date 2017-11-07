@@ -4,7 +4,8 @@
 
 module Euler where
 
-import Data.List (intercalate, nub, permutations, sort)
+import Data.Function (on)
+import Data.List (intercalate, maximumBy, nub, permutations, sort)
 import Euler.Data
 import Euler.Grid
 import Euler.List
@@ -197,7 +198,7 @@ problem13 =
            ,53503534226472524250874054075591789781264330331690]
         in (intercalate "" . map show . take 10 . digits . sum) ns
 
-problem14 = notSolved
+problem14 = fst $ maximumBy (compare `on` snd) $ zip [1..999999] $ map collatzLength [1..999999]
 
 problem15 = binomialCoefficient 20
 

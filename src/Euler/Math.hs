@@ -4,6 +4,7 @@
 
 module Euler.Math where
 
+import           Data.Array ((!), Array, bounds, inRange, listArray)
 import qualified Data.Digits as D
 import           Data.List.Ordered (minus, unionAll)
 import           Euler.Data (digits)
@@ -87,10 +88,16 @@ modSum m ns = foldl (modAdd m) 0 (map (flip mod m) ns)
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
 
-collatzLength :: Integral a => a -> a
+collatzLengths :: Array Integer Integer
+collatzLengths = listArray (1, 1000000) $ map collatzLength [1..1000000]
+
+collatzLength :: Integer -> Integer
 collatzLength 1 = 1
-collatzLength n = 1 + collatzLength (next n)
+collatzLength n
+  | inRange (bounds collatzLengths) n' = 1 + collatzLengths ! n'
+  | otherwise = 1 + collatzLength n'
   where
-    next n
-      | isEven n = n `div` 2
-      | isOdd n = 3 * n + 1
+    n' = case n of
+           1 -> 1
+           n | isEven n -> n `div` 2
+             | isOdd n -> 3 * n + 1
