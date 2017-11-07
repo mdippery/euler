@@ -206,13 +206,13 @@ main = hspec $ do
         moveModifier GCurrent `shouldBe` (0,0)
         moveModifier GRight `shouldBe` (0,1)
         moveModifier GDown `shouldBe` (1,0)
-        moveModifier GDiagonal `shouldBe` (1,1)
+        moveModifier GDownRight `shouldBe` (1,1)
 
       it "returns a skip modifier" $ do
         skipModifier GCurrent g 5 `shouldBe` 5
         skipModifier GRight g 5 `shouldBe` 6
         skipModifier GDown g 5 `shouldBe` 9
-        skipModifier GDiagonal g 5 `shouldBe` 10
+        skipModifier GDownRight g 5 `shouldBe` 10
 
     describe "gridLine" $ do
       it "returns the gridline to the right from a given point" $ do
@@ -256,33 +256,35 @@ main = hspec $ do
         gridLine 3 15 GDown g `shouldBe` Nothing
 
       it "returns the gridline diagonal from a given point" $ do
-        gridLine 3 0 GDiagonal g `shouldBe` Just [0,5,10]
-        gridLine 3 1 GDiagonal g `shouldBe` Just [1,6,11]
-        gridLine 3 4 GDiagonal g `shouldBe` Just [4,9,14]
-        gridLine 3 5 GDiagonal g `shouldBe` Just [5,10,15]
+        gridLine 3 0 GDownRight g `shouldBe` Just [0,5,10]
+        gridLine 3 1 GDownRight g `shouldBe` Just [1,6,11]
+        gridLine 3 4 GDownRight g `shouldBe` Just [4,9,14]
+        gridLine 3 5 GDownRight g `shouldBe` Just [5,10,15]
 
       it "returns nothing if there are no diagonal gridlines" $ do
-        gridLine 3 2 GDiagonal g `shouldBe` Nothing
-        gridLine 3 3 GDiagonal g `shouldBe` Nothing
-        gridLine 3 6 GDiagonal g `shouldBe` Nothing
-        gridLine 3 7 GDiagonal g `shouldBe` Nothing
-        gridLine 3 8 GDiagonal g `shouldBe` Nothing
-        gridLine 3 9 GDiagonal g `shouldBe` Nothing
-        gridLine 3 10 GDiagonal g `shouldBe` Nothing
-        gridLine 3 11 GDiagonal g `shouldBe` Nothing
-        gridLine 3 12 GDiagonal g `shouldBe` Nothing
-        gridLine 3 13 GDiagonal g `shouldBe` Nothing
-        gridLine 3 14 GDiagonal g `shouldBe` Nothing
-        gridLine 3 15 GDiagonal g `shouldBe` Nothing
+        gridLine 3 2 GDownRight g `shouldBe` Nothing
+        gridLine 3 3 GDownRight g `shouldBe` Nothing
+        gridLine 3 6 GDownRight g `shouldBe` Nothing
+        gridLine 3 7 GDownRight g `shouldBe` Nothing
+        gridLine 3 8 GDownRight g `shouldBe` Nothing
+        gridLine 3 9 GDownRight g `shouldBe` Nothing
+        gridLine 3 10 GDownRight g `shouldBe` Nothing
+        gridLine 3 11 GDownRight g `shouldBe` Nothing
+        gridLine 3 12 GDownRight g `shouldBe` Nothing
+        gridLine 3 13 GDownRight g `shouldBe` Nothing
+        gridLine 3 14 GDownRight g `shouldBe` Nothing
+        gridLine 3 15 GDownRight g `shouldBe` Nothing
 
     describe "gridLines" $ do
       it "returns all the gridlines of a given size" $ do
         gridLines 3 g `shouldBe` [ [0,1,2], [0,5,10], [0,4,8]
                                  , [1,2,3], [1,6,11], [1,5,9]
-                                 , [2,6,10], [3,7,11]
+                                 , [2,6,10], [2,5,8]
+                                 , [3,7,11], [3,6,9]
                                  , [4,5,6], [4,9,14], [4,8,12]
                                  , [5,6,7], [5,10,15], [5,9,13]
-                                 , [6,10,14], [7,11,15]
+                                 , [6,10,14], [6,9,12]
+                                 , [7,11,15], [7,10,13]
                                  , [8,9,10], [9,10,11]
                                  , [12,13,14], [13,14,15]
                                  ]
@@ -354,22 +356,22 @@ main = hspec $ do
         canMove 15 GDown g `shouldBe` False
 
       it "indicates whether there are moves diagonally" $ do
-        canMove 0 GDiagonal g `shouldBe` True
-        canMove 1 GDiagonal g `shouldBe` True
-        canMove 2 GDiagonal g `shouldBe` True
-        canMove 3 GDiagonal g `shouldBe` False
-        canMove 4 GDiagonal g `shouldBe` True
-        canMove 5 GDiagonal g `shouldBe` True
-        canMove 6 GDiagonal g `shouldBe` True
-        canMove 7 GDiagonal g `shouldBe` False
-        canMove 8 GDiagonal g `shouldBe` True
-        canMove 9 GDiagonal g `shouldBe` True
-        canMove 10 GDiagonal g `shouldBe` True
-        canMove 11 GDiagonal g `shouldBe` False
-        canMove 12 GDiagonal g `shouldBe` False
-        canMove 13 GDiagonal g `shouldBe` False
-        canMove 14 GDiagonal g `shouldBe` False
-        canMove 15 GDiagonal g `shouldBe` False
+        canMove 0 GDownRight g `shouldBe` True
+        canMove 1 GDownRight g `shouldBe` True
+        canMove 2 GDownRight g `shouldBe` True
+        canMove 3 GDownRight g `shouldBe` False
+        canMove 4 GDownRight g `shouldBe` True
+        canMove 5 GDownRight g `shouldBe` True
+        canMove 6 GDownRight g `shouldBe` True
+        canMove 7 GDownRight g `shouldBe` False
+        canMove 8 GDownRight g `shouldBe` True
+        canMove 9 GDownRight g `shouldBe` True
+        canMove 10 GDownRight g `shouldBe` True
+        canMove 11 GDownRight g `shouldBe` False
+        canMove 12 GDownRight g `shouldBe` False
+        canMove 13 GDownRight g `shouldBe` False
+        canMove 14 GDownRight g `shouldBe` False
+        canMove 15 GDownRight g `shouldBe` False
 
     describe "rowIndex" $ do
       it "returns the row index for a given index" $ do
@@ -475,21 +477,21 @@ main = hspec $ do
         cell 15 GDown g `shouldBe` Nothing
 
       it "returns the cell diagonally" $ do
-        cell 0 GDiagonal g `shouldBe` Just 5
-        cell 1 GDiagonal g `shouldBe` Just 6
-        cell 2 GDiagonal g `shouldBe` Just 7
-        cell 4 GDiagonal g `shouldBe` Just 9
-        cell 5 GDiagonal g `shouldBe` Just 10
-        cell 6 GDiagonal g `shouldBe` Just 11
-        cell 8 GDiagonal g `shouldBe` Just 13
-        cell 9 GDiagonal g `shouldBe` Just 14
-        cell 10 GDiagonal g `shouldBe` Just 15
+        cell 0 GDownRight g `shouldBe` Just 5
+        cell 1 GDownRight g `shouldBe` Just 6
+        cell 2 GDownRight g `shouldBe` Just 7
+        cell 4 GDownRight g `shouldBe` Just 9
+        cell 5 GDownRight g `shouldBe` Just 10
+        cell 6 GDownRight g `shouldBe` Just 11
+        cell 8 GDownRight g `shouldBe` Just 13
+        cell 9 GDownRight g `shouldBe` Just 14
+        cell 10 GDownRight g `shouldBe` Just 15
 
       it "returns nothing if there are no more diagonal cells" $ do
-        cell 3 GDiagonal g `shouldBe` Nothing
-        cell 7 GDiagonal g `shouldBe` Nothing
-        cell 11 GDiagonal g `shouldBe` Nothing
-        cell 12 GDiagonal g `shouldBe` Nothing
-        cell 13 GDiagonal g `shouldBe` Nothing
-        cell 14 GDiagonal g `shouldBe` Nothing
-        cell 15 GDiagonal g `shouldBe` Nothing
+        cell 3 GDownRight g `shouldBe` Nothing
+        cell 7 GDownRight g `shouldBe` Nothing
+        cell 11 GDownRight g `shouldBe` Nothing
+        cell 12 GDownRight g `shouldBe` Nothing
+        cell 13 GDownRight g `shouldBe` Nothing
+        cell 14 GDownRight g `shouldBe` Nothing
+        cell 15 GDownRight g `shouldBe` Nothing

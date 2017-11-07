@@ -4,6 +4,7 @@
 
 module Euler.Grid where
 
+import Data.List (nub, sort)
 import Euler.List (splitEvery, zipWithIndex)
 
 class Moveable a where
@@ -19,7 +20,15 @@ type GridLine = [Int]
 data Grid = Grid GridDimensions [Int]
   deriving Eq
 
-data GridDirection = GCurrent | GRight | GDown | GDiagonal
+data GridDirection = GCurrent
+                   | GUp
+                   | GUpRight
+                   | GRight
+                   | GDownRight
+                   | GDown
+                   | GDownLeft
+                   | GLeft
+                   | GUpLeft
   deriving (Enum, Eq, Show)
 
 instance Show Grid where
@@ -27,9 +36,14 @@ instance Show Grid where
 
 instance Moveable GridDirection where
   moveModifier GCurrent = (0,0)
+  moveModifier GUp = (-1,0)
+  moveModifier GUpRight = (-1,1)
   moveModifier GRight = (0,1)
+  moveModifier GDownRight = (1,1)
   moveModifier GDown = (1,0)
-  moveModifier GDiagonal = (1,1)
+  moveModifier GDownLeft = (1,-1)
+  moveModifier GLeft = (0,-1)
+  moveModifier GUpLeft = (-1,-1)
 
 instance Skippable GridDirection where
   skipModifier d (Grid (_,h) _) =
@@ -54,7 +68,7 @@ canMove current dir g =
       c = columnIndex current g
       r' = r + rm
       c' = c + cm
-   in r' < length rs && c' < length (rs !! r')
+   in r' >= 0 && c' >= 0 && r' < length rs && c' < length (rs !! r')
 
 cell :: Int -> GridDirection -> Grid -> Maybe Int
 cell _ _ (Grid _ []) = Nothing
@@ -79,9 +93,9 @@ gridLine size at to g =
 gridLines :: Int -> Grid -> [GridLine]
 gridLines size g@(Grid _ cs) =
   let is = (map fst . zipWithIndex) cs
-      combos = [(i,d) | i <- is, d <- [GRight,GDiagonal,GDown]]
+      combos = [(i,d) | i <- is, d <- [GUp .. GUpLeft]]
       f (i,d) = gridLine size i d g
       extract [] = []
       extract (Nothing:rest) = extract rest
       extract (Just x:rest) = x : extract rest
-   in extract $ map f combos
+   in (nub . map sort . extract . map f) combos
