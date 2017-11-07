@@ -87,10 +87,10 @@ modSum m ns = foldl (modAdd m) 0 (map (flip mod m) ns)
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
 
-collatz :: Integral a => a -> [a]
-collatz 1 = [1]
-collatz n = n : (collatz . nextN) n
+collatzLength :: Integral a => a -> a
+collatzLength 1 = 1
+collatzLength n = 1 + collatzLength (next n)
   where
-    nextN n
+    next n
       | isEven n = n `div` 2
       | isOdd n = 3 * n + 1
