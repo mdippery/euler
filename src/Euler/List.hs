@@ -22,6 +22,13 @@ dropNth n =
   let step n (i, x) acc = if i `rem` n == 0 then acc else (i, x):acc
    in unzipWithIndex . foldr (step n) [] . zipWithIndex
 
+replaceAt :: Int -> a -> [a] -> [a]
+replaceAt i e ls =
+  case splitAt i ls of
+    ([], []) -> []
+    (h, []) -> ls
+    (h, rest) -> h ++ [e] ++ tail rest
+
 windows :: Int -> [a] -> [[a]]
 windows n [] = []
 windows n ls
