@@ -89,6 +89,8 @@ choose n r = factorial n `div` (factorial r * factorial (n - r))
 
 collatz :: Integral a => a -> [a]
 collatz 1 = [1]
-collatz n
-  | isEven n = n : collatz (n `div` 2)
-  | isOdd n  = n : collatz (3 * n + 1)
+collatz n = n : (collatz . nextN) n
+  where
+    nextN n
+      | isEven n = n `div` 2
+      | isOdd n = 3 * n + 1
