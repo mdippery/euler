@@ -5,6 +5,7 @@
 import Euler
 import Euler.Grid
 import Euler.List
+import Euler.Math
 import Test.Hspec
 
 
@@ -207,6 +208,21 @@ main = hspec $ do
 
       it "produces chunks of a list of size 4" $ do
         splitEvery 4 ls `shouldBe` [[0..3], [4..7], [8..11], [12..15]]
+
+  describe "Euler.Math" $ do
+    describe "collatz" $ do
+      it "returns a correct value for the base case" $ do
+        collatz 1 `shouldBe` [1]
+
+      it "returns correct values" $ do
+        collatz 13 `shouldBe` [13,40,20,10,5,16,8,4,2,1]
+        collatz 28 `shouldBe` [28,14,7,22,11,34,17,52,26,13,40,20,10,5,16,8,4,2,1]
+        collatz 1022 `shouldBe` [1022,511,1534,767,2302,1151,3454,1727,5182,2591
+                                ,7774,3887,11662,5831,17494,8747,26242,13121
+                                ,39364,19682,9841,29524,14762,7381,22144,11072
+                                ,5536,2768,1384,692,346,173,520,260,130,65,196
+                                ,98,49,148,74,37,112,56,28,14,7,22,11,34,17,52
+                                ,26,13,40,20,10,5,16,8,4,2,1]
 
   describe "Euler.Grid" $ do
     {-  0  1  2  3
