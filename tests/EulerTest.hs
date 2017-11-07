@@ -201,6 +201,19 @@ main = hspec $ do
     let g = Grid (4,4) [0..15]
         e = Grid (0,0) []
 
+    describe "GridDirection" $ do
+      it "returns a move modifier" $ do
+        moveModifier GCurrent `shouldBe` (0,0)
+        moveModifier GRight `shouldBe` (0,1)
+        moveModifier GDown `shouldBe` (1,0)
+        moveModifier GDiagonal `shouldBe` (1,1)
+
+      it "returns a skip modifier" $ do
+        skipModifier GCurrent g 5 `shouldBe` 5
+        skipModifier GRight g 5 `shouldBe` 6
+        skipModifier GDown g 5 `shouldBe` 9
+        skipModifier GDiagonal g 5 `shouldBe` 10
+
     describe "gridLine" $ do
       it "returns the gridline to the right from a given point" $ do
         gridLine 3 0 GRight g `shouldBe` Just [0,1,2]
