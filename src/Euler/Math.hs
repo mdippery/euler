@@ -69,9 +69,6 @@ fibonacci n =
 binomialCoefficient :: Integral a => a -> a
 binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 
-numDigits :: Integral a => a -> Int
-numDigits = length . digits
-
 modMult :: Integral a => a -> a -> a -> a
 modMult m a b = (a * b) `mod` m
 
@@ -95,9 +92,3 @@ collatz 1 = [1]
 collatz n
   | isEven n = n : collatz (n `div` 2)
   | isOdd n  = n : collatz (3 * n + 1)
-
-sumOfPowers :: Integral a => a -> a -> a
-sumOfPowers exp = sum . map (^ exp) . digits
-
-sumOfFactorials :: Integral a => a -> a
-sumOfFactorials = sum . map factorial . digits
