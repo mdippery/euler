@@ -10,7 +10,7 @@ import Euler.Grid
 import Euler.List
 import Euler.Math
 import Euler.Text
-import Euler.Util
+import Euler.Tuple
 
 notSolved = 0
 
@@ -224,17 +224,14 @@ problem25 = notSolved
 problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 
 problem30 =
-    let nums      = [2..355000]
-        pair      = pairWithFunc (sumOfPowers 5)
-        equalSums = filter pairHasEqualElements
-        extract   = map fst
-     in (sum . extract . equalSums . map pair) nums
+    let nums = [2..355000]
+        pow = sumOfPowers 5
+     in (sum . map decompose . filter equal . map (compose pow)) nums
 
 problem34 =
-    let nums            = [3..2540160]
-        equalFactorials = filter pairHasEqualElements
-        extract         = map fst
-     in sum $ extract $ equalFactorials $ map (pairWithFunc sumOfFactorials) nums
+    let nums = [3..2540160]
+        fact = sumOfFactorials
+     in (sum . map decompose . filter equal . map (compose fact)) nums
 
 problem35 = notSolved
 
