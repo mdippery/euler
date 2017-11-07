@@ -4,7 +4,6 @@
 
 module Euler.Math where
 
-import           Data.Array ((!), Ix, listArray)
 import qualified Data.Digits as D
 import           Data.List.Ordered (minus, unionAll)
 import           Euler.Data (digits)
@@ -88,13 +87,10 @@ modSum m ns = foldl (modAdd m) 0 (map (flip mod m) ns)
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
 
-collatz :: (Integral a, Ix a) => a -> [a]
-collatz n = go n
+collatz :: Integral a => a -> [a]
+collatz 1 = [1]
+collatz n = n : (collatz . nextN) n
   where
-    max = 2000000
-    go 1 = [1]
-    go n = n : cs ! (next n)
-    next n
+    nextN n
       | isEven n = n `div` 2
       | isOdd n = 3 * n + 1
-    cs = listArray (0, max) [go x | x <- [0..max]]
