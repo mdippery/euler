@@ -6,7 +6,9 @@ module Euler.Math where
 
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import qualified Data.Digits as D
+import           Data.List (unfoldr)
 import           Data.List.Ordered (minus, unionAll)
+import           Data.Maybe (listToMaybe)
 import           Euler.Data (digits)
 import           Euler.List ((<:), isEmpty)
 
@@ -53,6 +55,11 @@ divides a b = b `rem` a == 0
 
 divisibleBy :: Integral a => [a] -> a -> Bool
 divisibleBy ns n = all (flip divides n) ns
+
+factorization :: Integer -> [Integer]
+factorization = unfoldr f
+  where
+    f n = listToMaybe [(x, n `div` x) | x <- [2..n], x `divides` n]
 
 fibonacci :: Integral a => a -> a
 fibonacci n =
