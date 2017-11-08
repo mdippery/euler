@@ -8,7 +8,20 @@ import Euler.List
 import Euler.Tuple
 
 maxR :: (Num a, Ord a) => [a] -> [a] -> [a]
-maxR t b =
+maxR b t =
   let t' = duplicate t
       b' = fatten b
    in (map maximum . splitEvery 2 . mapT (+) . zip t') b'
+
+reduce :: (Num a, Ord a) => [[a]] -> [a]
+reduce ls
+  | length ls == 1 = head ls
+  | otherwise = reduce (r : ls')
+  where
+    b = head ls
+    t = (head . tail) ls
+    r = maxR b t
+    ls' = drop 2 ls
+
+maximumPath :: (Num a, Ord a) => [[a]] -> a
+maximumPath = head . reduce . reverse
