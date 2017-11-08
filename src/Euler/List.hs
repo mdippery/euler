@@ -11,6 +11,19 @@ isEmpty :: [a] -> Bool
 isEmpty [] = True
 isEmpty _  = False
 
+middle :: [a] -> [a]
+middle = init . tail
+
+penultimate :: [a] -> a
+penultimate = last . init
+
+duplicate :: [a] -> [a]
+duplicate [] = []
+duplicate (h:rest) = h : h : duplicate rest
+
+fatten :: [a] -> [a]
+fatten ls = head ls : duplicate (middle ls) <: last ls
+
 zipWithIndex :: (Enum b, Num b) => [a] -> [(b, a)]
 zipWithIndex = zip [0..]
 
