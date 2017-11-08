@@ -254,7 +254,7 @@ problem48 =
       mp n = modPower p n n
    in (modSum p . map mp) [1..1000]
 
-problem53 = notSolved
+problem53 = (length . filter (> 1000000)) [n `choose` r | n <- [1..100], r <- [1..n]]
 
 problem56 = notSolved
 
