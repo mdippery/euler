@@ -62,7 +62,7 @@ factorization = unfoldr f
     f n = listToMaybe [(x, n `div` x) | x <- [2..n], x `divides` n]
 
 numDivisors :: Integer -> Int
-numDivisors = product . map (+ 1) . map length . group . factorization
+numDivisors = product . map ((+ 1) . length) . group . factorization
 
 fibonacci :: Integral a => a -> a
 fibonacci n =
