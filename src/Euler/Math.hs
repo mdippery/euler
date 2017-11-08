@@ -64,6 +64,13 @@ factorization = unfoldr f
 numDivisors :: Integer -> Int
 numDivisors = product . map ((+ 1) . length) . group . factorization
 
+sumDivisors :: Integer -> Integer
+sumDivisors n = go n - n
+  where
+    pow' ls = (head ls, length ls)
+    sum' (n,p) = (sum . map (\x -> n ^ x)) [0..p]
+    go = product . map (sum' . pow') . group . factorization
+
 fibonacci :: Integral a => a -> a
 fibonacci n =
   let s   = sqrt 5

@@ -217,6 +217,19 @@ main = hspec $ do
         collatzLength 28 `shouldBe` 19
         collatzLength 1022 `shouldBe` 63
 
+    describe "sumDivisors" $ do
+      it "returns the sum of the divisors of 72" $ do
+        sumDivisors 72 `shouldBe` 123
+
+      it "returns the sum of the divisors of 120" $ do
+        sumDivisors 120 `shouldBe` 240
+
+      it "returns the sum of the divisors of 220" $ do
+        sumDivisors 220 `shouldBe` 284
+
+      it "returns the sum of the divisors of 284" $ do
+        sumDivisors 284 `shouldBe` 220
+
   describe "Euler.Grid" $ do
     {-  0  1  2  3
         4  5  6  7
