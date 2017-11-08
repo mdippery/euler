@@ -93,7 +93,10 @@ problem11 =
                   , 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48]
    in (head . reverse . sort . map product . gridLines 4) grid
 
-problem12 = notSolved
+problem12 =
+  let lt500 (_, d) = d <= 500
+      numDivisorsP n = (n, numDivisors n)
+   in (fst . head . dropWhile lt500 . map numDivisorsP) triangleNumbers
 
 problem13 =
   let ns = [37107287533902102798797998220837590246510135740250
