@@ -4,8 +4,10 @@
 
 module Euler where
 
+import Data.Dates (DateTime(..))
 import Data.Function (on)
 import Data.List (intercalate, maximumBy, nub, permutations, sort)
+import Euler.Calendar
 import Euler.Data
 import Euler.Grid
 import Euler.List
@@ -211,7 +213,10 @@ problem17 = (countLetters . foldl (++) "" . map toWord) [1..1000]
 
 problem18 = notSolved
 
-problem19 = notSolved
+problem19 =
+  let start = DateTime 1901 1 1 0 0 0
+      end = DateTime 2000 12 31 0 0 0
+   in (length . filter isFirstOfMonth) (sundaysBetween start end)
 
 problem20 = (sum . digits . factorial) 100
 
