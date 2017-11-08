@@ -235,12 +235,12 @@ problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 problem30 =
     let nums = [2..355000]
         pow = sum . map (^ 5) . digits
-     in (sum . map decompose . filter equal . map (compose pow)) nums
+     in (sum . fst . unzipT . filter equalT . zipT pow) nums
 
 problem34 =
     let nums = [3..2540160]
         fact = sum . map factorial . digits
-     in (sum . map decompose . filter equal . map (compose fact)) nums
+     in (sum . fst . unzipT . filter equalT . zipT fact) nums
 
 problem35 = notSolved
 

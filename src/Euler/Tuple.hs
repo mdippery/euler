@@ -1,10 +1,10 @@
 module Euler.Tuple where
 
-compose :: (a -> b) -> a -> (a, b)
-compose f x = (x, f x)
+zipT :: (a -> b) -> [a] -> [(a, b)]
+zipT f = map (\x -> (x, f x))
 
-decompose :: (a, b) -> a
-decompose = fst
+unzipT :: [(a, b)] -> ([a], [b])
+unzipT = unzip
 
-equal :: Eq a => (a, a) -> Bool
-equal (x, y) = x == y
+equalT :: Eq a => (a, a) -> Bool
+equalT (x, y) = x == y
