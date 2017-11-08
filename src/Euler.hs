@@ -256,6 +256,6 @@ problem48 =
 
 problem53 = (length . filter (> 1000000)) [n `choose` r | n <- [1..100], r <- [1..n]]
 
-problem56 = notSolved
+problem56 = (maximum . map (sum . digits)) [a ^ b | a <- [1..99], b <- [1..99]]
 
 problem67 = notSolved
