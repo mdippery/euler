@@ -61,6 +61,9 @@ factorization = unfoldr f
   where
     f n = listToMaybe [(x, n `div` x) | x <- [2..n], x `divides` n]
 
+divisors :: Integral a => a -> [a]
+divisors n = 1 : filter (flip divides n) [2..n `div` 2]
+
 numDivisors :: Integer -> Int
 numDivisors = product . map (+ 1) . map length . group . factorization
 
