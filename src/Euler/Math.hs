@@ -89,6 +89,9 @@ fibonacci n =
       tn' = tn / 2
    in round $ (si * (tp' ^ n)) - (si * (tn' ^ n))
 
+fibonaccis :: Integral a => [a]
+fibonaccis = 1 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
+
 binomialCoefficient :: Integral a => a -> a
 binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 

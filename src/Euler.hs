@@ -6,7 +6,7 @@ module Euler where
 
 import Data.Dates (DateTime(..))
 import Data.Function (on)
-import Data.List (intercalate, maximumBy, nub, permutations, sort)
+import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort)
 import Data.List.Split (wordsBy)
 import Euler.Calendar
 import Euler.Data
@@ -23,7 +23,7 @@ problem1 =
   let d35 n = 3 `divides` n || 5 `divides` n
    in (sum . filter d35) [1..999]
 
-problem2 = (sum . filter isEven . takeWhile (<= 4000000) . map fibonacci) [1..]
+problem2 = (sum . filter isEven . takeWhile (<= 4000000)) fibonaccis
 
 problem3 =
   let n = 600851475143
@@ -256,7 +256,11 @@ problem24 =
     let millionth = drop 999999
      in (head . millionth . sort . permutations) "0123456789"
 
-problem25 = notSolved
+problem25 =
+  let go = elemIndex 1000 . map (length . show)
+   in case go fibonaccis of
+        Just x -> x + 1
+        Nothing -> -1
 
 problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 

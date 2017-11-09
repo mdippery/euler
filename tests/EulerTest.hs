@@ -106,8 +106,7 @@ main = hspec $ do
 
   describe "Verify that problem 25" $ do
     it "is correct" $ do
-      pendingWith "No Haskell solution committed to repo"
-      -- problem25 `shouldBe` 4782
+      problem25 `shouldBe` 4782
 
   describe "Verify that problem 29" $ do
     it "is correct" $ do
