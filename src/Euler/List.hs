@@ -25,7 +25,10 @@ fatten :: [a] -> [a]
 fatten ls = head ls : duplicate (middle ls) <: last ls
 
 zipWithIndex :: (Enum b, Num b) => [a] -> [(b, a)]
-zipWithIndex = zip [0..]
+zipWithIndex = zipWithIndexAt 0
+
+zipWithIndexAt :: (Enum b, Num b) => b -> [a] -> [(b, a)]
+zipWithIndexAt i = zip [i..]
 
 unzipWithIndex :: [(b, a)] -> [a]
 unzipWithIndex = map snd
