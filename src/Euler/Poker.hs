@@ -55,15 +55,15 @@ data PlayerHand = PlayerHand Player Card Card Card Card Card deriving Show
 player :: PlayerHand -> Player
 player (PlayerHand p _ _ _ _ _) = p
 
-getCards :: PlayerHand -> [Card]
-getCards (PlayerHand _ c1 c2 c3 c4 c5) = [c1, c2, c3, c4, c5]
+cards :: PlayerHand -> [Card]
+cards (PlayerHand _ c1 c2 c3 c4 c5) = [c1, c2, c3, c4, c5]
 
 sameSuit :: PlayerHand -> Bool
 sameSuit ph =
-  let cards = getCards ph
-      suits = map cardSuit cards
+  let cs = cards ph
+      suits = map cardSuit cs
       suit = head suits
    in all (== suit) suits
 
 nKind :: Int -> PlayerHand -> Bool
-nKind n = elem n . map length . groupBy ((==) `on` cardValue) . sort . getCards
+nKind n = elem n . map length . groupBy ((==) `on` cardValue) . sort . cards
