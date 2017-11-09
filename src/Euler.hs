@@ -270,7 +270,9 @@ problem34 =
         fact = sum . map factorial . digits
      in (sum . fst . unzipT . filter equalT . zipT fact) nums
 
-problem35 = notSolved
+problem35 = (length . filter f) [1..1000000]
+  where
+    f = all isPrime . map unDigits . nub . rotations . digits
 
 problem36 =
   let p n = isPalindromeIn 10 n && isPalindromeIn 2 n

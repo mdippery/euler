@@ -51,6 +51,17 @@ windows n ls
   | length ls >= n = take n ls : windows n (tail ls)
   | otherwise      = []
 
+rotateOnce :: [a] -> [a]
+rotateOnce ls = last ls : init ls
+
+rotations :: [a] -> [[a]]
+rotations ls = go ls (length ls) []
+  where
+    go _ 0 acc = acc
+    go ls n acc =
+      let ls' = rotateOnce ls
+       in go ls' (n - 1) (ls' : acc)
+
 splitEvery :: Int -> [a] -> [[a]]
 splitEvery _ [] = []
 splitEvery n ls =
