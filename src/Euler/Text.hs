@@ -8,8 +8,8 @@ import Data.Char (ord)
 
 data CharacterSet = CharacterSet [Char]
 
-inSet :: Char -> CharacterSet -> Bool
-inSet ch (CharacterSet chs) = ch `elem` chs
+contains :: CharacterSet -> Char -> Bool
+contains (CharacterSet set) ch = ch `elem` set
 
 letterValue :: Char -> Int
 letterValue ch = ord ch - 64
@@ -20,7 +20,7 @@ stringValue = sum . map letterValue
 removeCharacters :: CharacterSet -> String -> String
 removeCharacters _ "" = ""
 removeCharacters set (ch:rest)
-  | ch `inSet` set = removeCharacters set rest
+  | set `contains` ch = removeCharacters set rest
   | otherwise = ch : removeCharacters set rest
 
 countLetters :: String -> Integer
