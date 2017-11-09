@@ -128,6 +128,11 @@ main = hspec $ do
     it "is correct" $ do
       problem36 `shouldBe` 872187
 
+  describe "Verify that problem 42" $ do
+    it "is correct" $ do
+      count <- problem42
+      count `shouldBe` 162
+
   describe "Verify that problem 48" $ do
     it "is correct" $ do
       problem48 `shouldBe` 9110846700

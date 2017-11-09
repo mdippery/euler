@@ -5,6 +5,7 @@
 module Euler.Text where
 
 import Data.Char (ord)
+import Euler.Math (triangleNumbers)
 
 data CharacterSet = CharacterSet [Char]
 
@@ -66,3 +67,9 @@ toWord n
   | n < 1000  = toWord ((n `div` 100) * 100) ++ " and " ++ toWord r100
   where r10 = n `rem` 10
         r100 = n `rem` 100
+
+isTriangleWord :: String -> Bool
+isTriangleWord s =
+  let v = stringValue s
+      tns = takeWhile (<= v) triangleNumbers
+   in v `elem` tns

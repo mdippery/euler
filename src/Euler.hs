@@ -283,6 +283,15 @@ problem36 =
       ns  = [1..999999]
    in (sum . filter p) ns
 
+problem42 = do
+  count <- fmap
+             (length
+              . filter isTriangleWord
+              . map (removeCharacters (CharacterSet "\""))
+              . wordsBy (== ','))
+             (readFile "data/words.txt")
+  return count
+
 problem48 =
   let p = 10 ^ 10
       mp n = modPower p n n
