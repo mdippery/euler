@@ -21,6 +21,7 @@ library
     Euler.Grid,
     Euler.List,
     Euler.Math,
+    Euler.Poker,
     Euler.Pyramid,
     Euler.Text,
     Euler.Tuple
