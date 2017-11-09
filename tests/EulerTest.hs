@@ -85,7 +85,7 @@ main = hspec $ do
 
   describe "Verify that problem 19" $ do
     it "is correct" $ do
-      pending
+      pendingWith "No Haskell solution committed to repo"
       -- problem19 `shouldBe` 171
 
   describe "Verify that problem 20" $ do
@@ -94,12 +94,12 @@ main = hspec $ do
 
   describe "Verify that problem 21" $ do
     it "is correct" $ do
-      pending
+      pendingWith "No Haskell solution committed to repo"
       -- problem21 `shouldBe` 31626
 
   describe "Verify that problem 22" $ do
     it "is correct" $ do
-      pending
+      pendingWith "No Haskell solution committed to repo"
       -- problem22 `shouldBe` 871198282
 
   describe "Verify that problem 24" $ do
@@ -108,7 +108,7 @@ main = hspec $ do
 
   describe "Verify that problem 25" $ do
     it "is correct" $ do
-      pending
+      pendingWith "No Haskell solution committed to repo"
       -- problem25 `shouldBe` 4782
 
   describe "Verify that problem 29" $ do
@@ -125,7 +125,7 @@ main = hspec $ do
 
   describe "Verify that problem 35" $ do
     it "is correct" $ do
-      pending
+      pendingWith "No Haskell solution committed to repo"
       -- problem35 `shouldBe` 55
 
   describe "Verify that problem 36" $ do
