@@ -146,8 +146,7 @@ main = hspec $ do
 
   describe "Verify that problem 67" $ do
     it "is correct" $ do
-      pending
-      -- problem67 `shouldBe` 7273
+      problem67 `shouldBe` 7273
 
   describe "Euler.List" $ do
     describe "zipWithIndex" $ do
