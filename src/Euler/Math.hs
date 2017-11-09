@@ -71,13 +71,10 @@ sumDivisors n = go n - n
     sum' (n,p) = (sum . map (\x -> n ^ x)) [0..p]
     go = product . map (sum' . pow') . group . factorization
 
-allDivisorSums :: Array Integer Integer
-allDivisorSums = listArray (1, 10000) $ map sumDivisors [1..10000]
-
 isAmicable :: Integer -> Integer -> Bool
 isAmicable a b = a < b && d a == b && d b == a
   where
-    d n = allDivisorSums ! n
+    d n = memoSumDivisors ! n
 
 fibonacci :: Integral a => a -> a
 fibonacci n =
@@ -113,16 +110,23 @@ modSum m ns = foldl (modAdd m) 0 (map (flip mod m) ns)
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
 
-collatzLengths :: Array Integer Integer
-collatzLengths = listArray (1, 1000000) $ map collatzLength [1..1000000]
-
 collatzLength :: Integer -> Integer
 collatzLength 1 = 1
 collatzLength n
-  | inRange (bounds collatzLengths) n' = 1 + collatzLengths ! n'
+  | inRange (bounds memoCollatzLengths) n' = 1 + memoCollatzLengths ! n'
   | otherwise = 1 + collatzLength n'
   where
     n' = case n of
            1 -> 1
            n | isEven n -> n `div` 2
              | isOdd n -> 3 * n + 1
+
+
+--  Stored values for memoization
+-------------------------------------------------------------------------------
+
+memoCollatzLengths :: Array Integer Integer
+memoCollatzLengths = listArray (1, 1000000) $ map collatzLength [1..1000000]
+
+memoSumDivisors :: Array Integer Integer
+memoSumDivisors = listArray (1, 10000) $ map sumDivisors [1..10000]
