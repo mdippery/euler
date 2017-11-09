@@ -87,7 +87,7 @@ fibonacci n =
       tn  = 1 - s
       tp' = tp / 2
       tn' = tn / 2
-   in round $ (si * (tp' ^ n)) - (si * (tn' ^ n))
+   in round $ si * tp' ^ n - si * tn' ^ n
 
 fibonaccis :: Integral a => [a]
 fibonaccis = 1 : 1 : zipWith (+) fibonaccis (tail fibonaccis)

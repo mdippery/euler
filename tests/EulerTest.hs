@@ -205,6 +205,10 @@ main = hspec $ do
         splitEvery 4 ls `shouldBe` [[0..3], [4..7], [8..11], [12..15]]
 
   describe "Euler.Math" $ do
+    describe "fibonacci" $ do
+      it "returns the first 10 fibonacci numbers" $ do
+        map fibonacci [1..10] `shouldBe` [1,1,2,3,5,8,13,21,34,55]
+
     describe "collatz" $ do
       it "returns a correct value for the base case" $ do
         collatzLength 1 `shouldBe` 1
