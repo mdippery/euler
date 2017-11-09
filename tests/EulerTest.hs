@@ -205,6 +205,20 @@ main = hspec $ do
         splitEvery 4 ls `shouldBe` [[0..3], [4..7], [8..11], [12..15]]
 
   describe "Euler.Math" $ do
+    describe "factorial" $ do
+      it "returns the first ten factorials" $ do
+        factorial 0 `shouldBe` 1
+        factorial 1 `shouldBe` 1
+        factorial 2 `shouldBe` 2
+        factorial 3 `shouldBe` 6
+        factorial 4 `shouldBe` 24
+        factorial 5 `shouldBe` 120
+        factorial 6 `shouldBe` 720
+        factorial 7 `shouldBe` 5040
+        factorial 8 `shouldBe` 40320
+        factorial 9 `shouldBe` 362880
+        factorial 10 `shouldBe` 3628800
+
     describe "fibonacci" $ do
       it "returns the first 10 fibonacci numbers" $ do
         map fibonacci [1..10] `shouldBe` [1,1,2,3,5,8,13,21,34,55]
