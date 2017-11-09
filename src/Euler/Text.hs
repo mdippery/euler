@@ -12,6 +12,12 @@ letterValue ch = ord ch - 64
 stringValue :: String -> Int
 stringValue = sum . map letterValue
 
+removeCharacters :: [Char] -> String -> String
+removeCharacters _ "" = ""
+removeCharacters chs (ch:rest)
+  | ch `elem` chs = removeCharacters chs rest
+  | otherwise = ch : removeCharacters chs rest
+
 countLetters :: String -> Integer
 countLetters = (sum . map cl)
   where cl ch | ch `elem` ['a'..'z'] = 1
