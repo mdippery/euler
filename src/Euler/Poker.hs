@@ -22,7 +22,9 @@ data CardValue = Two
                | Ace
                deriving (Eq, Ord, Show)
 
-data Card = Card CardValue Suit deriving (Eq, Show)
+data Card = Card { cardValue :: CardValue
+                 , cardSuit :: Suit
+                 } deriving (Eq, Show)
 
 instance Ord Card where
   compare (Card left _) (Card right _) = left `compare` right
@@ -49,3 +51,13 @@ data PlayerHand = PlayerHand Player Card Card Card Card Card deriving Show
 
 player :: PlayerHand -> Player
 player (PlayerHand p _ _ _ _ _) = p
+
+getCards :: PlayerHand -> [Card]
+getCards (PlayerHand _ c1 c2 c3 c4 c5) = [c1, c2, c3, c4, c5]
+
+sameSuit :: PlayerHand -> Bool
+sameSuit ph =
+  let cards = getCards ph
+      suits = map cardSuit cards
+      suit = head suits
+   in all (== suit) suits

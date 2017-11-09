@@ -6,6 +6,7 @@ import Euler
 import Euler.Grid
 import Euler.List
 import Euler.Math
+import Euler.Poker
 import Test.Hspec
 
 
@@ -244,6 +245,16 @@ main = hspec $ do
 
       it "returns the sum of the divisors of 284" $ do
         sumDivisors 284 `shouldBe` 220
+
+  describe "Euler.Poker" $ do
+    describe "sameSuit" $ do
+      it "returns true if all cards are of the same suit" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades)
+        sameSuit h `shouldBe` True
+
+      it "returns false if not all cards are of the same suit" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Hearts) (Card Two Clubs) (Card Two Spades)
+        sameSuit h `shouldBe` False
 
   describe "Euler.Grid" $ do
     {-  0  1  2  3
