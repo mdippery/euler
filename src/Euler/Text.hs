@@ -6,17 +6,22 @@ module Euler.Text where
 
 import Data.Char (ord)
 
+data CharacterSet = CharacterSet [Char]
+
+inSet :: Char -> CharacterSet -> Bool
+inSet ch (CharacterSet chs) = ch `elem` chs
+
 letterValue :: Char -> Int
 letterValue ch = ord ch - 64
 
 stringValue :: String -> Int
 stringValue = sum . map letterValue
 
-removeCharacters :: [Char] -> String -> String
+removeCharacters :: CharacterSet -> String -> String
 removeCharacters _ "" = ""
-removeCharacters chs (ch:rest)
-  | ch `elem` chs = removeCharacters chs rest
-  | otherwise = ch : removeCharacters chs rest
+removeCharacters set (ch:rest)
+  | ch `inSet` set = removeCharacters set rest
+  | otherwise = ch : removeCharacters set rest
 
 countLetters :: String -> Integer
 countLetters = (sum . map cl)
