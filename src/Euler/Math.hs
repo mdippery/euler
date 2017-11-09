@@ -71,6 +71,14 @@ sumDivisors n = go n - n
     sum' (n,p) = (sum . map (\x -> n ^ x)) [0..p]
     go = product . map (sum' . pow') . group . factorization
 
+allDivisorSums :: Array Integer Integer
+allDivisorSums = listArray (1, 10000) $ map sumDivisors [1..10000]
+
+isAmicable :: Integer -> Integer -> Bool
+isAmicable a b = a < b && d a == b && d b == a
+  where
+    d n = allDivisorSums ! n
+
 fibonacci :: Integral a => a -> a
 fibonacci n =
   let s   = sqrt 5

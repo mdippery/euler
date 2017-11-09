@@ -13,5 +13,8 @@ zipT f = map (\x -> (x, f x))
 unzipT :: [(a, b)] -> ([a], [b])
 unzipT = unzip
 
+flattenT :: [(a, a)] -> [a]
+flattenT = foldl (\memo (a, b) -> memo ++ [a,b]) []
+
 equalT :: Eq a => (a, a) -> Bool
 equalT (x, y) = x == y

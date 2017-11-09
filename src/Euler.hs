@@ -238,7 +238,7 @@ problem19 =
 
 problem20 = (sum . digits . factorial) 100
 
-problem21 = notSolved
+problem21 = (sum . flattenT . filter (uncurry isAmicable)) [(a,b) | a <- [1..9999], b <- [a..9999]]
 
 problem22 = notSolved
 
