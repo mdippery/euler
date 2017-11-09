@@ -256,6 +256,15 @@ main = hspec $ do
         let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Hearts) (Card Two Clubs) (Card Two Spades)
         sameSuit h `shouldBe` False
 
+    describe "nKind" $ do
+      it "returns true if the hand if three of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Two Hearts) (Card Three Spades) (Card Two Diamonds) (Card Two Spades) (Card King Spades)
+        nKind 3 h `shouldBe` True
+
+      it "returns false if the hand is not three of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Two Hearts) (Card Three Spades) (Card Two Diamonds) (Card Jack Spades) (Card King Spades)
+        nKind 3 h `shouldBe` False
+
   describe "Euler.Grid" $ do
     {-  0  1  2  3
         4  5  6  7

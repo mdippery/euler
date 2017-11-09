@@ -4,6 +4,9 @@
 
 module Euler.Poker where
 
+import Data.Function (on)
+import Data.List (groupBy, sort)
+
 data Suit = Clubs | Diamonds | Hearts | Spades
   deriving (Eq, Show)
 
@@ -61,3 +64,6 @@ sameSuit ph =
       suits = map cardSuit cards
       suit = head suits
    in all (== suit) suits
+
+nKind :: Int -> PlayerHand -> Bool
+nKind n = elem n . map length . groupBy ((==) `on` cardValue) . sort . getCards
