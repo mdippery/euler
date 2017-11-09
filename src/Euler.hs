@@ -7,6 +7,7 @@ module Euler where
 import Data.Dates (DateTime(..))
 import Data.Function (on)
 import Data.List (intercalate, maximumBy, nub, permutations, sort)
+import Data.List.Split (wordsBy)
 import Euler.Calendar
 import Euler.Data
 import Euler.Grid
@@ -240,7 +241,16 @@ problem20 = (sum . digits . factorial) 100
 
 problem21 = (sum . flattenT . filter (uncurry isAmicable)) [(a,b) | a <- [1..9999], b <- [a..9999]]
 
-problem22 = notSolved
+problem22 = do
+  score <- fmap
+             (sum
+              . map (\(i, s) -> i * stringValue s)
+              . zipWithIndexAt 1
+              . sort
+              . map (removeCharacters (CharacterSet "\""))
+              . wordsBy (== ','))
+             (readFile "data/names.txt")
+  return score
 
 problem24 =
     let millionth = drop 999999
