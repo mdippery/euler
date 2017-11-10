@@ -61,6 +61,9 @@ cards (PlayerHand _ c1 c2 c3 c4 c5) = [c1, c2, c3, c4, c5]
 groupedCardValues :: PlayerHand -> [[Card]]
 groupedCardValues = groupBy ((==) `on` cardValue) . sort . cards
 
+highestCardOf :: [Card] -> Card
+highestCardOf = head . sort
+
 isSameSuit :: PlayerHand -> Bool
 isSameSuit ph =
   let cs = cards ph
