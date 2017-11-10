@@ -118,3 +118,16 @@ isRoyalFlush :: PlayerHand -> Bool
 isRoyalFlush ph =
   let lowCard = (cardValue . head . sort . cards) ph
    in isStraight ph && isFlush ph && lowCard == Ten
+
+playerHandType :: PlayerHand -> HandType
+playerHandType ph
+  | isRoyalFlush ph = RoyalFlush
+  | isStraightFlush ph = StraightFlush
+  | isFourKind ph = FourOfAKind
+  | isFullHouse ph = FullHouse
+  | isFlush ph = Flush
+  | isStraight ph = Straight
+  | isThreeKind ph = ThreeOfAKind
+  | isTwoPair ph = TwoPairs
+  | isOnePair ph = OnePair
+  | isHighCard ph = HighCard

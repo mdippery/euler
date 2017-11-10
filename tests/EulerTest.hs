@@ -384,6 +384,27 @@ main = hspec $ do
         let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
         isRoyalFlush h `shouldBe` True
 
+    describe "playerHandType" $ do
+      it "returns the correct hand type" $ do
+        let highCard = PlayerHand PlayerOne (Card Two Clubs) (Card Three Diamonds) (Card Four Spades) (Card Five Hearts) (Card Seven Diamonds)
+            onePair = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
+            twoPairs = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Four Spades) (Card Four Hearts) (Card Six Diamonds)
+            threeKind = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Two Spades) (Card Four Hearts) (Card Six Diamonds)
+            straight = PlayerHand PlayerOne (Card Nine Spades) (Card Ten Diamonds) (Card Jack Hearts) (Card Queen Diamonds) (Card King Spades)
+            flush = PlayerHand PlayerOne (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades)
+            fullHouse = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Clubs) (Card King Spades) (Card King Diamonds)
+            straightFlush = PlayerHand PlayerOne (Card Two Spades) (Card Three Spades) (Card Four Spades) (Card Five Spades) (Card Six Spades)
+            royalFlush = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
+        playerHandType highCard `shouldBe` HighCard
+        playerHandType onePair `shouldBe` OnePair
+        playerHandType twoPairs `shouldBe` TwoPairs
+        playerHandType threeKind `shouldBe` ThreeOfAKind
+        playerHandType straight `shouldBe` Straight
+        playerHandType flush `shouldBe` Flush
+        playerHandType fullHouse `shouldBe` FullHouse
+        playerHandType straightFlush `shouldBe` StraightFlush
+        playerHandType royalFlush `shouldBe` RoyalFlush
+
   describe "Euler.Grid" $ do
     {-  0  1  2  3
         4  5  6  7
