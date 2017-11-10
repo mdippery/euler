@@ -5,7 +5,7 @@
 module Euler.Poker where
 
 import Data.Function (on)
-import Data.List (groupBy, sort)
+import Data.List (groupBy, sort, sortBy)
 
 data Suit = Clubs | Diamonds | Hearts | Spades
   deriving (Eq, Show)
@@ -150,7 +150,7 @@ parseCardSuit 'H' = Hearts
 parseCardSuit 'S' = Spades
 
 orderedCards :: PlayerHand -> [Card]
-orderedCards = reverse . map head . groupedCardValues
+orderedCards = map head . reverse . sortBy (compare `on` length) . groupedCardValues
 
 resolveTie :: PlayerHand -> PlayerHand -> Player
 resolveTie ph1 ph2

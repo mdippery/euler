@@ -425,6 +425,33 @@ main = hspec $ do
             p2 = PlayerHand PlayerTwo (Card Seven Diamonds) (Card Two Spades) (Card Five Diamonds) (Card Three Spades) (Card Ace Clubs)
         parseGame s `shouldBe` (p1, p2)
 
+    describe "orderedCards" $ do
+      it "returns an ordered list of cards" $ do
+        let h = PlayerHand PlayerOne (Card Eight Clubs) (Card Two Spades) (Card Eight Spades) (Card Two Diamonds) (Card Eight Hearts)
+        (cardValue . head . orderedCards) h `shouldBe` Eight
+        (cardValue . head . tail . orderedCards) h `shouldBe` Two
+
+    describe "winner" $ do
+      it "returns player two as the winner with a pair of eights" $ do
+        let (ph1, ph2) = parseGame "5H 5C 6S 7S KD 2C 3S 8S 8D TD"
+        winner ph1 ph2 `shouldBe` PlayerTwo
+
+      it "returns player one as the winner with a high ace" $ do
+        let (ph1, ph2) = parseGame "5D 8C 9S JS AC 2C 5C 7D 8S QH"
+        winner ph1 ph2 `shouldBe` PlayerOne
+
+      it "returns player two as the winner with a flush" $ do
+        let (ph1, ph2) = parseGame "2D 9C AS AH AC 3D 6D 7D TD QD"
+        winner ph1 ph2 `shouldBe` PlayerTwo
+
+      it "returns player one as the winner with a pair of queens and high nine" $ do
+        let (ph1, ph2) = parseGame "4D 6S 9H QH QC 3D 6D 7H QD QS"
+        winner ph1 ph2 `shouldBe` PlayerOne
+
+      it "returns player one as the winner with a full house of fours" $ do
+        let (ph1, ph2) = parseGame "2H 2D 4C 4D 4S 3C 3D 3S 9S 9D"
+        winner ph1 ph2 `shouldBe` PlayerOne
+
   describe "Euler.Grid" $ do
     {-  0  1  2  3
         4  5  6  7
