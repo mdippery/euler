@@ -48,9 +48,9 @@ data Hand = Hand { handType :: HandType
                  , highCard :: Card
                  } deriving (Eq, Ord, Show)
 
-data Player = PlayerOne | PlayerTwo deriving Show
+data Player = PlayerOne | PlayerTwo deriving (Eq, Show)
 
-data PlayerHand = PlayerHand Player Card Card Card Card Card deriving Show
+data PlayerHand = PlayerHand Player Card Card Card Card Card deriving (Eq, Show)
 
 player :: PlayerHand -> Player
 player (PlayerHand p _ _ _ _ _) = p
@@ -131,3 +131,39 @@ playerHandType ph
   | isTwoPair ph = TwoPairs
   | isOnePair ph = OnePair
   | isHighCard ph = HighCard
+
+parseCardValue :: Char -> CardValue
+parseCardValue '2' = Two
+parseCardValue '3' = Three
+parseCardValue '4' = Four
+parseCardValue '5' = Five
+parseCardValue '6' = Six
+parseCardValue '7' = Seven
+parseCardValue '8' = Eight
+parseCardValue '9' = Nine
+parseCardValue 'T' = Ten
+parseCardValue 'J' = Jack
+parseCardValue 'Q' = Queen
+parseCardValue 'K' = King
+parseCardValue 'A' = Ace
+
+parseCardSuit :: Char -> Suit
+parseCardSuit 'C' = Clubs
+parseCardSuit 'D' = Diamonds
+parseCardSuit 'H' = Hearts
+parseCardSuit 'S' = Spades
+
+parseCard :: String -> Card
+parseCard (v:s:[]) = Card (parseCardValue v) (parseCardSuit s)
+
+parseHand :: Player -> [String] -> PlayerHand
+parseHand p ss =
+  let cs = map parseCard ss
+   in PlayerHand p (cs !! 0) (cs !! 1) (cs !! 2) (cs !! 3) (cs !! 4)
+
+parseGame :: String -> (PlayerHand, PlayerHand)
+parseGame s =
+  let cs = words s
+      p1s = take 5 cs
+      p2s = drop 5 cs
+   in (parseHand PlayerOne p1s, parseHand PlayerTwo p2s)

@@ -405,6 +405,26 @@ main = hspec $ do
         playerHandType straightFlush `shouldBe` StraightFlush
         playerHandType royalFlush `shouldBe` RoyalFlush
 
+    describe "parseCard" $ do
+      it "returns a card" $ do
+        parseCard "5H" `shouldBe` Card Five Hearts
+        parseCard "QC" `shouldBe` Card Queen Clubs
+        parseCard "3S" `shouldBe` Card Three Spades
+        parseCard "JD" `shouldBe` Card Jack Diamonds
+
+    describe "parseHand" $ do
+      it "returns a player's hand" $ do
+        let s = "8C TS KC 9H 4S"
+            expected = PlayerHand PlayerOne (Card Eight Clubs) (Card Ten Spades) (Card King Clubs) (Card Nine Hearts) (Card Four Spades)
+        parseHand PlayerOne (words s) `shouldBe` expected
+
+    describe "parseGame" $ do
+      it "returns both player's hands" $ do
+        let s = "8C TS KC 9H 4S 7D 2S 5D 3S AC"
+            p1 = PlayerHand PlayerOne (Card Eight Clubs) (Card Ten Spades) (Card King Clubs) (Card Nine Hearts) (Card Four Spades)
+            p2 = PlayerHand PlayerTwo (Card Seven Diamonds) (Card Two Spades) (Card Five Diamonds) (Card Three Spades) (Card Ace Clubs)
+        parseGame s `shouldBe` (p1, p2)
+
   describe "Euler.Grid" $ do
     {-  0  1  2  3
         4  5  6  7
