@@ -149,8 +149,16 @@ parseCardSuit 'D' = Diamonds
 parseCardSuit 'H' = Hearts
 parseCardSuit 'S' = Spades
 
+orderedCards :: PlayerHand -> [Card]
+orderedCards = reverse . map head . groupedCardValues
+
 resolveTie :: PlayerHand -> PlayerHand -> Player
-resolveTie _ _ = PlayerOne
+resolveTie ph1 ph2
+  | cs1 > cs2 = PlayerOne
+  | cs2 > cs1 = PlayerTwo
+  where
+    cs1 = orderedCards ph1
+    cs2 = orderedCards ph2
 
 winner :: PlayerHand -> PlayerHand -> Player
 winner ph1 ph2
