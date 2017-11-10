@@ -13,6 +13,7 @@ import Euler.Data
 import Euler.Grid
 import Euler.List
 import Euler.Math
+import Euler.Poker
 import Euler.Pyramid
 import Euler.Text
 import Euler.Tuple
@@ -298,6 +299,16 @@ problem48 =
    in (modSum p . map mp) [1..1000]
 
 problem53 = (length . filter (> 1000000)) [n `choose` r | n <- [1..100], r <- [1..n]]
+
+problem54 = do
+  count <- fmap
+             (length
+              . filter (== PlayerOne)
+              . map (uncurry winner)
+              . map parseGame
+              . lines)
+             (readFile "data/poker.txt")
+  return count
 
 problem56 = (maximum . map (sum . digits)) [a ^ b | a <- [1..99], b <- [1..99]]
 
