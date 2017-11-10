@@ -23,7 +23,7 @@ data CardValue = Two
                | Queen
                | King
                | Ace
-               deriving (Eq, Ord, Show)
+               deriving (Enum, Eq, Ord, Show)
 
 data Card = Card { cardValue :: CardValue
                  , cardSuit :: Suit
@@ -58,12 +58,57 @@ player (PlayerHand p _ _ _ _ _) = p
 cards :: PlayerHand -> [Card]
 cards (PlayerHand _ c1 c2 c3 c4 c5) = [c1, c2, c3, c4, c5]
 
-sameSuit :: PlayerHand -> Bool
-sameSuit ph =
+groupedCardValues :: PlayerHand -> [[Card]]
+groupedCardValues = groupBy ((==) `on` cardValue) . sort . cards
+
+isSameSuit :: PlayerHand -> Bool
+isSameSuit ph =
   let cs = cards ph
       suits = map cardSuit cs
       suit = head suits
    in all (== suit) suits
 
+isConsecutive :: PlayerHand -> Bool
+isConsecutive ph =
+  let cs = cards ph
+      vals = (sort . map cardValue) cs
+      start = head vals
+   in vals == take 5 [start..]
+
 nKind :: Int -> PlayerHand -> Bool
-nKind n = elem n . map length . groupBy ((==) `on` cardValue) . sort . cards
+nKind n = elem n . map length . groupedCardValues
+
+isHighCard :: PlayerHand -> Bool
+isHighCard = (== 5) . length . groupedCardValues
+
+hasPairs :: Int -> PlayerHand -> Bool
+hasPairs n = (== n) . length . filter (== 2) . map length . groupedCardValues
+
+isOnePair :: PlayerHand -> Bool
+isOnePair = hasPairs 1
+
+isTwoPair :: PlayerHand -> Bool
+isTwoPair = hasPairs 2
+
+isThreeKind :: PlayerHand -> Bool
+isThreeKind = nKind 3
+
+isStraight :: PlayerHand -> Bool
+isStraight = isConsecutive
+
+isFlush :: PlayerHand -> Bool
+isFlush = isSameSuit
+
+isFullHouse :: PlayerHand -> Bool
+isFullHouse ph = isThreeKind ph && isOnePair ph
+
+isFourKind :: PlayerHand -> Bool
+isFourKind = nKind 4
+
+isStraightFlush :: PlayerHand -> Bool
+isStraightFlush ph = isStraight ph && isFlush ph && (not . isRoyalFlush) ph
+
+isRoyalFlush :: PlayerHand -> Bool
+isRoyalFlush ph =
+  let lowCard = (cardValue . head . sort . cards) ph
+   in isStraight ph && isFlush ph && lowCard == Ten

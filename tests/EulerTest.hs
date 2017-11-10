@@ -247,14 +247,23 @@ main = hspec $ do
         sumDivisors 284 `shouldBe` 220
 
   describe "Euler.Poker" $ do
-    describe "sameSuit" $ do
+    describe "isSameSuit" $ do
       it "returns true if all cards are of the same suit" $ do
         let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades)
-        sameSuit h `shouldBe` True
+        isSameSuit h `shouldBe` True
 
       it "returns false if not all cards are of the same suit" $ do
         let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Hearts) (Card Two Clubs) (Card Two Spades)
-        sameSuit h `shouldBe` False
+        isSameSuit h `shouldBe` False
+
+    describe "isConsecutive" $ do
+      it "returns true if the hand contains consecutive values" $ do
+        let h = PlayerHand PlayerOne (Card Nine Spades) (Card Ten Diamonds) (Card Jack Hearts) (Card Queen Diamonds) (Card King Spades)
+        isConsecutive h `shouldBe` True
+
+      it "returns false if the hand does not contain consecutive values" $ do
+        let h = PlayerHand PlayerOne (Card Eight Spades) (Card Ten Diamonds) (Card Jack Hearts) (Card Queen Diamonds) (Card King Spades)
+        isConsecutive h `shouldBe` False
 
     describe "nKind" $ do
       it "returns true if the hand if three of a kind" $ do
@@ -264,6 +273,100 @@ main = hspec $ do
       it "returns false if the hand is not three of a kind" $ do
         let h = PlayerHand PlayerOne (Card Two Hearts) (Card Three Spades) (Card Two Diamonds) (Card Jack Spades) (Card King Spades)
         nKind 3 h `shouldBe` False
+
+    describe "isHighCard" $ do
+      it "returns true if the hand is a high card hand" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Three Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
+        isHighCard h `shouldBe` True
+
+      it "returns false if the hand is not a high card hand" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
+        isHighCard h `shouldBe` False
+
+    describe "isOnePair" $ do
+      it "returns true if the hand is one pair" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
+        isOnePair h `shouldBe` True
+
+      it "returns false if the hand is not one pair" $ do
+        let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
+        isOnePair h `shouldBe` False
+
+    describe "isTwoPair" $ do
+      it "returns true if the hand is two pairs" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Four Spades) (Card Four Hearts) (Card Six Diamonds)
+        isTwoPair h `shouldBe` True
+
+      it "returns false if the hand is not two pairs" $ do
+        let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
+        isTwoPair h `shouldBe` False
+
+    describe "isThreeKind" $ do
+      it "returns true if the hand is three of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Two Spades) (Card Four Hearts) (Card Six Diamonds)
+        isThreeKind h `shouldBe` True
+
+      it "returns false if the hand is not three of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
+        isThreeKind h `shouldBe` False
+
+    describe "isStraight" $ do
+      it "returns true if the hand is a straight" $ do
+        let h = PlayerHand PlayerOne (Card Nine Spades) (Card Ten Diamonds) (Card Jack Hearts) (Card Queen Diamonds) (Card King Spades)
+        isStraight h `shouldBe` True
+
+      it "returns false if the hand is not a straight" $ do
+        let h = PlayerHand PlayerOne (Card Eight Spades) (Card Ten Diamonds) (Card Jack Hearts) (Card Queen Diamonds) (Card King Spades)
+        isStraight h `shouldBe` False
+
+    describe "isFlush" $ do
+      it "returns true if the hand is a flush" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades)
+        isFlush h `shouldBe` True
+
+      it "returns false if the hand is not a flush" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Hearts) (Card Two Clubs) (Card Two Spades)
+        isFlush h `shouldBe` False
+
+    describe "isFullHouse" $ do
+      it "returns true if the hand is a full house" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Clubs) (Card King Spades) (Card King Diamonds)
+        isFullHouse h `shouldBe` True
+
+      it "returns false if the hand is not a full house" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Clubs) (Card King Spades) (Card Queen Diamonds)
+        isFullHouse h `shouldBe` False
+
+    describe "isFourKind" $ do
+      it "returns true if the hand is four of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Two Spades) (Card Four Hearts) (Card Two Diamonds)
+        isFourKind h `shouldBe` True
+
+      it "returns false if the hand is not four of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Ten Clubs) (Card Ten Spades) (Card King Diamonds) (Card Ace Diamonds)
+        isFourKind h `shouldBe` False
+
+    describe "isStraightFlush" $ do
+      it "returns true if the hand is a straight flush" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Three Spades) (Card Four Spades) (Card Five Spades) (Card Six Spades)
+        isStraightFlush h `shouldBe` True
+
+      it "returns false if the hand is not a straight flush" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Three Spades) (Card Four Spades) (Card Five Spades) (Card Seven Spades)
+        isStraightFlush h `shouldBe` False
+
+      it "returns false if the hand is a royal flush" $ do
+        let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
+        isStraightFlush h `shouldBe` False
+
+    describe "isRoyalFlush" $ do
+      it "returns false if the hand is a royal flush" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Three Spades) (Card Four Spades) (Card Five Spades) (Card Six Spades)
+        isRoyalFlush h `shouldBe` False
+
+      it "returns true if the hand is a royal flush" $ do
+        let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
+        isRoyalFlush h `shouldBe` True
 
   describe "Euler.Grid" $ do
     {-  0  1  2  3
