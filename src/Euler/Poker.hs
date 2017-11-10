@@ -44,10 +44,6 @@ data HandType = HighCard
               | RoyalFlush
               deriving (Eq, Ord, Show)
 
-data Hand = Hand { handType :: HandType
-                 , highCard :: Card
-                 } deriving (Eq, Ord, Show)
-
 data Player = PlayerOne | PlayerTwo deriving (Eq, Show)
 
 data PlayerHand = PlayerHand Player Card Card Card Card Card deriving (Eq, Show)
