@@ -149,6 +149,18 @@ parseCardSuit 'D' = Diamonds
 parseCardSuit 'H' = Hearts
 parseCardSuit 'S' = Spades
 
+resolveTie :: PlayerHand -> PlayerHand -> Player
+resolveTie _ _ = PlayerOne
+
+winner :: PlayerHand -> PlayerHand -> Player
+winner ph1 ph2
+  | ht1 > ht2 = PlayerOne
+  | ht2 > ht1 = PlayerTwo
+  | ht1 == ht2 = resolveTie ph1 ph2
+  where
+    ht1 = playerHandType ph1
+    ht2 = playerHandType ph2
+
 parseCard :: String -> Card
 parseCard (v:s:[]) = Card (parseCardValue v) (parseCardSuit s)
 
