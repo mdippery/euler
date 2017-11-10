@@ -276,8 +276,12 @@ main = hspec $ do
 
     describe "isHighCard" $ do
       it "returns true if the hand is a high card hand" $ do
-        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Three Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Three Diamonds) (Card Four Spades) (Card Five Hearts) (Card Seven Diamonds)
         isHighCard h `shouldBe` True
+
+      it "returns false if the hand is a straight" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Three Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
+        isHighCard h `shouldBe` False
 
       it "returns false if the hand is not a high card hand" $ do
         let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
@@ -287,6 +291,10 @@ main = hspec $ do
       it "returns true if the hand is one pair" $ do
         let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Four Spades) (Card Five Hearts) (Card Six Diamonds)
         isOnePair h `shouldBe` True
+
+      it "returns false if the hand is three of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Two Spades) (Card Four Hearts) (Card Six Diamonds)
+        isOnePair h `shouldBe` False
 
       it "returns false if the hand is not one pair" $ do
         let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
@@ -305,6 +313,10 @@ main = hspec $ do
       it "returns true if the hand is three of a kind" $ do
         let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Two Spades) (Card Four Hearts) (Card Six Diamonds)
         isThreeKind h `shouldBe` True
+
+      it "returns false if the hand is a full house" $ do
+        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Clubs) (Card King Spades) (Card King Diamonds)
+        isThreeKind h `shouldBe` False
 
       it "returns false if the hand is not three of a kind" $ do
         let h = PlayerHand PlayerOne (Card Ten Diamonds) (Card Jack Diamonds) (Card Queen Diamonds) (Card King Diamonds) (Card Ace Diamonds)
@@ -332,6 +344,10 @@ main = hspec $ do
       it "returns true if the hand is a full house" $ do
         let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Clubs) (Card King Spades) (Card King Diamonds)
         isFullHouse h `shouldBe` True
+
+      it "returns false if hand is three of a kind" $ do
+        let h = PlayerHand PlayerOne (Card Two Clubs) (Card Two Diamonds) (Card Two Spades) (Card Four Hearts) (Card Six Diamonds)
+        isFullHouse h `shouldBe` False
 
       it "returns false if the hand is not a full house" $ do
         let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Clubs) (Card King Spades) (Card Queen Diamonds)

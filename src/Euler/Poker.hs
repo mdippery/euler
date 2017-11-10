@@ -82,7 +82,10 @@ nKind :: Int -> PlayerHand -> Bool
 nKind n = elem n . map length . groupedCardValues
 
 isHighCard :: PlayerHand -> Bool
-isHighCard = (== 5) . length . groupedCardValues
+isHighCard ph =
+  let total = (length . cards) ph
+      unique = (length . groupedCardValues) ph
+   in unique == total && (not . isStraight) ph
 
 hasPairs :: Int -> PlayerHand -> Bool
 hasPairs n = (== n) . length . filter (== 2) . map length . groupedCardValues
@@ -94,7 +97,7 @@ isTwoPair :: PlayerHand -> Bool
 isTwoPair = hasPairs 2
 
 isThreeKind :: PlayerHand -> Bool
-isThreeKind = nKind 3
+isThreeKind ph = nKind 3 ph && (not . isOnePair) ph
 
 isStraight :: PlayerHand -> Bool
 isStraight = isConsecutive
@@ -103,7 +106,7 @@ isFlush :: PlayerHand -> Bool
 isFlush = isSameSuit
 
 isFullHouse :: PlayerHand -> Bool
-isFullHouse ph = isThreeKind ph && isOnePair ph
+isFullHouse ph = nKind 3 ph && isOnePair ph
 
 isFourKind :: PlayerHand -> Bool
 isFourKind = nKind 4
