@@ -35,7 +35,7 @@ library
     digits >= 0.3.1,
     split >= 0.2.3.2
 
-test-suite spec
+test-suite tests
   type:               exitcode-stdio-1.0
   main-is:            Spec.hs
   hs-source-dirs:     tests
