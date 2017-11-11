@@ -3,7 +3,7 @@ version:             1.0.0
 synopsis:            Project Euler solutions
 description:         Project Euler solutions
 homepage:            https://github.com/mdippery/euler#readme
-license:             BSD3
+license:             PublicDomain
 license-file:        LICENSE
 author:              Michael Dippery
 maintainer:          michael@monkey-robot.com
