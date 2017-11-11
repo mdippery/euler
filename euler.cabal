@@ -4,7 +4,7 @@ synopsis:            Project Euler solutions
 description:         Project Euler solutions
 homepage:            https://github.com/mdippery/euler#readme
 license:             BSD3
--- license-file:        LICENSE
+license-file:        LICENSE
 author:              Michael Dippery
 maintainer:          michael@monkey-robot.com
 copyright:           2017 Michael Dippery
