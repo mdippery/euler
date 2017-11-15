@@ -9,6 +9,7 @@ import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort)
 import Data.List.Split (wordsBy)
 import Euler.Calendar
+import Euler.Currency
 import Euler.Data
 import Euler.Grid
 import Euler.List
@@ -272,6 +273,8 @@ problem30 =
     let nums = [2..355000]
         pow = sum . map (^ 5) . digits
      in (sum . fst . unzipT . filter equalT . zipT pow) nums
+
+problem31 = coinCombos 200 TwoHundredPence
 
 problem34 =
     let nums = [3..2540160]
