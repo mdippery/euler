@@ -9,7 +9,7 @@ import qualified Data.Digits as D
 import           Data.List (group, unfoldr)
 import           Data.List.Ordered (minus, unionAll)
 import           Data.Maybe (listToMaybe)
-import           Euler.Data (digits)
+import           Euler.Data (digits, unDigits)
 import           Euler.List ((<:), isEmpty)
 
 sqrtI :: Integral a => a -> a
@@ -88,6 +88,16 @@ fibonacci n =
 
 fibonaccis :: Integral a => [a]
 fibonaccis = 1 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
+
+truncatables :: Integral a => a -> [a]
+truncatables n = n : go' tail n ++ go' init n
+  where
+    go' f n = go f ((f . digits) n)
+    go _ [] = []
+    go f ns = unDigits ns : go f (f ns)
+
+isTruncatablePrime :: Integer -> Bool
+isTruncatablePrime = all isPrime . truncatables
 
 binomialCoefficient :: Integral a => a -> a
 binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)

@@ -49,3 +49,7 @@ spec = do
 
       it "returns the sum of the divisors of 284" $ do
         sumDivisors 284 `shouldBe` 220
+
+    describe "truncatables" $ do
+      it "returns a list of numbers truncated" $ do
+        truncatables 3797 `shouldBe` [3797, 797, 97, 7, 379, 37, 3]

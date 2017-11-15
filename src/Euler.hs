@@ -290,6 +290,8 @@ problem36 =
       ns  = [1..999999]
    in (sum . filter p) ns
 
+problem37 = (sum . take 11 . filter isTruncatablePrime) [8..]
+
 problem42 = do
   count <- fmap
              (length
