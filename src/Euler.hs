@@ -15,6 +15,7 @@ import Euler.List
 import Euler.Math
 import Euler.Poker
 import Euler.Pyramid
+import Euler.Ring
 import Euler.Text
 import Euler.Tuple
 
@@ -262,6 +263,8 @@ problem25 =
    in case go fibonaccis of
         Just x -> x + 1
         Nothing -> -1
+
+problem28 = (sumDiagonals . numRings) 1001
 
 problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 

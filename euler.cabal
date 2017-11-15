@@ -23,6 +23,7 @@ library
     Euler.Math,
     Euler.Poker,
     Euler.Pyramid,
+    Euler.Ring,
     Euler.Text,
     Euler.Tuple
   hs-source-dirs:      src
