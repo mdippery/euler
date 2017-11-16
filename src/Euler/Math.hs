@@ -36,7 +36,7 @@ primes :: [Integer]
 primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
 
 primesBelow :: Integer -> [Integer]
-primesBelow n = primesTo (n - 1)
+primesBelow = primesTo . (flip (-) 1)
 
 primesTo :: Integer -> [Integer]
 primesTo n = takeWhile (<= n) primes
