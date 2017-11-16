@@ -6,7 +6,7 @@ module Euler.Math where
 
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import qualified Data.Digits as D
-import           Data.List (group, unfoldr)
+import           Data.List (group, sort, unfoldr)
 import           Data.List.Ordered (minus, unionAll)
 import           Data.Maybe (listToMaybe)
 import           Euler.Data (digits, unDigits)
@@ -21,10 +21,19 @@ isEven = divides 2
 isOdd :: Integral a => a -> Bool
 isOdd = not . isEven
 
-isPrime :: (Integral a) => a -> Bool
+isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
+
+isPandigital :: Integral a => a -> Bool
+isPandigital = isPandigitalTo 9
+
+isPandigitalTo :: Integral a => a -> a -> Bool
+isPandigitalTo = isPandigitalFromTo 1
+
+isPandigitalFromTo :: Integral a => a -> a -> a -> Bool
+isPandigitalFromTo s e = (== [s..e]) . sort . digits
 
 triangleNumber :: Integral a => a -> a
 triangleNumber n = n * (n + 1) `div` 2

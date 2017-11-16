@@ -53,3 +53,24 @@ spec = do
     describe "truncatables" $ do
       it "returns a list of numbers truncated" $ do
         truncatables 3797 `shouldBe` [3797, 797, 97, 7, 379, 37, 3]
+
+    describe "isPandigital" $ do
+      it "returns true if a number is 1-9 pandigital" $ do
+        isPandigital 123456789 `shouldBe` True
+
+      it "returns false if a number is not 1-9 pandigital" $ do
+        isPandigital 1234456789 `shouldBe` False
+
+    describe "isPandigitalTo" $ do
+      it "returns true if a number is 1-5 pandigital" $ do
+        isPandigitalTo 5 15234 `shouldBe` True
+
+      it "returns false if a number is not 1-5 pandigital" $ do
+        isPandigitalTo 5 12445 `shouldBe` False
+
+    describe "isPandigitalFromTo" $ do
+      it "returns true if a number is 0-5 pandigital" $ do
+        isPandigitalFromTo 0 5 123045 `shouldBe` True
+
+      it "returns false if a number is not 0-5 pandigital" $ do
+        isPandigitalFromTo 0 5 153302 `shouldBe` False
