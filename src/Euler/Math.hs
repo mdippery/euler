@@ -76,15 +76,8 @@ isAmicable a b = a < b && d a == b && d b == a
   where
     d n = memoSumDivisors ! n
 
-fibonacci :: Integral a => a -> a
-fibonacci n =
-  let s   = sqrt 5
-      si  = 1 / s
-      tp  = 1 + s
-      tn  = 1 - s
-      tp' = tp / 2
-      tn' = tn / 2
-   in round $ si * tp' ^ n - si * tn' ^ n
+fibonacci :: Integral a => Int -> a
+fibonacci = (!!) fibonaccis . (flip (-) 1)
 
 fibonaccis :: Integral a => [a]
 fibonaccis = 1 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
