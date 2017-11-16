@@ -86,10 +86,10 @@ isAmicable a b = a < b && d a == b && d b == a
     d n = memoSumDivisors ! n
 
 fibonacci :: Integral a => Int -> a
-fibonacci = (!!) fibonaccis . (flip (-) 1)
+fibonacci = (!!) fibonaccis
 
 fibonaccis :: Integral a => [a]
-fibonaccis = 1 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
+fibonaccis = 0 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
 
 truncatables :: Integral a => a -> [a]
 truncatables n = n : go' tail n ++ go' init n

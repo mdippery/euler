@@ -262,7 +262,7 @@ problem24 =
 problem25 =
   let go = elemIndex 1000 . map (length . show)
    in case go fibonaccis of
-        Just x -> x + 1
+        Just x -> x
         Nothing -> -1
 
 problem28 = (sumDiagonals . numRings) 1001
