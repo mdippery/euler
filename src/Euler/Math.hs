@@ -108,7 +108,7 @@ modAdd :: Integral a => a -> a -> a -> a
 modAdd m a b = (a + b) `mod` m
 
 modSum :: Integral a => a -> [a] -> a
-modSum m ns = foldl (modAdd m) 0 (map (flip mod m) ns)
+modSum m = foldl (modAdd m) 0 . map (flip mod m)
 
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
