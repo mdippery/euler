@@ -99,7 +99,7 @@ modMult :: Integral a => a -> a -> a -> a
 modMult m a b = (a * b) `mod` m
 
 modProduct :: Integral a => a -> [a] -> a
-modProduct m ns = foldl (modMult m) 1 (map (flip mod m) ns)
+modProduct m = foldl (modMult m) 1 . map (flip mod m)
 
 modPower :: Integral a => a -> a -> Int -> a
 modPower m a b = (modProduct m . take b . repeat) a
