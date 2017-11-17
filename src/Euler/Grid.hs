@@ -18,8 +18,9 @@ type GridDimensions = (Int, Int)
 
 type GridLine = [Int]
 
-data Grid = Grid GridDimensions [Int]
-  deriving Eq
+data Grid = Grid { gridDimensions :: GridDimensions
+                 , gridData :: [Int]
+                 } deriving Eq
 
 data GridDirection = GCurrent
                    | GUp
@@ -52,14 +53,20 @@ instance Skippable GridDirection where
         hm = dm * h
      in (+ hm) . (+ rm)
 
+gridHeight :: Grid -> Int
+gridHeight = snd . gridDimensions
+
+gridWidth :: Grid -> Int
+gridWidth = fst . gridDimensions
+
 rows :: Grid -> [[Int]]
-rows (Grid (w,_) g) = splitEvery w g
+rows g = splitEvery (gridWidth g) (gridData g)
 
 rowIndex :: Int -> Grid -> Int
-rowIndex i (Grid (_,h) _) = i `div` h
+rowIndex i = div i . gridHeight
 
 columnIndex :: Int -> Grid -> Int
-columnIndex i (Grid (w,_) _) = i `rem` w
+columnIndex i = rem i . gridWidth
 
 canMove :: Int -> GridDirection -> Grid -> Bool
 canMove current dir g =
