@@ -259,11 +259,7 @@ problem24 =
     let millionth = drop 999999
      in (head . millionth . sort . permutations) "0123456789"
 
-problem25 =
-  let go = elemIndex 1000 . map (length . show)
-   in case go fibonaccis of
-        Just x -> x
-        Nothing -> -1
+problem25 = (maybe (-1) id . elemIndex 1000 . map (length . show)) fibonaccis
 
 problem28 = (sumDiagonals . numRings) 1001
 
