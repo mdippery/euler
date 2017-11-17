@@ -63,7 +63,7 @@ divides :: Integral a => a -> a -> Bool
 divides = ((.) (== 0)) . flip rem
 
 divisibleBy :: Integral a => [a] -> a -> Bool
-divisibleBy ns n = all (flip divides n) ns
+divisibleBy = (flip (.) (flip divides)) . flip all
 
 factorization :: Integer -> [Integer]
 factorization = unfoldr f
