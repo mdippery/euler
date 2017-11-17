@@ -13,7 +13,7 @@ contains :: CharacterSet -> Char -> Bool
 contains (CharacterSet set) ch = ch `elem` set
 
 letterValue :: Char -> Int
-letterValue ch = ord ch - 64
+letterValue = flip (-) 64 . ord
 
 stringValue :: String -> Int
 stringValue = sum . map letterValue
