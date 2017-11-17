@@ -60,7 +60,7 @@ factorial :: (Enum a, Num a) => a -> a
 factorial = product . enumFromTo 1
 
 divides :: Integral a => a -> a -> Bool
-divides a b = b `rem` a == 0
+divides = ((.) (== 0)) . flip rem
 
 divisibleBy :: Integral a => [a] -> a -> Bool
 divisibleBy ns n = all (flip divides n) ns
