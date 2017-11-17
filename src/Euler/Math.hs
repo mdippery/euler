@@ -6,9 +6,10 @@ module Euler.Math where
 
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import qualified Data.Digits as D
-import           Data.List (group, intersect, sort, unfoldr)
+import           Data.List (group, intersect, nub, sort, unfoldr)
 import           Data.List.Ordered (minus, unionAll)
 import           Data.Maybe (listToMaybe)
+import           Data.Ratio ((%), denominator, numerator)
 import           Euler.Data (digits, unDigits)
 import           Euler.List ((<:), isEmpty)
 
@@ -70,6 +71,9 @@ factorization = unfoldr f
   where
     f n = listToMaybe [(x, n `div` x) | x <- [2..n], x `divides` n]
 
+primeFactors :: Integer -> [Integer]
+primeFactors = nub . factorization
+
 numDivisors :: Integer -> Int
 numDivisors = product . map ((+ 1) . length) . group . factorization
 
@@ -128,7 +132,10 @@ isCoprime a b = case factorization a `intersect` factorization b of
                   _  -> False
 
 totient :: Integer -> Integer
-totient n = (toInteger . length . filter (isCoprime n)) [1..n]
+totient 1 = 1
+totient n =
+  let ratio = foldl (\memo x -> memo * (1 - (1 % x))) (n % 1) $ primeFactors n
+   in numerator ratio `div` denominator ratio
 
 collatzLength :: Integer -> Integer
 collatzLength 1 = 1
