@@ -25,7 +25,7 @@ removeCharacters set (ch:rest)
   | otherwise = ch : removeCharacters set rest
 
 countLetters :: String -> Integer
-countLetters = (sum . map cl)
+countLetters = sum . map cl
   where cl ch | ch `elem` ['a'..'z'] = 1
               | otherwise            = 0
 
