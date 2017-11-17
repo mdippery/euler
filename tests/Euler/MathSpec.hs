@@ -74,3 +74,16 @@ spec = do
 
       it "returns false if a number is not 0-5 pandigital" $ do
         isPandigitalFromTo 0 5 153302 `shouldBe` False
+
+    describe "totient" $ do
+      it "returns the numbers coprime to a given number" $ do
+        totient 1 `shouldBe` 1
+        totient 2 `shouldBe` 1
+        totient 3 `shouldBe` 2
+        totient 4 `shouldBe` 2
+        totient 5 `shouldBe` 4
+        totient 6 `shouldBe` 2
+        totient 7 `shouldBe` 6
+        totient 8 `shouldBe` 4
+        totient 9 `shouldBe` 6
+        totient 10 `shouldBe` 4

@@ -6,7 +6,7 @@ module Euler.Math where
 
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import qualified Data.Digits as D
-import           Data.List (group, sort, unfoldr)
+import           Data.List (group, intersect, sort, unfoldr)
 import           Data.List.Ordered (minus, unionAll)
 import           Data.Maybe (listToMaybe)
 import           Euler.Data (digits, unDigits)
@@ -121,6 +121,14 @@ modSum m = foldl (modAdd m) 0 . map (flip mod m)
 
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
+
+isCoprime :: Integer -> Integer -> Bool
+isCoprime a b = case factorization a `intersect` factorization b of
+                  [] -> True
+                  _  -> False
+
+totient :: Integer -> Integer
+totient n = (toInteger . length . filter (isCoprime n)) [1..n]
 
 collatzLength :: Integer -> Integer
 collatzLength 1 = 1
