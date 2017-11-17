@@ -5,6 +5,7 @@
 module Euler.Grid where
 
 import Data.List (nub, sort)
+import Data.Maybe (isJust)
 import Euler.List (splitEvery, zipWithIndex)
 
 class Moveable a where
@@ -95,7 +96,4 @@ gridLines size g@(Grid _ cs) =
   let is = (map fst . zipWithIndex) cs
       combos = [(i,d) | i <- is, d <- [GUp .. GUpLeft]]
       f (i,d) = gridLine size i d g
-      extract [] = []
-      extract (Nothing:rest) = extract rest
-      extract (Just x:rest) = x : extract rest
-   in (nub . map sort . extract . map f) combos
+   in (nub . map sort . maybe [] id . sequence . filter isJust . map f) combos
