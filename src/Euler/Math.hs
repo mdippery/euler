@@ -9,7 +9,7 @@ import qualified Data.Digits as D
 import           Data.List (group, intersect, nub, sort, unfoldr)
 import           Data.List.Ordered (minus, unionAll)
 import           Data.Maybe (listToMaybe)
-import           Data.Ratio ((%), denominator, numerator)
+import           Data.Ratio ((%), Ratio, denominator, numerator)
 import           Euler.Data (digits, unDigits)
 import           Euler.List ((<:), isEmpty)
 
@@ -147,6 +147,22 @@ collatzLength n
            1 -> 1
            n | isEven n -> n `div` 2
              | isOdd n -> 3 * n + 1
+
+closestRatio' :: (Integral a) => Ratio a -> a -> Ratio a -> Ratio a
+closestRatio' target 2 memo = memo
+closestRatio' target q memo =
+  let a = numerator target
+      b = denominator target
+      r = numerator memo
+      s = denominator memo
+      p = (a * q - 1) `div` b
+      n = q - 1
+   in if p * s > r * q
+         then closestRatio' target n (p % q)
+         else closestRatio' target n (r % s)
+
+closestRatio :: Integral a => Ratio a -> Ratio a
+closestRatio target = closestRatio' target 1000000 (0 % 1)
 
 
 --  Stored values for memoization
