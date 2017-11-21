@@ -149,18 +149,18 @@ collatzLength n
              | isOdd n -> 3 * n + 1
 
 closestRatio :: Integral a => Ratio a -> Ratio a
-closestRatio target = closestRatio' target 1000000 (0 % 1)
+closestRatio target = foldl closest (0 % 1) [1000000,999999..2]
   where
-    closestRatio' target 2 memo = memo
-    closestRatio' target q memo =
+    closest memo q =
       let a = numerator target
           b = denominator target
           r = numerator memo
           s = denominator memo
           p = (a * q - 1) `div` b
           n = q - 1
-          next = if p * s > r * q then p % q else r % s
-       in closestRatio' target n next
+       in if p * s > r * q
+             then p % q
+             else r % s
 
 
 --  Stored values for memoization
