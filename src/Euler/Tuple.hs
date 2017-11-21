@@ -14,7 +14,7 @@ unzipT :: [(a, b)] -> ([a], [b])
 unzipT = unzip
 
 flattenT :: [(a, a)] -> [a]
-flattenT = foldl (\memo (a, b) -> memo ++ [a,b]) []
+flattenT = foldr (\(a, b) memo -> memo ++ [a,b]) []
 
 equalT :: Eq a => (a, a) -> Bool
 equalT (x, y) = x == y

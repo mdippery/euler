@@ -112,7 +112,7 @@ modMult :: Integral a => a -> a -> a -> a
 modMult m a b = (a * b) `mod` m
 
 modProduct :: Integral a => a -> [a] -> a
-modProduct m = foldl (modMult m) 1 . map (flip mod m)
+modProduct m = foldr (modMult m) 1 . map (flip mod m)
 
 modPower :: Integral a => a -> a -> Int -> a
 modPower m a b = (modProduct m . take b . repeat) a
@@ -121,7 +121,7 @@ modAdd :: Integral a => a -> a -> a -> a
 modAdd m a b = (a + b) `mod` m
 
 modSum :: Integral a => a -> [a] -> a
-modSum m = foldl (modAdd m) 0 . map (flip mod m)
+modSum m = foldr (modAdd m) 0 . map (flip mod m)
 
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
@@ -134,7 +134,7 @@ isCoprime a b = case factorization a `intersect` factorization b of
 totient :: Integer -> Integer
 totient 1 = 1
 totient n =
-  let ratio = foldl (\memo x -> memo * (1 - (1 % x))) (n % 1) $ primeFactors n
+  let ratio = foldr (\x memo -> memo * (1 - (1 % x))) (n % 1) $ primeFactors n
    in numerator ratio `div` denominator ratio
 
 collatzLength :: Integer -> Integer
@@ -149,9 +149,9 @@ collatzLength n
              | isOdd n -> 3 * n + 1
 
 closestRatio :: Integral a => Ratio a -> Ratio a
-closestRatio target = foldl closest (0 % 1) [1000000,999999..2]
+closestRatio target = foldr closest (0 % 1) [1000000,999999..2]
   where
-    closest memo q =
+    closest q memo =
       let a = numerator target
           b = denominator target
           r = numerator memo
