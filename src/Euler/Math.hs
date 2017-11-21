@@ -127,9 +127,7 @@ choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
 
 isCoprime :: Integer -> Integer -> Bool
-isCoprime a b = case factorization a `intersect` factorization b of
-                  [] -> True
-                  _  -> False
+isCoprime a b = (isEmpty . uncurry intersect) (factorization a, factorization b)
 
 totient :: Integer -> Integer
 totient 1 = 1
