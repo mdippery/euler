@@ -159,9 +159,8 @@ closestRatio target = closestRatio' target 1000000 (0 % 1)
           s = denominator memo
           p = (a * q - 1) `div` b
           n = q - 1
-      in if p * s > r * q
-            then closestRatio' target n (p % q)
-            else closestRatio' target n (r % s)
+          next = if p * s > r * q then p % q else r % s
+       in closestRatio' target n next
 
 
 --  Stored values for memoization
