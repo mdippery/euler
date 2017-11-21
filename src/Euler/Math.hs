@@ -148,21 +148,20 @@ collatzLength n
            n | isEven n -> n `div` 2
              | isOdd n -> 3 * n + 1
 
-closestRatio' :: (Integral a) => Ratio a -> a -> Ratio a -> Ratio a
-closestRatio' target 2 memo = memo
-closestRatio' target q memo =
-  let a = numerator target
-      b = denominator target
-      r = numerator memo
-      s = denominator memo
-      p = (a * q - 1) `div` b
-      n = q - 1
-   in if p * s > r * q
-         then closestRatio' target n (p % q)
-         else closestRatio' target n (r % s)
-
 closestRatio :: Integral a => Ratio a -> Ratio a
 closestRatio target = closestRatio' target 1000000 (0 % 1)
+  where
+    closestRatio' target 2 memo = memo
+    closestRatio' target q memo =
+      let a = numerator target
+          b = denominator target
+          r = numerator memo
+          s = denominator memo
+          p = (a * q - 1) `div` b
+          n = q - 1
+      in if p * s > r * q
+            then closestRatio' target n (p % q)
+            else closestRatio' target n (r % s)
 
 
 --  Stored values for memoization
