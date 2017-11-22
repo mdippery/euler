@@ -17,4 +17,4 @@ flattenT :: [(a, a)] -> [a]
 flattenT = foldr (\(a, b) memo -> memo ++ [a,b]) []
 
 equalT :: Eq a => (a, a) -> Bool
-equalT (x, y) = x == y
+equalT = uncurry (==)
