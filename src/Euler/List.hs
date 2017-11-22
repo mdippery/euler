@@ -28,7 +28,7 @@ zipWithIndex :: (Enum b, Num b) => [a] -> [(b, a)]
 zipWithIndex = zipWithIndexAt 0
 
 zipWithIndexAt :: (Enum b, Num b) => b -> [a] -> [(b, a)]
-zipWithIndexAt i = zip [i..]
+zipWithIndexAt = zip . enumFrom
 
 unzipWithIndex :: [(b, a)] -> [a]
 unzipWithIndex = map snd
