@@ -130,7 +130,6 @@ isCoprime :: Integer -> Integer -> Bool
 isCoprime a b = (isEmpty . uncurry intersect) (factorization a, factorization b)
 
 totient :: Integer -> Integer
-totient 1 = 1
 totient n =
   let ratio = foldr (\x memo -> memo * (1 - (1 % x))) (n % 1) $ primeFactors n
    in numerator ratio `div` denominator ratio
