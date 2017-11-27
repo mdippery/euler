@@ -4,11 +4,13 @@
 
 module Euler.Tuple where
 
+import Control.Monad (ap)
+
 mapT :: (a -> b -> c) -> [(a, b)] -> [c]
 mapT f = map (\(a,b) -> f a b)
 
 zipT :: (a -> b) -> [a] -> [(a, b)]
-zipT f = map (\x -> (x, f x))
+zipT = map . ap (,)
 
 unzipT :: [(a, b)] -> ([a], [b])
 unzipT = unzip
