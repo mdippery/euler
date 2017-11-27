@@ -4,6 +4,7 @@
 
 module Euler.Grid where
 
+import Control.Monad (liftM2)
 import Data.List (nub, sort)
 import Data.Maybe (isJust)
 import Euler.List (splitEvery, zipWithIndex)
@@ -60,13 +61,13 @@ gridWidth :: Grid -> Int
 gridWidth = fst . gridDimensions
 
 rows :: Grid -> [[Int]]
-rows g = splitEvery (gridWidth g) (gridData g)
+rows = liftM2 splitEvery gridWidth gridData
 
 rowIndex :: Int -> Grid -> Int
-rowIndex i = div i . gridHeight
+rowIndex = (. gridHeight) . div
 
 columnIndex :: Int -> Grid -> Int
-columnIndex i = rem i . gridWidth
+columnIndex = (. gridWidth) . rem
 
 canMove :: Int -> GridDirection -> Grid -> Bool
 canMove current dir g =
