@@ -7,7 +7,7 @@ module Euler.Tuple where
 import Control.Monad (ap)
 
 mapT :: (a -> b -> c) -> [(a, b)] -> [c]
-mapT f = map (\(a,b) -> f a b)
+mapT = map . uncurry
 
 zipT :: (a -> b) -> [a] -> [(a, b)]
 zipT = map . ap (,)
