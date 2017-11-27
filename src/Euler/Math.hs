@@ -4,6 +4,7 @@
 
 module Euler.Math where
 
+import           Control.Monad (ap)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import qualified Data.Digits as D
 import           Data.List (group, intersect, nub, sort, unfoldr)
@@ -25,7 +26,7 @@ isOdd = not . isEven
 isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
-isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
+isPrime n = isEmpty . ap (filter . flip divides) (enumFromTo 2 . sqrtI) $ n
 
 isPandigital :: Integral a => a -> Bool
 isPandigital = isPandigitalTo 9
