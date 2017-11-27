@@ -66,6 +66,9 @@ divides = ((.) (== 0)) . flip rem
 divisibleBy :: Integral a => [a] -> a -> Bool
 divisibleBy = (flip (.) (flip divides)) . flip all
 
+divisibleByAny :: Integral a => [a] -> a -> Bool
+divisibleByAny = (flip (.) (flip divides)) . flip any
+
 factorization :: Integer -> [Integer]
 factorization = unfoldr f
   where
