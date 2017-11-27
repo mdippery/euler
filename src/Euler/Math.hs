@@ -8,11 +8,14 @@ import           Control.Monad (ap)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import qualified Data.Digits as D
 import           Data.List (group, intersect, nub, sort, unfoldr)
-import           Data.List.Ordered (minus, unionAll)
 import           Data.Maybe (listToMaybe)
 import           Data.Ratio ((%), Ratio, denominator, numerator)
+
+import           Data.List.Ordered (minus, unionAll)
+
 import           Euler.Data (digits, unDigits)
 import           Euler.List ((<:), isEmpty)
+
 
 sqrtI :: Integral a => a -> a
 sqrtI = round . sqrt . fromIntegral

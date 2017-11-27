@@ -7,7 +7,9 @@ module Euler.Grid where
 import Control.Monad (liftM2)
 import Data.List (nub, sort)
 import Data.Maybe (isJust)
+
 import Euler.List (splitEvery, zipWithIndex)
+
 
 class Moveable a where
   moveModifier :: a -> (Int, Int)
