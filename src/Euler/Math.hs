@@ -53,7 +53,7 @@ primesBelow :: Integer -> [Integer]
 primesBelow = primesTo . (flip (-) 1)
 
 primesTo :: Integer -> [Integer]
-primesTo n = takeWhile (<= n) primes
+primesTo = flip takeWhile primes . flip (<=)
 
 isPalindrome :: Integral a => a -> Bool
 isPalindrome = isPalindromeIn 10
