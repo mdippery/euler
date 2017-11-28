@@ -65,13 +65,13 @@ factorial :: (Enum a, Num a) => a -> a
 factorial = product . enumFromTo 1
 
 divides :: Integral a => a -> a -> Bool
-divides = ((.) (== 0)) . flip rem
+divides = ((== 0) .) . flip rem
 
 divisibleBy :: Integral a => [a] -> a -> Bool
-divisibleBy = (flip (.) (flip divides)) . flip all
+divisibleBy = (. (flip divides)) . flip all
 
 divisibleByAny :: Integral a => [a] -> a -> Bool
-divisibleByAny = (flip (.) (flip divides)) . flip any
+divisibleByAny = (. (flip divides)) . flip any
 
 factorization :: Integer -> [Integer]
 factorization = unfoldr f
@@ -100,7 +100,7 @@ isAbundant :: Integer -> Bool
 isAbundant = (>) =<< (memoSumDivisors !)
 
 fibonacci :: Integral a => Int -> a
-fibonacci = (!!) fibonaccis
+fibonacci = (fibonaccis !!)
 
 fibonaccis :: Integral a => [a]
 fibonaccis = 0 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
@@ -122,7 +122,7 @@ modMult :: Integral a => a -> a -> a -> a
 modMult m a b = (a * b) `mod` m
 
 modProduct :: Integral a => a -> [a] -> a
-modProduct m = foldr (modMult m) 1 . map (flip mod m)
+modProduct m = foldr (modMult m) 1 . map (`mod` m)
 
 modPower :: Integral a => a -> a -> Int -> a
 modPower m a b = (modProduct m . take b . repeat) a
@@ -131,7 +131,7 @@ modAdd :: Integral a => a -> a -> a -> a
 modAdd m a b = (a + b) `mod` m
 
 modSum :: Integral a => a -> [a] -> a
-modSum m = foldr (modAdd m) 0 . map (flip mod m)
+modSum m = foldr (modAdd m) 0 . map (`mod` m)
 
 choose :: Integral a => a -> a -> a
 choose n r = factorial n `div` (factorial r * factorial (n - r))
@@ -142,7 +142,7 @@ isCoprime a b = (isEmpty . uncurry intersect) (factorization a, factorization b)
 totient :: Integer -> Integer
 totient n =
   let ratio = foldr (\x memo -> memo * (1 - (1 % x))) (n % 1) $ primeFactors n
-   in numerator ratio `div` denominator ratio
+   in (liftM2 div numerator denominator) ratio
 
 collatzLength :: Integer -> Integer
 collatzLength 1 = 1
