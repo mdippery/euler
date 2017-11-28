@@ -4,7 +4,7 @@
 
 module Euler.Math where
 
-import           Control.Monad (ap)
+import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import           Data.List (group, intersect, nub, sort, unfoldr)
 import           Data.Maybe (listToMaybe)
@@ -85,10 +85,10 @@ numDivisors :: Integer -> Int
 numDivisors = product . map ((+ 1) . length) . group . factorization
 
 sumDivisors :: Integer -> Integer
-sumDivisors n = go n - n
+sumDivisors = (-) =<< go
   where
-    pow' ls = (head ls, length ls)
-    sum' (n,p) = (sum . map (\x -> n ^ x)) [0..p]
+    pow' = liftM2 (,) head length
+    sum' = uncurry ((. enumFromTo 0) . (sum .) . map . (^))
     go = product . map (sum' . pow') . group . factorization
 
 isAmicable :: Integer -> Integer -> Bool
