@@ -94,7 +94,10 @@ sumDivisors n = go n - n
 isAmicable :: Integer -> Integer -> Bool
 isAmicable a b = a < b && d a == b && d b == a
   where
-    d n = memoSumDivisors ! n
+    d = (memoSumDivisors !)
+
+isAbundant :: Integer -> Bool
+isAbundant = (>) =<< (memoSumDivisors !)
 
 fibonacci :: Integral a => Int -> a
 fibonacci = (!!) fibonaccis
@@ -174,4 +177,4 @@ memoCollatzLengths :: Array Integer Integer
 memoCollatzLengths = listArray (1, 1000000) $ map collatzLength [1..1000000]
 
 memoSumDivisors :: Array Integer Integer
-memoSumDivisors = listArray (1, 10000) $ map sumDivisors [1..10000]
+memoSumDivisors = listArray (1, 30000) $ map sumDivisors [1..30000]
