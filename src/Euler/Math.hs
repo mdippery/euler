@@ -40,17 +40,15 @@ isPandigitalTo = isPandigitalFromTo 1
 isPandigitalFromTo :: Integral a => a -> a -> a -> Bool
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
 
-triangleNumber :: Integral a => a -> a
-triangleNumber n = n * (n + 1) `div` 2
-
 triangleNumbers :: Integral a => [a]
-triangleNumbers = map triangleNumber [1..]
-
-pentagonalNumber :: Integral a => a -> a
-pentagonalNumber n = n * (3 * n - 1) `div` 2
+triangleNumbers = map tn [1..]
+  where
+    tn n = n * (n + 1) `div` 2
 
 pentagonalNumbers :: [Integer]
-pentagonalNumbers = map pentagonalNumber [1..]
+pentagonalNumbers = map pn [1..]
+  where
+    pn n = n * (3 * n - 1) `div` 2
 
 isPentagonal :: Integer -> Bool
 isPentagonal n = n `elem` (takeWhile (<= n) pentagonalNumbers)
