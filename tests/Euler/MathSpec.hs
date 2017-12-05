@@ -24,6 +24,20 @@ spec = do
         factorial 9 `shouldBe` 362880
         factorial 10 `shouldBe` 3628800
 
+    describe "isPentagonal" $ do
+      it "returns true if a number is pentagonal" $ do
+        isPentagonal 1 `shouldBe` True
+        isPentagonal 5 `shouldBe` True
+        isPentagonal 12 `shouldBe` True
+        isPentagonal 22 `shouldBe` True
+        isPentagonal 35 `shouldBe` True
+        isPentagonal 51 `shouldBe` True
+        isPentagonal 70 `shouldBe` True
+        isPentagonal 92 `shouldBe` True
+        isPentagonal 117 `shouldBe` True
+        isPentagonal 145 `shouldBe` True
+        isPentagonal 48 `shouldBe` False
+
     describe "fibonacci" $ do
       it "returns the first 10 fibonacci numbers" $ do
         map fibonacci [1..10] `shouldBe` [1,1,2,3,5,8,13,21,34,55]
