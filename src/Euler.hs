@@ -4,11 +4,14 @@
 
 module Euler where
 
-import Data.Dates (DateTime(..))
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort)
-import Data.List.Split (wordsBy)
+import Data.Ord (comparing)
 import Data.Ratio ((%), numerator)
+
+import Data.Dates (DateTime(..))
+import Data.List.Split (wordsBy)
+
 import Euler.Calendar
 import Euler.Currency
 import Euler.Data
@@ -286,6 +289,8 @@ problem36 =
    in (sum . filter p) ns
 
 problem37 = (sum . take 11 . filter isTruncatablePrime) [8..]
+
+problem39 = (fst . maximumBy (comparing snd) . zip [1..] . map (length . rightTriangles)) [1..1000]
 
 problem42 = do
   count <- fmap

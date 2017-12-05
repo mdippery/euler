@@ -169,6 +169,16 @@ closestRatio target = foldr closest (0 % 1) [1000000,999999..2]
              then p % q
              else r % s
 
+rightTriangles :: Integral a => a -> [(a,a,a)]
+rightTriangles p = map toT $ nub $ map sort $ filter sqfits $ filter pfits [[a, b a, c a] | a <- [1..u]]
+  where
+    u = p `div` 3
+    b a = (p ^ 2 - 2 * p * a) `div` (2 * p - 2 * a)
+    c a = p - b a - a
+    pfits = (== p) . sum
+    sqfits ns = (ns !! 2) ^ 2 == (ns !! 0) ^ 2 + (ns !! 1) ^ 2
+    toT ns = (ns !! 0, ns !! 1, ns !! 2)
+
 
 --  Stored values for memoization
 -------------------------------------------------------------------------------
