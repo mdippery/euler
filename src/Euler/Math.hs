@@ -50,8 +50,11 @@ pentagonalNumbers = map pn [1..]
   where
     pn n = n * (3 * n - 1) `div` 2
 
-isPentagonal :: Integer -> Bool
-isPentagonal n = n `elem` (takeWhile (<= n) pentagonalNumbers)
+isPentagonal :: (RealFrac a, Floating a) => a -> Bool
+isPentagonal n =
+  let sqn = sqrt $ 24 * n + 1
+      p = (sqn + 1) / 6
+   in p == fromIntegral (floor p)
 
 primes :: [Integer]
 primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
