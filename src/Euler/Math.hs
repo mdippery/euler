@@ -46,6 +46,15 @@ triangleNumber n = n * (n + 1) `div` 2
 triangleNumbers :: Integral a => [a]
 triangleNumbers = map triangleNumber [1..]
 
+pentagonalNumber :: Integral a => a -> a
+pentagonalNumber n = n * (3 * n - 1) `div` 2
+
+pentagonalNumbers :: [Integer]
+pentagonalNumbers = map pentagonalNumber [1..]
+
+isPentagonal :: Integer -> Bool
+isPentagonal n = n `elem` (takeWhile (<= n) pentagonalNumbers)
+
 primes :: [Integer]
 primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
 
