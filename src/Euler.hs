@@ -306,6 +306,12 @@ problem42 = do
              (readFile "data/words.txt")
   return count
 
+problem44 = head [abs (a' - b')
+                  | a <- [1..], b' <- take a pentagonalNumbers,
+                    let a' = pentagonalNumber a,
+                    isPentagonal (a' + b'),
+                    isPentagonal (a' - b')]
+
 problem48 =
   let p = 10 ^ 10
       mp n = modPower p n n

@@ -53,9 +53,9 @@ pentagonalNumbers = map pn [1..]
 pentagonalNumber :: Int -> Integer
 pentagonalNumber = ((0 : pentagonalNumbers) !!)
 
-isPentagonal :: (RealFrac a, Floating a) => a -> Bool
+isPentagonal :: Integer -> Bool
 isPentagonal n =
-  let sqn = sqrt $ 24 * n + 1
+  let sqn = sqrt $ 24 * (fromInteger n) + 1
       p = (sqn + 1) / 6
    in p == fromIntegral (floor p)
 
