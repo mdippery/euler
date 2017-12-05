@@ -4,6 +4,7 @@
 
 module Euler where
 
+import Data.Char (digitToInt)
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort)
 import Data.Ord (comparing)
@@ -291,6 +292,10 @@ problem36 =
 problem37 = (sum . take 11 . filter isTruncatablePrime) [8..]
 
 problem39 = (fst . maximumBy (comparing snd) . zip [1..] . map (length . rightTriangles)) [1..1000]
+
+problem40 =
+  let s = (foldr (++) "" . map show) [0..]
+   in (product . map digitToInt . map (s !!) . map (10 ^)) [0..6]
 
 problem42 = do
   count <- fmap
