@@ -45,6 +45,12 @@ triangleNumbers = map tn [1..]
   where
     tn n = n * (n + 1) `div` 2
 
+isTriangle :: Integer -> Bool
+isTriangle n =
+  let sqn = sqrt $ 8 * (fromInteger n) + 1
+      p = (sqn - 1) / 2
+   in p == fromIntegral (floor p)
+
 pentagonalNumbers :: [Integer]
 pentagonalNumbers = map pn [1..]
   where
@@ -57,6 +63,17 @@ isPentagonal :: Integer -> Bool
 isPentagonal n =
   let sqn = sqrt $ 24 * (fromInteger n) + 1
       p = (sqn + 1) / 6
+   in p == fromIntegral (floor p)
+
+hexagonalNumbers :: [Integer]
+hexagonalNumbers = map hn [1..]
+  where
+    hn n = n * (2 * n - 1)
+
+isHexagonal :: Integer -> Bool
+isHexagonal n =
+  let sqn = sqrt $ 8 * (fromInteger n) + 1
+      p = (sqn + 1) / 4
    in p == fromIntegral (floor p)
 
 primes :: [Integer]

@@ -312,6 +312,8 @@ problem44 = head [abs (a' - b')
                     isPentagonal (a' + b'),
                     isPentagonal (a' - b')]
 
+problem45 = (head . dropWhile (<= 40755) . filter (\n -> isTriangle n && isPentagonal n)) hexagonalNumbers
+
 problem48 =
   let p = 10 ^ 10
       mp n = modPower p n n
