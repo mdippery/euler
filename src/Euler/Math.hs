@@ -40,6 +40,9 @@ isPandigitalTo = isPandigitalFromTo 1
 isPandigitalFromTo :: Integral a => a -> a -> a -> Bool
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
 
+floatIsInteger :: RealFrac a => a -> Bool
+floatIsInteger n = n == fromIntegral (floor n)
+
 triangleNumbers :: Integral a => [a]
 triangleNumbers = map tn [1..]
   where
@@ -49,7 +52,7 @@ isTriangle :: Integer -> Bool
 isTriangle n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
       p = (sqn - 1) / 2
-   in p == fromIntegral (floor p)
+   in floatIsInteger p
 
 pentagonalNumbers :: [Integer]
 pentagonalNumbers = map pn [1..]
@@ -63,7 +66,7 @@ isPentagonal :: Integer -> Bool
 isPentagonal n =
   let sqn = sqrt $ 24 * (fromInteger n) + 1
       p = (sqn + 1) / 6
-   in p == fromIntegral (floor p)
+   in floatIsInteger p
 
 hexagonalNumbers :: [Integer]
 hexagonalNumbers = map hn [1..]
@@ -74,7 +77,7 @@ isHexagonal :: Integer -> Bool
 isHexagonal n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
       p = (sqn + 1) / 4
-   in p == fromIntegral (floor p)
+   in floatIsInteger p
 
 primes :: [Integer]
 primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
