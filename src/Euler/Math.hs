@@ -23,6 +23,9 @@ sqrtI = round . sqrt . fromIntegral
 cubeRoot :: Integer -> Double
 cubeRoot = (** (1 / 3)) . fromIntegral
 
+isCube :: Integer -> Bool
+isCube n = round (cubeRoot n) ^ 3 == n
+
 isEven :: Integral a => a -> Bool
 isEven = divides 2
 
