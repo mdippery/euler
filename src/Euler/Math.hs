@@ -45,6 +45,9 @@ numLength n = numLength' n
       | n < 10 = 1
       | otherwise = 1 + numLength' (n `div` 10)
 
+numbersOfLength :: (Num b, Enum b, Integral a) => a -> [b]
+numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
+
 isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
