@@ -20,6 +20,9 @@ import           Euler.List ((<:), isEmpty)
 sqrtI :: Integral a => a -> a
 sqrtI = round . sqrt . fromIntegral
 
+cubeRoot :: Integer -> Double
+cubeRoot = (** (1 / 3)) . fromIntegral
+
 isEven :: Integral a => a -> Bool
 isEven = divides 2
 
