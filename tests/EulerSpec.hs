@@ -172,6 +172,10 @@ spec = do
       count <- problem54
       count `shouldBe` 376
 
+  describe "Verify that problem 55" $ do
+    it "is correct" $ do
+      problem55 `shouldBe` 249
+
   describe "Verify that problem 56" $ do
     it "is correct" $ do
       problem56 `shouldBe` 972

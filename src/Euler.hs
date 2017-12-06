@@ -331,6 +331,8 @@ problem54 = do
              (readFile "data/poker.txt")
   return count
 
+problem55 = (length . filter isLychrel) [1..9999]
+
 problem56 = (maximum . map (sum . digits)) [a ^ b | a <- [1..99], b <- [1..99]]
 
 problem67 =
