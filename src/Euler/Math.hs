@@ -32,6 +32,13 @@ isEven = divides 2
 isOdd :: Integral a => a -> Bool
 isOdd = not . isEven
 
+numLength :: (Integral a, Num b) => a -> b
+numLength n = numLength' n
+  where
+    numLength' n
+      | n < 10 = 1
+      | otherwise = 1 + numLength' (n `div` 10)
+
 isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
