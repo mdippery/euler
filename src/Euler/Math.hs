@@ -60,7 +60,7 @@ isPandigitalFromTo :: Integral a => a -> a -> a -> Bool
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
 
 floatIsInteger :: RealFrac a => a -> Bool
-floatIsInteger n = n == fromIntegral (floor n)
+floatIsInteger = ap (==) (fromIntegral . floor)
 
 triangleNumbers :: Integral a => [a]
 triangleNumbers = map tn [1..]
