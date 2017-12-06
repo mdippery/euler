@@ -17,20 +17,26 @@ import           Euler.Data (digits, unDigits)
 import           Euler.List ((<:), isEmpty)
 
 
-sqrtI :: Integral a => a -> a
-sqrtI = round . sqrt . fromIntegral
-
-cubeRoot :: Integer -> Double
-cubeRoot = (** (1 / 3)) . fromIntegral
-
-isCube :: Integer -> Bool
-isCube n = round (cubeRoot n) ^ 3 == n
-
 isEven :: Integral a => a -> Bool
 isEven = divides 2
 
 isOdd :: Integral a => a -> Bool
 isOdd = not . isEven
+
+sqrtI :: Integral a => a -> a
+sqrtI = round . sqrt . fromIntegral
+
+cubeRoot :: Integer -> Double
+cubeRoot = nthRoot 3
+
+isCube :: Integer -> Bool
+isCube = isPowerOf 3
+
+nthRoot :: Integer -> Integer -> Double
+nthRoot r = (** (1 / (fromIntegral r))) . fromIntegral
+
+isPowerOf :: Integer -> Integer -> Bool
+isPowerOf p n = round (nthRoot p n) ^ p == n
 
 numLength :: (Integral a, Num b) => a -> b
 numLength n = numLength' n
