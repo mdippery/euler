@@ -384,10 +384,10 @@ rightTriangles p = map toT $ nub $ map sort $ filter sqfits $ filter pfits [[a, 
 -- either produce a palindrome or prove to be Lychrel in 50 iterations or
 -- less, as described in <https://projecteuler.net/problem=55 Euler Problem #55>.
 isLychrel :: Integral a => a -> Bool
-isLychrel n = isLychrel' n 0
+isLychrel = isLychrel' 0
   where
     isLychrel' _ 50 = True
-    isLychrel' n i =
+    isLychrel' i n =
       let n' = (unDigits . reverse . digits) n
           n'' = n + n'
        in if isPalindrome n'' then False else isLychrel' n'' (i + 1)
