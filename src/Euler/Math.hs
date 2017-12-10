@@ -61,14 +61,10 @@ isPowerOf :: Integer  -- ^ /nth/ power
 isPowerOf p n = round (nthRoot p n) ^ p == n
 
 -- | Number of digits in a given number in base 10.
-numLength :: (Integral a, Num b)
-          => a  -- ^ Number
-          -> b  -- ^ Number of digits in the number
-numLength n = numLength' n
-  where
-    numLength' n
-      | n < 10 = 1
-      | otherwise = 1 + numLength' (n `div` 10)
+numLength :: (Integral a)
+          => a    -- ^ Number
+          -> Int  -- ^ Number of digits in the number
+numLength = length . digits
 
 -- | All numbers with the given number of digits in base 10.
 numbersOfLength :: (Num b, Enum b, Integral a)
