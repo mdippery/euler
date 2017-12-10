@@ -2,6 +2,14 @@
    For the full text of the license, see the file LICENSE.
    Additional licensing information may be found at http://unlicense.org. -}
 
+{-|
+  Module      : Euler.Calendar
+  Description : Useful calendar functions
+  License     : UNLICENSE
+  Maintainer  : michael@monkey-robot.com
+
+  Useful date-related functions.
+-}
 module Euler.Calendar where
 
 import Data.Dates ( DateInterval(..)
@@ -13,18 +21,27 @@ import Data.Dates ( DateInterval(..)
                   , nextMonday
                   , weekdayNumber)
 
-isSunday :: DateTime -> Bool
+-- | Returns true if the given date/time is a Sunday.
+isSunday :: DateTime  -- ^ Date/time
+         -> Bool      -- ^ True if the given date/time is a Sunday
 isSunday = (== 7) . weekdayNumber . dateWeekDay
 
-isFirstOfMonth :: DateTime -> Bool
+-- | Returns true if the given date/time lies on the first of a month.
+isFirstOfMonth :: DateTime  -- ^ Date/time
+               -> Bool      -- ^ True if the date/time is first day of month
 isFirstOfMonth = (== 1) . day
 
-nextSunday :: DateTime -> DateTime
+-- | Returns the next Sunday after the given date/time.
+nextSunday :: DateTime  -- ^ Date/time
+           -> DateTime  -- ^ First Sunday after the given date/time
 nextSunday dt
   | isSunday dt = dt `addInterval` Weeks 1
   | otherwise = nextMonday dt `minusInterval` Days 1
 
-sundaysBetween :: DateTime -> DateTime -> [DateTime]
+-- | A list of all the Sundays between the given two dates
+sundaysBetween :: DateTime    -- ^ Starting date
+               -> DateTime    -- ^ Ending date
+               -> [DateTime]  -- ^ All Sundays between the two dates
 sundaysBetween start end
   | start > end = []
   | isSunday start = start : sundaysBetween (nextSunday start) end

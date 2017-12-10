@@ -2,6 +2,15 @@
    For the full text of the license, see the file LICENSE.
    Additional licensing information may be found at http://unlicense.org. -}
 
+{-|
+  Module      : Euler.Grid
+  Description : Models a grid of numbers
+  License     : UNLICENSE
+  Maintainer  : michael@monkey-robot.com
+
+  Provides functions for working with a grid of numbers as described in
+  <https://projecteuler.net/problem=11 Euler Problem #11>.
+-}
 module Euler.Grid where
 
 import Control.Monad (liftM2)
@@ -11,20 +20,34 @@ import Data.Maybe (isJust)
 import Euler.List (splitEvery, zipWithIndex)
 
 
+-- | A general data type that can indicate movement
 class Moveable a where
+  -- | Indicates the "cost" of moving in a given direction
   moveModifier :: a -> (Int, Int)
 
+-- | A general data type that indicates how many cells to skip in a grid
 class Skippable a where
+  -- | Number of cells to skip in a grid
   skipModifier :: a -> Grid -> (Int -> Int)
 
+-- | Dimensions of a grid of numbers.
+--
+-- Use 'gridHeight' and 'gridWidth' to retrieve the height and width of a grid.
 type GridDimensions = (Int, Int)
 
+-- | A single line from a grid of numbers
 type GridLine = [Int]
 
-data Grid = Grid { gridDimensions :: GridDimensions
-                 , gridData :: [Int]
-                 } deriving Eq
+-- | A data structure representing a grid of integers.
+--
+-- See <https://projecteuler.net/problem=11 Euler Problem #11> for a more
+-- concise description of this data structure.
+data Grid = Grid
+  { gridDimensions :: GridDimensions  -- ^ Dimensions of the grid
+  , gridData :: [Int]                 -- ^ Integers that make up the grid
+  } deriving Eq
 
+-- | A direction to traverse through the grid
 data GridDirection = GCurrent
                    | GUp
                    | GUpRight
@@ -36,9 +59,11 @@ data GridDirection = GCurrent
                    | GUpLeft
   deriving (Enum, Eq, Show)
 
+-- | Converts a grid to a string
 instance Show Grid where
   show (Grid _ g) = show g
 
+-- | Defines movement modifiers for grid directions
 instance Moveable GridDirection where
   moveModifier GCurrent = (0,0)
   moveModifier GUp = (-1,0)
@@ -50,28 +75,46 @@ instance Moveable GridDirection where
   moveModifier GLeft = (0,-1)
   moveModifier GUpLeft = (-1,-1)
 
+-- | Defines skip modifiers for grid directions
 instance Skippable GridDirection where
   skipModifier d (Grid (_,h) _) =
     let (dm,rm) = moveModifier d
         hm = dm * h
      in (+ hm) . (+ rm)
 
-gridHeight :: Grid -> Int
+-- | Height of a grid
+gridHeight :: Grid  -- ^ Grid
+           -> Int   -- ^ Height of the grid
 gridHeight = snd . gridDimensions
 
-gridWidth :: Grid -> Int
+-- | Width of a grid
+gridWidth :: Grid   -- ^ Grid
+          -> Int    -- ^ Width of the grid
 gridWidth = fst . gridDimensions
 
-rows :: Grid -> [[Int]]
+-- | A list of all the rows contained in a grid
+rows :: Grid      -- ^ Grid
+     -> [[Int]]   -- ^ All the rows of the grid
 rows = liftM2 splitEvery gridWidth gridData
 
-rowIndex :: Int -> Grid -> Int
+-- | Numbered row for the given cell, starting at 0.
+rowIndex :: Int   -- ^ Current cell
+         -> Grid  -- ^ Grid
+         -> Int   -- ^ Numbered row that contains the given cell
 rowIndex = (. gridHeight) . div
 
-columnIndex :: Int -> Grid -> Int
+-- | Numbered column for the given cell, starting at 0.
+columnIndex :: Int    -- ^ Current cell
+            -> Grid   -- ^ Grid
+            -> Int    -- ^ Numbered column that contains the given cell
 columnIndex = (. gridWidth) . rem
 
-canMove :: Int -> GridDirection -> Grid -> Bool
+-- | Indicates if one can move in the given direction from the starting
+-- cell.
+canMove :: Int            -- ^ Index of the current cell
+        -> GridDirection  -- ^ Direction to move
+        -> Grid           -- ^ Grid
+        -> Bool           -- ^ True if one can move in the given direction from the current cell
 canMove current dir g =
   let rs = rows g
       (rm,cm) = moveModifier dir
@@ -81,7 +124,20 @@ canMove current dir g =
       c' = c + cm
    in r' >= 0 && c' >= 0 && r' < length rs && c' < length (rs !! r')
 
-cell :: Int -> GridDirection -> Grid -> Maybe Int
+-- | Returns the value for the cell in a given direction from the current cell.
+--
+-- If moving in the given direction from the current cell is illegal ("off the
+-- grid", i.e., that cell doesn't exist), 'Nothing' is returned.
+--
+-- If
+--
+-- > canMove n dir g
+--
+-- returns 'True', then this function is guaranteed to return a 'Just'.
+cell :: Int             -- ^ Current cell
+     -> GridDirection   -- ^ Direction to move
+     -> Grid            -- ^ Grid
+     -> Maybe Int       -- ^ Value of the cell in the given direction from the current cell, if such a cell exists.
 cell _ _ (Grid _ []) = Nothing
 cell i d g
   | not $ canMove i d g = Nothing
@@ -94,14 +150,26 @@ cell i d g
         c' = c + cm
      in Just $ rs !! r' !! c'
 
-gridLine :: Int -> Int -> GridDirection -> Grid -> Maybe GridLine
+-- | Returns a grid line of the given length, starting at the current cell,
+-- pointing in the given direction.
+--
+-- If no such grid line exists (i.e., part -- or all of it would extend past
+-- the bounds of the grid), then 'Nothing' is returned.
+gridLine :: Int             -- ^ Desired length of grid line
+         -> Int             -- ^ Current cell
+         -> GridDirection   -- ^ Direction of grid line
+         -> Grid            -- ^ Grid
+         -> Maybe GridLine  -- ^ Grid line, if it exists
 gridLine size at to g =
   let s = size - 1
       f = skipModifier to g
       cell' = flip (flip cell to) g
    in sequence $ cell at GCurrent g : (map cell' $ take s [at,f at..])
 
-gridLines :: Int -> Grid -> [GridLine]
+-- | All grid lines of a given size that exist in the grid.
+gridLines :: Int          -- ^ Desired size of grid lines
+          -> Grid         -- ^ Grid
+          -> [GridLine]   -- ^ A list of all grid lines of the desired size
 gridLines size g@(Grid _ cs) =
   let is = (map fst . zipWithIndex) cs
       combos = [(i,d) | i <- is, d <- [GUp .. GUpLeft]]

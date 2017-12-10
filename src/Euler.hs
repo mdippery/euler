@@ -2,6 +2,14 @@
    For the full text of the license, see the file LICENSE.
    Additional licensing information may be found at http://unlicense.org. -}
 
+{-|
+  Module      : Euler
+  Description : Solutions to Project Euler problems
+  License     : UNLICENSE
+  Maintainer  : michael@monkey-robot.com
+
+  Solutions to <https://projecteuler.net/ Project Euler> problems.
+-}
 module Euler where
 
 import Data.Char (digitToInt)
@@ -25,28 +33,34 @@ import Euler.Ring
 import Euler.Text
 import Euler.Tuple
 
-notSolved = 0
-
+-- | Solves <https://projecteuler.net/problem=1 Project Euler Problem #1>
 problem1 = (sum . filter (divisibleByAny [3,5])) [1..999]
 
+-- | Solves <https://projecteuler.net/problem=2 Project Euler Problem #2>
 problem2 = (sum . filter isEven . takeWhile (<= 4000000)) fibonaccis
 
+-- | Solves <https://projecteuler.net/problem=3 Project Euler Problem #3>
 problem3 =
   let n = 600851475143
    in (head . reverse . filter (flip divides n) . primesTo . sqrtI) n
 
+-- | Solves <https://projecteuler.net/problem=4 Project Euler Problem #4>
 problem4 = (head . reverse . sort . filter isPalindrome) [x * y | x <- [100..999], y <- [100..999]]
 
+-- | Solves <https://projecteuler.net/problem=5 Project Euler Problem #5>
 problem5 = head $ dropWhile (not . divisibleBy [1..20]) [20,40..]
 
+-- | Solves <https://projecteuler.net/problem=6 Project Euler Problem #6>
 problem6 =
   let ns           = [1..100]
       sumOfSquares = (sum . map (^ 2)) ns
       squareOfSums = sum ns ^ 2
    in squareOfSums - sumOfSquares
 
+-- | Solves <https://projecteuler.net/problem=7 Project Euler Problem #7>
 problem7 = (head . drop 10000 . filter isPrime) [2..]
 
+-- | Solves <https://projecteuler.net/problem=8 Project Euler Problem #8>
 problem8 =
   let ds = "73167176531330624919225119674426574742355349194934" ++
            "96983520312774506326239578318016984801869478851843" ++
@@ -70,6 +84,7 @@ problem8 =
            "71636269561882670428252483600823257530420752963450"
    in (head . reverse . sort . map product . windows 13 . ints) ds
 
+-- | Solves <https://projecteuler.net/problem=9 Project Euler Problem #9>
 problem9 =
   let triples = [(m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2) | n <- [1000,999..1], m <- [1000,999..n]]
       eq (a,b,c) = a + b + c == 1000
@@ -77,8 +92,10 @@ problem9 =
       f (a,b,c) = a * b * c
    in (f . ans) triples
 
+-- | Solves <https://projecteuler.net/problem=10 Project Euler Problem #10>
 problem10 = (sum . primesBelow) 2000000
 
+-- | Solves <https://projecteuler.net/problem=11 Project Euler Problem #11>
 problem11 =
   let grid = Grid (20, 20)
                   [ 8,  2, 22, 97, 38, 15,  0, 40,  0, 75,  4,  5,  7, 78, 52, 12, 50, 77, 91,  8
@@ -103,11 +120,13 @@ problem11 =
                   , 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48]
    in (head . reverse . sort . map product . gridLines 4) grid
 
+-- | Solves <https://projecteuler.net/problem=12 Project Euler Problem #12>
 problem12 =
   let lt500 (_, d) = d <= 500
       numDivisorsP n = (n, numDivisors n)
    in (fst . head . dropWhile lt500 . map numDivisorsP) triangleNumbers
 
+-- | Solves <https://projecteuler.net/problem=13 Project Euler Problem #13>
 problem13 =
   let ns = [37107287533902102798797998220837590246510135740250
            ,46376937677490009712648124896970078050417018260538
@@ -211,14 +230,19 @@ problem13 =
            ,53503534226472524250874054075591789781264330331690]
         in (intercalate "" . map show . take 10 . digits . sum) ns
 
+-- | Solves <https://projecteuler.net/problem=14 Project Euler Problem #14>
 problem14 = fst $ maximumBy (compare `on` snd) $ zip [1..999999] $ map collatzLength [1..999999]
 
+-- | Solves <https://projecteuler.net/problem=15 Project Euler Problem #15>
 problem15 = binomialCoefficient 20
 
+-- | Solves <https://projecteuler.net/problem=16 Project Euler Problem #16>
 problem16 = (sum . digits) (2 ^ 1000)
 
+-- | Solves <https://projecteuler.net/problem=17 Project Euler Problem #17>
 problem17 = (countLetters . foldr (++) "" . map toWord) [1..1000]
 
+-- | Solves <https://projecteuler.net/problem=18 Project Euler Problem #18>
 problem18 =
   let pyr = [ [75]
             , [95, 64]
@@ -238,15 +262,19 @@ problem18 =
             ]
    in maximumPath pyr
 
+-- | Solves <https://projecteuler.net/problem=19 Project Euler Problem #19>
 problem19 =
   let start = DateTime 1901 1 1 0 0 0
       end = DateTime 2000 12 31 0 0 0
    in (length . filter isFirstOfMonth) (sundaysBetween start end)
 
+-- | Solves <https://projecteuler.net/problem=20 Project Euler Problem #20>
 problem20 = (sum . digits . factorial) 100
 
+-- | Solves <https://projecteuler.net/problem=21 Project Euler Problem #21>
 problem21 = (sum . flattenT . filter (uncurry isAmicable)) [(a,b) | a <- [1..9999], b <- [a..9999]]
 
+-- | Solves <https://projecteuler.net/problem=22 Project Euler Problem #22>
 problem22 = do
   score <- fmap
              (sum
@@ -258,45 +286,58 @@ problem22 = do
              (readFile "data/names.txt")
   return score
 
+-- | Solves <https://projecteuler.net/problem=24 Project Euler Problem #24>
 problem24 =
     let millionth = drop 999999
      in (head . millionth . sort . permutations) "0123456789"
 
+-- | Solves <https://projecteuler.net/problem=25 Project Euler Problem #25>
 problem25 = (maybe (-1) id . elemIndex 1000 . map (length . show)) fibonaccis
 
+-- | Solves <https://projecteuler.net/problem=28 Project Euler Problem #28>
 problem28 = (sumDiagonals . numRings) 1001
 
+-- | Solves <https://projecteuler.net/problem=29 Project Euler Problem #29>
 problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 
+-- | Solves <https://projecteuler.net/problem=30 Project Euler Problem #30>
 problem30 =
     let nums = [2..355000]
         pow = sum . map (^ 5) . digits
      in (sum . fst . unzipT . filter equalT . zipT pow) nums
 
+-- | Solves <https://projecteuler.net/problem=31 Project Euler Problem #31>
 problem31 = coinCombos 200 TwoHundredPence
 
+-- | Solves <https://projecteuler.net/problem=34 Project Euler Problem #34>
 problem34 =
     let nums = [3..2540160]
         fact = sum . map factorial . digits
      in (sum . fst . unzipT . filter equalT . zipT fact) nums
 
+-- | Solves <https://projecteuler.net/problem=35 Project Euler Problem #35>
 problem35 = (length . filter f) [1..1000000]
   where
     f = all isPrime . map unDigits . nub . rotations . digits
 
+-- | Solves <https://projecteuler.net/problem=36 Project Euler Problem #36>
 problem36 =
   let p n = isPalindromeIn 10 n && isPalindromeIn 2 n
       ns  = [1..999999]
    in (sum . filter p) ns
 
+-- | Solves <https://projecteuler.net/problem=37 Project Euler Problem #37>
 problem37 = (sum . take 11 . filter isTruncatablePrime) [8..]
 
+-- | Solves <https://projecteuler.net/problem=39 Project Euler Problem #39>
 problem39 = (fst . maximumBy (comparing snd) . zip [1..] . map (length . rightTriangles)) [1..1000]
 
+-- | Solves <https://projecteuler.net/problem=40 Project Euler Problem #40>
 problem40 =
   let s = (foldr (++) "" . map show) [0..]
    in (product . map digitToInt . map (s !!) . map (10 ^)) [0..6]
 
+-- | Solves <https://projecteuler.net/problem=42 Project Euler Problem #42>
 problem42 = do
   count <- fmap
              (length
@@ -306,21 +347,26 @@ problem42 = do
              (readFile "data/words.txt")
   return count
 
+-- | Solves <https://projecteuler.net/problem=44 Project Euler Problem #44>
 problem44 = head [abs (a' - b')
                   | a <- [1..], b' <- take a pentagonalNumbers,
                     let a' = pentagonalNumber a,
                     isPentagonal (a' + b'),
                     isPentagonal (a' - b')]
 
+-- | Solves <https://projecteuler.net/problem=45 Project Euler Problem #45>
 problem45 = (head . dropWhile (<= 40755) . filter (\n -> isTriangle n && isPentagonal n)) hexagonalNumbers
 
+-- | Solves <https://projecteuler.net/problem=48 Project Euler Problem #48>
 problem48 =
   let p = 10 ^ 10
       mp n = modPower p n n
    in (modSum p . map mp) [1..1000]
 
+-- | Solves <https://projecteuler.net/problem=53 Project Euler Problem #53>
 problem53 = (length . filter (> 1000000)) [n `choose` r | n <- [1..100], r <- [1..n]]
 
+-- | Solves <https://projecteuler.net/problem=54 Project Euler Problem #54>
 problem54 = do
   count <- fmap
              (length
@@ -331,10 +377,13 @@ problem54 = do
              (readFile "data/poker.txt")
   return count
 
+-- | Solves <https://projecteuler.net/problem=55 Project Euler Problem #55>
 problem55 = (length . filter isLychrel) [1..9999]
 
+-- | Solves <https://projecteuler.net/problem=56 Project Euler Problem #56>
 problem56 = (maximum . map (sum . digits)) [a ^ b | a <- [1..99], b <- [1..99]]
 
+-- | Solves <https://projecteuler.net/problem=67 Project Euler Problem #67>
 problem67 =
   let pyr = [ [59]
             , [73, 41]
@@ -439,4 +488,5 @@ problem67 =
             ]
    in maximumPath pyr
 
+-- | Solves <https://projecteuler.net/problem=71 Project Euler Problem #71>
 problem71 = (numerator . closestRatio) (3 % 7)
