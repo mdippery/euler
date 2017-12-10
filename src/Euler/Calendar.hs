@@ -12,6 +12,7 @@
 -}
 module Euler.Calendar where
 
+import Data.List (unfoldr)
 import Data.Dates ( DateInterval(..)
                   , DateTime
                   , addInterval
@@ -42,7 +43,11 @@ nextSunday dt
 sundaysBetween :: DateTime    -- ^ Starting date
                -> DateTime    -- ^ Ending date
                -> [DateTime]  -- ^ All Sundays between the two dates
-sundaysBetween start end
-  | start > end = []
-  | isSunday start = start : sundaysBetween (nextSunday start) end
-  | otherwise = sundaysBetween (nextSunday start) end
+sundaysBetween start end = unfoldr next start'
+  where
+    start'
+      | isSunday start = start
+      | otherwise = nextSunday start
+    next d
+      | d > end = Nothing
+      | otherwise = Just (d, nextSunday d)
