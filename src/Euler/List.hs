@@ -48,8 +48,7 @@ penultimate = last . init
 -- > duplicate [1,2,3,4,5] == [1,1,2,2,3,3,4,4,5,5]
 duplicate :: [a]  -- ^ List
           -> [a]  -- ^ New list with all elements duplicated
-duplicate [] = []
-duplicate (h:rest) = h : h : duplicate rest
+duplicate = foldr (\e memo -> e : e : memo) []
 
 -- | Duplicates only the 'middle' of a list.
 --

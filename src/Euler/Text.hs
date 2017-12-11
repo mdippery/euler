@@ -12,7 +12,9 @@
 -}
 module Euler.Text where
 
+import Data.Bool (bool)
 import Data.Char (ord)
+
 import Euler.Math (triangleNumbers)
 
 -- | A set of characters
@@ -34,18 +36,13 @@ stringValue = sum . map letterValue
 removeCharacters :: CharacterSet  -- ^ Character set
                  -> String        -- ^ Original string
                  -> String        -- ^ String with characters removed
-removeCharacters _ "" = ""
-removeCharacters set (ch:rest)
-  | set `contains` ch = removeCharacters set rest
-  | otherwise = ch : removeCharacters set rest
+removeCharacters cs = foldr (\ch memo -> if cs `contains` ch then memo else ch : memo) ""
 
 -- | Number of /letters/ in a string.
 --
 -- This excludes non-alpha characters.
 countLetters :: String -> Integer
-countLetters = sum . map cl
-  where cl ch | ch `elem` ['a'..'z'] = 1
-              | otherwise            = 0
+countLetters = sum . map (bool 0 1 . flip elem ['a'..'z'])
 
 -- | Converts a string to a list of integers.
 ints :: String -> [Int]

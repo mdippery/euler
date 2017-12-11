@@ -37,7 +37,7 @@ unzipT = unzip
 
 -- | Flattens a list of 2-tuples into a single list containing all values.
 flattenT :: [(a, a)] -> [a]
-flattenT = foldr (\(a, b) memo -> memo ++ [a,b]) []
+flattenT = foldr (\(a, b) memo -> a : b : memo) []
 
 -- | 'True' if both elements of a 2-tuple are equal.
 equalT :: Eq a => (a, a) -> Bool
