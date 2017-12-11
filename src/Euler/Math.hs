@@ -386,11 +386,11 @@ rightTriangles p = map toT $ nub $ map sort $ filter sqfits $ filter pfits [[a, 
 isLychrel :: Integral a => a -> Bool
 isLychrel = isLychrel' 0
   where
-    isLychrel' _ 50 = True
+    isLychrel' 50 _ = True
     isLychrel' i n =
       let n' = (unDigits . reverse . digits) n
           n'' = n + n'
-       in if isPalindrome n'' then False else isLychrel' n'' (i + 1)
+       in if isPalindrome n'' then False else isLychrel' (i + 1) n''
 
 
 --  Stored values for memoization
