@@ -36,7 +36,7 @@ stringValue = sum . map letterValue
 removeCharacters :: CharacterSet  -- ^ Character set
                  -> String        -- ^ Original string
                  -> String        -- ^ String with characters removed
-removeCharacters cs = foldr (\ch memo -> if cs `contains` ch then memo else ch : memo) ""
+removeCharacters cs = foldr (\ch memo -> bool (ch : memo) memo (cs `contains` ch)) ""
 
 -- | Number of /letters/ in a string.
 --
