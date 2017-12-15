@@ -16,12 +16,17 @@ module Euler.Pyramid where
 import Euler.List
 import Euler.Tuple
 
+-- | A single row in a pyramid
+type PyramidRow = [Integer]
+
+-- | A pyramid
+type Pyramid = [PyramidRow]
+
 -- | Calculates the maximum paths between each element in two adjacent rows
 -- of the integer pyramid.
-maxR :: (Num a, Ord a)
-     => [a]   -- ^ Bottom row
-     -> [a]   -- ^ Top row
-     -> [a]   -- ^ A new row formed with the maximum values of paths between the two rows
+maxR :: PyramidRow   -- ^ Bottom row
+     -> PyramidRow   -- ^ Top row
+     -> PyramidRow   -- ^ A new row formed with the maximum values of paths between the two rows
 maxR b t =
   let t' = duplicate t
       b' = fatten b
@@ -29,9 +34,8 @@ maxR b t =
 
 -- | Reduces a pyramid down to one row with one element containing the
 -- maximum path through the pyramid.
-reduce :: (Num a, Ord a)
-       => [[a]]   -- ^ Pyramid
-       -> [a]     -- ^ One row with one element containing the maximum path
+reduce :: Pyramid     -- ^ Pyramid
+       -> PyramidRow  -- ^ One row with one element containing the maximum path
 reduce ls
   | length ls == 1 = head ls
   | otherwise = reduce (r : ls')
@@ -42,7 +46,6 @@ reduce ls
     ls' = drop 2 ls
 
 -- | Find the maximum path through a pyramid of integers.
-maximumPath :: (Num a, Ord a)
-            => [[a]]  -- ^ Pyramid of integers, as a list of rows in the pyramid
-            -> a      -- ^ Value of the maximum path
+maximumPath :: Pyramid  -- ^ Pyramid of integers, as a list of rows in the pyramid
+            -> Integer  -- ^ Value of the maximum path
 maximumPath = head . reduce . reverse
