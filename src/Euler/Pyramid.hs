@@ -17,28 +17,40 @@ import Euler.List
 import Euler.Tuple
 
 -- | A single row in a pyramid
-type PyramidRow = [Integer]
+data (Num a, Ord a) => PyramidRow a = PyramidRow
+  { pyramidBricks :: [a]   -- ^ Value of each cell in the row
+  } deriving Show
 
 -- | A pyramid
-type Pyramid = [PyramidRow]
+data (Num a, Ord a) => Pyramid a = Pyramid
+  { pyramidRows :: [PyramidRow a]  -- ^ Rows of the pyramid
+  } deriving Show
+
+-- | Creates a new pyramid from the given data.
+pyramid :: (Num a, Ord a)
+        => [[a]]      -- ^ Pyramid data
+        -> Pyramid a  -- ^ A new Pyramid
+pyramid = Pyramid . map PyramidRow
 
 -- | Calculates the maximum paths between each element in two adjacent rows
 -- of the integer pyramid.
-maxR :: PyramidRow   -- ^ Bottom row
-     -> PyramidRow   -- ^ Top row
-     -> PyramidRow   -- ^ A new row formed with the maximum values of paths between the two rows
-maxR b t =
+maxR :: (Num a, Ord a)
+     => PyramidRow a  -- ^ Bottom row
+     -> PyramidRow a  -- ^ Top row
+     -> PyramidRow a  -- ^ A new row formed with the maximum values of paths between the two rows
+maxR (PyramidRow b) (PyramidRow t) =
   let t' = duplicate t
       b' = fatten b
-   in (map maximum . splitEvery 2 . mapT (+) . zip t') b'
+   in (PyramidRow . map maximum . splitEvery 2 . mapT (+) . zip t') b'
 
 -- | Reduces a pyramid down to one row with one element containing the
 -- maximum path through the pyramid.
-reduce :: Pyramid     -- ^ Pyramid
-       -> PyramidRow  -- ^ One row with one element containing the maximum path
-reduce ls
+reduce :: (Num a, Ord a)
+       => Pyramid a     -- ^ Pyramid
+       -> PyramidRow a  -- ^ One row with one element containing the maximum path
+reduce (Pyramid ls)
   | length ls == 1 = head ls
-  | otherwise = reduce (r : ls')
+  | otherwise = (reduce . Pyramid) (r : ls')
   where
     b = head ls
     t = (head . tail) ls
@@ -46,6 +58,7 @@ reduce ls
     ls' = drop 2 ls
 
 -- | Find the maximum path through a pyramid of integers.
-maximumPath :: Pyramid  -- ^ Pyramid of integers, as a list of rows in the pyramid
-            -> Integer  -- ^ Value of the maximum path
-maximumPath = head . reduce . reverse
+maximumPath :: (Num a, Ord a)
+            => Pyramid a  -- ^ Pyramid of integers, as a list of rows in the pyramid
+            -> a          -- ^ Value of the maximum path
+maximumPath = head . pyramidBricks . reduce . Pyramid . reverse . pyramidRows
