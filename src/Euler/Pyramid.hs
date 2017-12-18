@@ -17,12 +17,12 @@ import Euler.List
 import Euler.Tuple
 
 -- | A single row in a pyramid
-data (Num a, Ord a) => PyramidRow a = PyramidRow
+data PyramidRow a = PyramidRow
   { pyramidBricks :: [a]   -- ^ Value of each cell in the row
   } deriving Show
 
 -- | A pyramid
-data (Num a, Ord a) => Pyramid a = Pyramid
+data Pyramid a = Pyramid
   { pyramidRows :: [PyramidRow a]  -- ^ Rows of the pyramid
   } deriving Show
 
