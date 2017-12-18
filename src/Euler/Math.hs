@@ -103,7 +103,7 @@ isPandigitalFromTo s e = (== [s..e]) . sort . digits
 
 -- | 'True' if the decimal number is a whole number.
 --
--- For example,
+-- ==== Examples
 --
 -- > floatIsInteger 10.0 == True
 -- > floatIsInteger 10.1 == False
@@ -189,7 +189,7 @@ divides = ((== 0) .) . flip rem
 
 -- | 'True' if a number is divisible by /all/ the numbers in a list.
 --
--- For example,
+-- ==== Examples
 --
 -- > divisibleBy [3,8] 24 == True
 divisibleBy :: Integral a
@@ -200,7 +200,7 @@ divisibleBy = (. (flip divides)) . flip all
 
 -- | 'True' if a number is divisible by /any/ of the numbers in a list.
 --
--- For example,
+-- ==== Examples
 --
 -- > divisibleByAny [7,8] 24 == True
 -- > divisibleByAny [9,16] 24 == False
@@ -255,7 +255,7 @@ fibonaccis = 0 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
 
 -- | List of all the truncated numbers associated with the given number.
 --
--- For example,
+-- ==== Examples
 --
 -- > truncatables 3797 == [3797, 797, 97, 7, 379, 37, 3]
 --

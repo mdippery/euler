@@ -29,7 +29,8 @@ isEmpty _  = False
 -- | Returns the middle elements of a list.
 --
 -- The middle of a list is all the elements except for the first and the last.
--- For example:
+--
+-- ==== Examples
 --
 -- > middle [1..10] == [2,3,4,5,6,7,8,9]
 middle :: [a]   -- ^ List
@@ -43,7 +44,7 @@ penultimate = last . init
 
 -- | Duplicates each element of the list.
 --
--- For example,
+-- ==== Examples
 --
 -- > duplicate [1,2,3,4,5] == [1,1,2,2,3,3,4,4,5,5]
 duplicate :: [a]  -- ^ List
@@ -52,7 +53,7 @@ duplicate = foldr (\e memo -> e : e : memo) []
 
 -- | Duplicates only the 'middle' of a list.
 --
--- For example,
+-- ==== Examples
 --
 -- > fatten [1,2,3,4,5] == [1,2,2,3,3,4,4,5]
 fatten :: [a]   -- ^ List
@@ -62,7 +63,8 @@ fatten ls = head ls : duplicate (middle ls) <: last ls
 -- | Combines all elements with their index in the list, starting with 0.
 --
 -- The resulting list is a list of 2-tuples in the form (index, element).
--- For example,
+--
+-- ==== Examples
 --
 -- > zipWithIndex [10,20,30] == [(0,10), (1,20), (2,30)]
 zipWithIndex :: (Enum b, Num b)
@@ -74,7 +76,8 @@ zipWithIndex = zipWithIndexAt 0
 -- given index.
 --
 -- The resulting list is a list of 2-tuples in the form (index, element).
--- For example,
+--
+-- ==== Examples
 --
 -- > zipWithIndex 2 [10,20,30] == [(2,10), (3,20), (4,30)]
 zipWithIndexAt :: (Enum b, Num b)
@@ -109,6 +112,8 @@ dropNth n =
 -- If the given index does not exist in the list, the unmodified list is
 -- returned. Therefore,
 --
+-- ==== Examples
+--
 -- > replaceAt 3 20 [1..10] == [1,2,3,20,5,6,7,8,9,10]
 -- > replaceAt 100 20 [1..10] == [1,2,3,4,5,6,7,8,9,10]
 -- > replaceAt 0 20 [] == []
@@ -124,7 +129,7 @@ replaceAt i e ls =
 
 -- | Returns all sublists of the given size.
 --
--- For example,
+-- ==== Examples
 --
 -- > windows 4 [1..6] == [[1,2,3,4], [2,3,4,5], [3,4,5,6]]
 windows :: Int    -- ^ Desired size of sublists
@@ -137,7 +142,7 @@ windows n ls
 
 -- | Moves the last element of a list to the front.
 --
--- For example,
+-- ==== Examples
 --
 -- > rotateOnce [1..5] == [5,1,2,3,4]
 rotateOnce :: [a]   -- ^ List
@@ -146,7 +151,7 @@ rotateOnce ls = last ls : init ls
 
 -- | All possible rotations of a list.
 --
--- For example,
+-- ==== Examples
 --
 -- > rotations [1,2,3] == [[1,2,3], [2,3,1], [3,1,2]]
 rotations :: [a]    -- ^ List
@@ -158,10 +163,10 @@ rotations ls = go ls (length ls) []
       let ls' = rotateOnce ls
        in go ls' (n - 1) (ls' : acc)
 
--- | Splits a list into n-sized chunks.
+-- | Splits a list into /n/-sized chunks.
 splitEvery :: Int     -- ^ Desired size of chunks
            -> [a]     -- ^ List
-           -> [[a]]   -- ^ List of lists of size n
+           -> [[a]]   -- ^ List of lists of size /n/
 splitEvery _ [] = []
 splitEvery n ls =
   let (h,rest) = splitAt n ls
