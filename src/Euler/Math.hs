@@ -245,6 +245,10 @@ isAmicable a b = a < b && d a == b && d b == a
 isAbundant :: Integer -> Bool
 isAbundant = (>) =<< (memoSumDivisors !)
 
+-- | List of all abundant numbers
+abundantNumbers :: [Integer]
+abundantNumbers = filter (memoAbundantNumbers !) [1..28123]
+
 -- | The /nth/ Fibonacci number
 fibonacci :: Integral a => Int -> a
 fibonacci = (fibonaccis !!)
@@ -407,3 +411,9 @@ memoCollatzLengths = listArray (1, 1000000) $ map collatzLength [1..1000000]
 -- In general, use 'sumDivisors' instead of accessing this array directly.
 memoSumDivisors :: Array Integer Integer
 memoSumDivisors = listArray (1, 30000) $ map sumDivisors [1..30000]
+
+-- | Stored abundant number mapping.
+--
+-- In general, use 'abundantNumbers' instead of access this array directly.
+memoAbundantNumbers :: Array Integer Bool
+memoAbundantNumbers = listArray (1, 28123) $ map isAbundant [1..28123]
