@@ -12,6 +12,7 @@
 -}
 module Euler where
 
+import Control.Monad (ap)
 import Data.Char (digitToInt)
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort)
@@ -228,7 +229,7 @@ problem13 =
         in (intercalate "" . map show . take 10 . digits . sum) ns
 
 -- | Solves <https://projecteuler.net/problem=14 Project Euler Problem #14>
-problem14 = fst $ maximumBy (compare `on` snd) $ zip [1..999999] $ map collatzLength [1..999999]
+problem14 = (fst . maximumBy (comparing snd) . ap (zip . enumFromTo 1) (map collatzLength . enumFromTo 1)) 999999
 
 -- | Solves <https://projecteuler.net/problem=15 Project Euler Problem #15>
 problem15 = binomialCoefficient 20
