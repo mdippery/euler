@@ -246,7 +246,17 @@ factorial :: (Enum a, Num a) => a -> a
 factorial = product . enumFromTo 1
 
 -- | True if /a/ divides /b/, that is, b divided by a yields no remainder.
-divides :: Integral a => a -> a -> Bool
+--
+-- This is best used as an infix operator.
+--
+-- ==== Examples
+--
+-- > 10 `divides` 100 == True
+-- > 9 `divides` 100 == False
+divides :: Integral a
+        => a      -- ^ /a/
+        -> a      -- ^ /b/
+        -> Bool   -- ^ True if /a/ divides /b/
 divides = ((== 0) .) . flip rem
 
 -- | True if a number is divisible by /all/ the numbers in a list.
@@ -376,7 +386,11 @@ modSum m = foldr (modAdd m) 0 . map (`mod` m)
 
 -- | <https://en.wikipedia.org/wiki/Combination Combination> function.
 --
--- This is best used as an infix operator, i.e., @n \`choose\` k@.
+-- This is best used as an infix operator.
+--
+-- ==== Examples
+--
+-- > 10 `choose` 5 == 252
 choose :: Integral a
        => a   -- ^ /n/
        -> a   -- ^ /k/
