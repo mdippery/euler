@@ -47,8 +47,7 @@ import Euler.Tuple (flattenT)
 as <: b = as ++ [b]
 
 -- | True if the list is empty.
-isEmpty :: [a]    -- ^ List
-        -> Bool   -- ^ True if the list is empty
+isEmpty :: [a] -> Bool
 isEmpty [] = True
 isEmpty _  = False
 
@@ -59,13 +58,11 @@ isEmpty _  = False
 -- ==== Examples
 --
 -- > middle [1..10] == [2,3,4,5,6,7,8,9]
-middle :: [a]   -- ^ List
-       -> [a]   -- ^ List with the first and last elements removed
+middle :: [a] -> [a]
 middle = init . tail
 
 -- | Next-to-last element of a list.
-penultimate :: [a]  -- ^ List
-            -> a    -- ^ Next-to-last element of the list
+penultimate :: [a] -> a
 penultimate = last . init
 
 -- | Duplicates each element of the list.
@@ -73,8 +70,7 @@ penultimate = last . init
 -- ==== Examples
 --
 -- > duplicate [1,2,3,4,5] == [1,1,2,2,3,3,4,4,5,5]
-duplicate :: [a]  -- ^ List
-          -> [a]  -- ^ New list with all elements duplicated
+duplicate :: [a] -> [a]
 duplicate = foldr (\e memo -> e : e : memo) []
 
 -- | Duplicates only the 'middle' of a list.
@@ -82,8 +78,7 @@ duplicate = foldr (\e memo -> e : e : memo) []
 -- ==== Examples
 --
 -- > fatten [1,2,3,4,5] == [1,2,2,3,3,4,4,5]
-fatten :: [a]   -- ^ List
-       -> [a]   -- ^ New list with middle elements duplicated
+fatten :: [a] -> [a]
 fatten ls = head ls : duplicate (middle ls) <: last ls
 
 -- | Combines all elements with their index in the list, starting with 0.
@@ -122,13 +117,13 @@ unzipWithIndex :: [(b, a)]  -- ^ List
                -> [a]       -- ^ List with indexes removed
 unzipWithIndex = map snd
 
--- | Removes every nth element from a list.
+-- | Removes every /nth/ element from a list.
 --
 -- > dropNth 2 [1..10] == [1,3,5,7,9]
 dropNth :: Integral b
-        => b    -- ^ nth element to remove
+        => b    -- ^ /nth/ element to remove
         -> [a]  -- ^ List
-        -> [a]  -- ^ List with every n elements removed
+        -> [a]  -- ^ List with every /n/ elements removed
 dropNth n =
   let step n (i, x) acc = if i `rem` n == 0 then acc else (i, x):acc
    in unzipWithIndex . foldr (step n) [] . zipWithIndex
@@ -146,7 +141,7 @@ dropNth n =
 replaceAt :: Int  -- ^ Index to replace
           -> a    -- ^ Replacement element
           -> [a]  -- ^ List
-          -> [a]  -- ^ List with the nth element replaced by the given value
+          -> [a]  -- ^ List with the /nth/ element replaced by the given value
 replaceAt i e ls =
   case splitAt i ls of
     ([], []) -> []
@@ -171,8 +166,7 @@ windows n ls
 -- ==== Examples
 --
 -- > rotateOnce [1..5] == [5,1,2,3,4]
-rotateOnce :: [a]   -- ^ List
-           -> [a]   -- ^ List with last element moved to the front
+rotateOnce :: [a] -> [a]
 rotateOnce ls = last ls : init ls
 
 -- | All possible rotations of a list.
@@ -180,8 +174,7 @@ rotateOnce ls = last ls : init ls
 -- ==== Examples
 --
 -- > rotations [1,2,3] == [[1,2,3], [2,3,1], [3,1,2]]
-rotations :: [a]    -- ^ List
-          -> [[a]]  -- ^ List of all rotations
+rotations :: [a] -> [[a]]
 rotations ls = go ls (length ls) []
   where
     go _ 0 acc = acc
