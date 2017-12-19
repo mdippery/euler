@@ -87,11 +87,11 @@ import           Euler.Data (digits, unDigits)
 import           Euler.List ((<:), isEmpty)
 
 
--- | 'True' if a number is even.
+-- | True if a number is even.
 isEven :: Integral a => a -> Bool
 isEven = divides 2
 
--- | 'True' if a number is odd.
+-- | True if a number is odd.
 isOdd :: Integral a => a -> Bool
 isOdd = not . isEven
 
@@ -106,7 +106,7 @@ sqrtI = round . sqrt . fromIntegral
 cubeRoot :: Integer -> Double
 cubeRoot = nthRoot 3
 
--- | 'True' if a number is the cube of some number.
+-- | True if a number is the cube of some number.
 isCube :: Integer -> Bool
 isCube = isPowerOf 3
 
@@ -116,10 +116,10 @@ nthRoot :: Integer  -- ^ /nth/ root to calculate
         -> Double   -- ^ /nth/ root of the number
 nthRoot r = (** (1 / (fromIntegral r))) . fromIntegral
 
--- | 'True' if a number is the /nth/ power of another number.
+-- | True if a number is the /nth/ power of another number.
 isPowerOf :: Integer  -- ^ /nth/ power
           -> Integer  -- ^ Number
-          -> Bool     -- ^ 'True' if the number is the /nth/ power of some number
+          -> Bool     -- ^ True if the number is the /nth/ power of some number
 isPowerOf p n = round (nthRoot p n) ^ p == n
 
 -- | Number of digits in a given number in base 10.
@@ -134,36 +134,36 @@ numbersOfLength :: (Num b, Enum b, Integral a)
                 -> [b]  -- ^ All integers with the given number of digits in base 10
 numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
 
--- | 'True' if the number is prime
+-- | True if the number is prime
 isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty . ap (filter . flip divides) (enumFromTo 2 . sqrtI) $ n
 
--- | 'True' if the number contains all the digits from 1 to 9, in some order.
+-- | True if the number contains all the digits from 1 to 9, in some order.
 --
 -- This is equivalent to @isPandigital 9@.
 isPandigital :: Integral a => a -> Bool
 isPandigital = isPandigitalTo 9
 
--- | 'True' if the number contains all the digits from 1 to /n/, in some order.
+-- | True if the number contains all the digits from 1 to /n/, in some order.
 --
 -- This is equivalent to @isPandigitalFromTo 1@.
 isPandigitalTo :: Integral a
                => a     -- ^ Upper limit of range
                -> a     -- ^ Number
-               -> Bool  -- 'True' if the number contains all the digits from 1 to /n/, in some order
+               -> Bool  -- True if the number contains all the digits from 1 to /n/, in some order
 isPandigitalTo = isPandigitalFromTo 1
 
--- | 'True' if the number contains all the digits from /m/ to /n/, in some order.
+-- | True if the number contains all the digits from /m/ to /n/, in some order.
 isPandigitalFromTo :: Integral a
                    => a     -- ^ Lower bound of digit range
                    -> a     -- ^ Upper bound of digit range
                    -> a     -- ^ Number
-                   -> Bool  -- ^ 'True' if the number contains all the digits from /m/ to /n/, in some order.
+                   -> Bool  -- ^ True if the number contains all the digits from /m/ to /n/, in some order.
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
 
--- | 'True' if the decimal number is a whole number.
+-- | True if the decimal number is a whole number.
 --
 -- ==== Examples
 --
@@ -178,7 +178,7 @@ triangleNumbers = map tn [1..]
   where
     tn n = n * (n + 1) `div` 2
 
--- | 'True' if the given number is a <https://en.wikipedia.org/wiki/Triangular_number triangle number>.
+-- | True if the given number is a <https://en.wikipedia.org/wiki/Triangular_number triangle number>.
 isTriangle :: Integer -> Bool
 isTriangle n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
@@ -195,7 +195,7 @@ pentagonalNumbers = map pn [1..]
 pentagonalNumber :: Int -> Integer
 pentagonalNumber = ((0 : pentagonalNumbers) !!)
 
--- | 'True' if a number is a <https://en.wikipedia.org/wiki/Pentagonal_number pentagonal number>.
+-- | True if a number is a <https://en.wikipedia.org/wiki/Pentagonal_number pentagonal number>.
 isPentagonal :: Integer -> Bool
 isPentagonal n =
   let sqn = sqrt $ 24 * (fromInteger n) + 1
@@ -208,7 +208,7 @@ hexagonalNumbers = map hn [1..]
   where
     hn n = n * (2 * n - 1)
 
--- | 'True' if the given number is a <https://en.wikipedia.org/wiki/Hexagonal_number hexagonal number>.
+-- | True if the given number is a <https://en.wikipedia.org/wiki/Hexagonal_number hexagonal number>.
 isHexagonal :: Integer -> Bool
 isHexagonal n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
@@ -229,27 +229,27 @@ primesTo :: Integer     -- ^ Upper bound, inclusive
          -> [Integer]   -- ^ All prime numbers less than or equal to the upper bound
 primesTo = flip takeWhile primes . flip (<=)
 
--- | 'True' if the number is <https://en.wikipedia.org/wiki/Palindromic_number palindromic>
+-- | True if the number is <https://en.wikipedia.org/wiki/Palindromic_number palindromic>
 -- in base 10.
 isPalindrome :: Integral a => a -> Bool
 isPalindrome = isPalindromeIn 10
 
--- | 'True' if a number is palindromic in the given base.
+-- | True if a number is palindromic in the given base.
 isPalindromeIn :: Integral a
                => a     -- ^ Base
                -> a     -- ^ Number
-               -> Bool  -- ^ 'True' if the number is palindromic in the given base
+               -> Bool  -- ^ True if the number is palindromic in the given base
 isPalindromeIn base n = D.digits base n == reverse (D.digits base n)
 
 -- | Factorial of /n/.
 factorial :: (Enum a, Num a) => a -> a
 factorial = product . enumFromTo 1
 
--- | 'True' if /a/ divides /b/, that is, b divided by a yields no remainder.
+-- | True if /a/ divides /b/, that is, b divided by a yields no remainder.
 divides :: Integral a => a -> a -> Bool
 divides = ((== 0) .) . flip rem
 
--- | 'True' if a number is divisible by /all/ the numbers in a list.
+-- | True if a number is divisible by /all/ the numbers in a list.
 --
 -- ==== Examples
 --
@@ -257,10 +257,10 @@ divides = ((== 0) .) . flip rem
 divisibleBy :: Integral a
             => [a]    -- ^ List of numbers that the number in question /must/ be divisible by
             -> a      -- ^ Number
-            -> Bool   -- ^ 'True' if a number is divisible by the entire list of numbers
+            -> Bool   -- ^ True if a number is divisible by the entire list of numbers
 divisibleBy = (. (flip divides)) . flip all
 
--- | 'True' if a number is divisible by /any/ of the numbers in a list.
+-- | True if a number is divisible by /any/ of the numbers in a list.
 --
 -- ==== Examples
 --
@@ -269,7 +269,7 @@ divisibleBy = (. (flip divides)) . flip all
 divisibleByAny :: Integral a
                => [a]   -- ^ List of possible divisors
                -> a     -- ^ Number
-               -> Bool  -- ^ 'True' if a number is divisible by any number in the list
+               -> Bool  -- ^ True if a number is divisible by any number in the list
 divisibleByAny = (. (flip divides)) . flip any
 
 -- | List of all factors of the given number
@@ -294,7 +294,7 @@ sumDivisors = (-) =<< go
     sum' = uncurry ((. enumFromTo 0) . (sum .) . map . (^))
     go = product . map (sum' . pow') . group . factorization
 
--- | 'True' if a pair of numbers are <https://en.wikipedia.org/wiki/Amicable_numbers amicable>.
+-- | True if a pair of numbers are <https://en.wikipedia.org/wiki/Amicable_numbers amicable>.
 --
 -- Two numbers are amicable if the sum of the divisors of one number is equal
 -- to the other number and vice-versa.
@@ -303,7 +303,7 @@ isAmicable a b = a < b && d a == b && d b == a
   where
     d = (memoSumDivisors !)
 
--- | 'True' if the sum of the divisors of a number is greater than the number itself.
+-- | True if the sum of the divisors of a number is greater than the number itself.
 isAbundant :: Integer -> Bool
 isAbundant = (>) =<< (memoSumDivisors !)
 
@@ -334,7 +334,7 @@ truncatables n = n : go' tail n ++ go' init n
     go _ [] = []
     go f ns = unDigits ns : go f (f ns)
 
--- | 'True' if a number, all with all its associated truncated numbers, are prime.
+-- | True if a number, all with all its associated truncated numbers, are prime.
 isTruncatablePrime :: Integer -> Bool
 isTruncatablePrime = all isPrime . truncatables
 
@@ -383,7 +383,7 @@ choose :: Integral a
        -> a   -- ^ Number of /k/ distinct elements in a set of size /n/
 choose n r = factorial n `div` (factorial r * factorial (n - r))
 
--- | 'True' if two integers are coprime or /relatively prime/ to each other.
+-- | True if two integers are coprime or /relatively prime/ to each other.
 --
 -- Two integers are <https://en.wikipedia.org/wiki/Coprime_integers coprime>
 -- if their greatest common divisor is 1.
@@ -442,7 +442,7 @@ rightTriangles p = map toT $ nub $ map sort $ filter sqfits $ filter pfits [[a, 
     sqfits ns = (ns !! 2) ^ 2 == (ns !! 0) ^ 2 + (ns !! 1) ^ 2
     toT ns = (ns !! 0, ns !! 1, ns !! 2)
 
--- | 'True' if a number is a /Lychrel number/, i.e., if you reverse its digits
+-- | True if a number is a /Lychrel number/, i.e., if you reverse its digits
 -- and add them together, and keep applying that operation, you will never
 -- reach a palindromic number.
 --

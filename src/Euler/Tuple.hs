@@ -39,6 +39,6 @@ unzipT = unzip
 flattenT :: [(a, a)] -> [a]
 flattenT = foldr (\(a, b) memo -> a : b : memo) []
 
--- | 'True' if both elements of a 2-tuple are equal.
+-- | True if both elements of a 2-tuple are equal.
 equalT :: Eq a => (a, a) -> Bool
 equalT = uncurry (==)

@@ -133,7 +133,7 @@ canMove current dir g =
 --
 -- > canMove n dir g
 --
--- returns 'True', then this function is guaranteed to return a 'Just'.
+-- returns True, then this function is guaranteed to return a 'Just'.
 cell :: Int             -- ^ Current cell
      -> GridDirection   -- ^ Direction to move
      -> Grid            -- ^ Grid

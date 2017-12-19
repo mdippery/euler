@@ -81,7 +81,7 @@ groupedCardValues = groupBy ((==) `on` cardValue) . sort . cards
 highestCardOf :: [Card] -> Card
 highestCardOf = head . sort
 
--- | 'True' if all cards in the player's hand are of the same suit
+-- | True if all cards in the player's hand are of the same suit
 isSameSuit :: PlayerHand -> Bool
 isSameSuit ph =
   let cs = cards ph
@@ -89,7 +89,7 @@ isSameSuit ph =
       suit = head suits
    in all (== suit) suits
 
--- | 'True' if all the cards in the player's hand are of consecutive values
+-- | True if all the cards in the player's hand are of consecutive values
 isConsecutive :: PlayerHand -> Bool
 isConsecutive ph =
   let cs = cards ph
@@ -97,58 +97,58 @@ isConsecutive ph =
       start = head vals
    in vals == take 5 [start..]
 
--- | 'True' if the hand contains /n/ cards of the same suit
+-- | True if the hand contains /n/ cards of the same suit
 nKind :: Int          -- ^ Target number of cards of the same suit
       -> PlayerHand   -- ^ Player's hand
-      -> Bool         -- ^ 'True' if the hand contains /n/ cards of the same suit
+      -> Bool         -- ^ True if the hand contains /n/ cards of the same suit
 nKind n = elem n . map length . groupedCardValues
 
--- | 'True' if the best hand is a "high card"
+-- | True if the best hand is a "high card"
 isHighCard :: PlayerHand -> Bool
 isHighCard ph =
   let total = (length . cards) ph
       unique = (length . groupedCardValues) ph
    in unique == total && (not . isStraight) ph
 
--- | 'True' if the hand contains /n/ pairs
+-- | True if the hand contains /n/ pairs
 hasPairs :: Int         -- ^ Target number of pairs
          -> PlayerHand  -- ^ Player hand
-         -> Bool        -- ^ 'True' if the hand contains /n/ pairs
+         -> Bool        -- ^ True if the hand contains /n/ pairs
 hasPairs n = (== n) . length . filter (== 2) . map length . groupedCardValues
 
--- | 'True' if the player's hand contains a pair
+-- | True if the player's hand contains a pair
 isOnePair :: PlayerHand -> Bool
 isOnePair = hasPairs 1
 
--- | 'True' if the player's hand contains two pairs
+-- | True if the player's hand contains two pairs
 isTwoPair :: PlayerHand -> Bool
 isTwoPair = hasPairs 2
 
--- | 'True' if the player's hand contains a three of a kind
+-- | True if the player's hand contains a three of a kind
 isThreeKind :: PlayerHand -> Bool
 isThreeKind ph = nKind 3 ph && (not . isOnePair) ph
 
--- | 'True' if the player's hand is a straight
+-- | True if the player's hand is a straight
 isStraight :: PlayerHand -> Bool
 isStraight = isConsecutive
 
--- | 'True' if the player's hand is a flush
+-- | True if the player's hand is a flush
 isFlush :: PlayerHand -> Bool
 isFlush = isSameSuit
 
--- | 'True' if the player's hand is a full house
+-- | True if the player's hand is a full house
 isFullHouse :: PlayerHand -> Bool
 isFullHouse ph = nKind 3 ph && isOnePair ph
 
--- | 'True' if the player's hand is a four of a kind
+-- | True if the player's hand is a four of a kind
 isFourKind :: PlayerHand -> Bool
 isFourKind = nKind 4
 
--- | 'True' if the player's hand is a straight flush
+-- | True if the player's hand is a straight flush
 isStraightFlush :: PlayerHand -> Bool
 isStraightFlush ph = isStraight ph && isFlush ph && (not . isRoyalFlush) ph
 
--- | 'True' if the player's hand is a royal flush
+-- | True if the player's hand is a royal flush
 isRoyalFlush :: PlayerHand -> Bool
 isRoyalFlush ph =
   let lowCard = (cardValue . head . sort . cards) ph

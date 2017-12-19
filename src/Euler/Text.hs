@@ -20,7 +20,7 @@ import Euler.Math (triangleNumbers)
 -- | A set of characters
 data CharacterSet = CharacterSet [Char]
 
--- | 'True' if a set of characters contains the given character.
+-- | True if a set of characters contains the given character.
 contains :: CharacterSet -> Char -> Bool
 contains (CharacterSet set) ch = ch `elem` set
 
@@ -85,7 +85,7 @@ toWord n
   where r10 = n `rem` 10
         r100 = n `rem` 100
 
--- | 'True' if the word is a triangle word.
+-- | True if the word is a triangle word.
 --
 -- A "triangle word" is a word whose 'stringValue' is a triangle number,
 -- as defined in <https://projecteuler.net/problem=42 Euler Problem #42>.

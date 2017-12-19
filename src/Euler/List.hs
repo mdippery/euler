@@ -20,9 +20,9 @@ import Euler.Tuple (flattenT)
      -> [a]   -- ^ New list with the given value appended
 as <: b = as ++ [b]
 
--- | 'True' if the list is empty.
+-- | True if the list is empty.
 isEmpty :: [a]    -- ^ List
-        -> Bool   -- ^ 'True' if the list is empty
+        -> Bool   -- ^ True if the list is empty
 isEmpty [] = True
 isEmpty _  = False
 
