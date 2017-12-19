@@ -400,6 +400,8 @@ isLychrel = isLychrel' 0
 --  Stored values for memoization
 -------------------------------------------------------------------------------
 
+-- * Memoized Values
+
 -- | Stored Collatz length values.
 --
 -- In general, use 'collatzLength` instead of accessing this array directly.
