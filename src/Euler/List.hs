@@ -10,7 +10,33 @@
 
   Provides missing functionality for Haskell lists.
 -}
-module Euler.List where
+module Euler.List
+  (
+    -- * Basic properties
+    isEmpty
+
+    -- * Basic functions
+  , (<:)
+  , middle
+  , penultimate
+
+    -- * Transformations
+  , duplicate
+  , fatten
+  , replaceAt
+  , rotateOnce
+  , rotations
+
+    -- * Sublists
+  , dropNth
+  , splitEvery
+  , windows
+
+    -- * Zipping and unzipping
+  , zipWithIndex
+  , zipWithIndexAt
+  , unzipWithIndex
+  ) where
 
 import Euler.Tuple (flattenT)
 
