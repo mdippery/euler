@@ -10,7 +10,69 @@
 
   Helps solve various math-heavy problems.
 -}
-module Euler.Math where
+module Euler.Math
+  (
+    -- * Properties of Numbers
+    floatIsInteger
+  , isAbundant
+  , isAmicable
+  , isCoprime
+  , isCube
+  , isEven
+  , isHexagonal
+  , isLychrel
+  , isOdd
+  , isPalindrome
+  , isPalindromeIn
+  , isPandigital
+  , isPandigitalFromTo
+  , isPandigitalTo
+  , isPentagonal
+  , isPowerOf
+  , isPrime
+  , isTriangle
+  , isTruncatablePrime
+  , numLength
+
+    -- * Operations and Calculations
+  , binomialCoefficient
+  , closestRatio
+  , collatzLength
+  , choose
+  , divides
+  , divisibleBy
+  , divisibleByAny
+  , factorial
+  , factorization
+  , modAdd
+  , modMult
+  , modPower
+  , modProduct
+  , modSum
+  , numDivisors
+  , rightTriangles
+  , sumDivisors
+  , totient
+  , truncatables
+
+    -- * Roots and Powers
+  , cubeRoot
+  , nthRoot
+  , sqrtI
+
+    -- * Groups, Classes, and Sequences
+  , abundantNumbers
+  , fibonacci
+  , fibonaccis
+  , hexagonalNumbers
+  , numbersOfLength
+  , pentagonalNumber
+  , pentagonalNumbers
+  , primes
+  , primesBelow
+  , primesTo
+  , triangleNumbers
+  ) where
 
 import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
@@ -400,22 +462,11 @@ isLychrel = isLychrel' 0
 --  Stored values for memoization
 -------------------------------------------------------------------------------
 
--- * Memoized Values
-
--- | Stored Collatz length values.
---
--- In general, use 'collatzLength` instead of accessing this array directly.
 memoCollatzLengths :: Array Integer Integer
 memoCollatzLengths = listArray (1, 1000000) $ map collatzLength [1..1000000]
 
--- | Stored divisor sums.
---
--- In general, use 'sumDivisors' instead of accessing this array directly.
 memoSumDivisors :: Array Integer Integer
 memoSumDivisors = listArray (1, 30000) $ map sumDivisors [1..30000]
 
--- | Stored abundant number mapping.
---
--- In general, use 'abundantNumbers' instead of access this array directly.
 memoAbundantNumbers :: Array Integer Bool
 memoAbundantNumbers = listArray (1, 28123) $ map isAbundant [1..28123]
