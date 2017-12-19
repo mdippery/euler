@@ -13,13 +13,13 @@
 module Euler.Math
   (
     -- * Properties of Numbers
-    floatIsInteger
-  , isAbundant
+    isAbundant
   , isAmicable
   , isCoprime
   , isCube
   , isEven
   , isHexagonal
+  , isInteger
   , isLychrel
   , isOdd
   , isPalindrome
@@ -167,10 +167,10 @@ isPandigitalFromTo s e = (== [s..e]) . sort . digits
 --
 -- ==== Examples
 --
--- > floatIsInteger 10.0 == True
--- > floatIsInteger 10.1 == False
-floatIsInteger :: RealFrac a => a -> Bool
-floatIsInteger = ap (==) (fromIntegral . floor)
+-- > isInteger 10.0 == True
+-- > isInteger 10.1 == False
+isInteger :: RealFrac a => a -> Bool
+isInteger = ap (==) (fromIntegral . floor)
 
 -- | Infinite list of all <https://en.wikipedia.org/wiki/Triangular_number triangle numbers>.
 triangleNumbers :: Integral a => [a]
@@ -183,7 +183,7 @@ isTriangle :: Integer -> Bool
 isTriangle n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
       p = (sqn - 1) / 2
-   in floatIsInteger p
+   in isInteger p
 
 -- | Infinite list of all <https://en.wikipedia.org/wiki/Pentagonal_number pentagonal numbers>.
 pentagonalNumbers :: [Integer]
@@ -200,7 +200,7 @@ isPentagonal :: Integer -> Bool
 isPentagonal n =
   let sqn = sqrt $ 24 * (fromInteger n) + 1
       p = (sqn + 1) / 6
-   in floatIsInteger p
+   in isInteger p
 
 -- | Infinite list of all <https://en.wikipedia.org/wiki/Hexagonal_number hexagonal numbers>.
 hexagonalNumbers :: [Integer]
@@ -213,7 +213,7 @@ isHexagonal :: Integer -> Bool
 isHexagonal n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
       p = (sqn + 1) / 4
-   in floatIsInteger p
+   in isInteger p
 
 -- | Infinite list of all prime numbers.
 primes :: [Integer]
