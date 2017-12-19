@@ -11,7 +11,16 @@
   Finds the maximum path through a pyramid of integers. For more information
   on the structure of the pyramid, see <https://projecteuler.net/problem=18 Euler Problem #18>.
 -}
-module Euler.Pyramid where
+module Euler.Pyramid
+  (
+    -- * Data types
+    Pyramid (..)
+  , PyramidRow (..)
+  , pyramid
+
+    -- * Basic functions
+  , maximumPath
+  ) where
 
 import Euler.List
 import Euler.Tuple
