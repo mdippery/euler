@@ -33,13 +33,13 @@ module Euler.Math
   , isPrime
   , isTriangle
   , isTruncatablePrime
-  , numLength
 
     -- * Operations and calculations
   , binomialCoefficient
   , closestRatio
   , collatzLength
   , choose
+  , cycleLength
   , divides
   , divisibleBy
   , divisibleByAny
@@ -51,6 +51,7 @@ module Euler.Math
   , modProduct
   , modSum
   , numDivisors
+  , numLength
   , rightTriangles
   , sumDivisors
   , totient
@@ -77,8 +78,8 @@ module Euler.Math
 
 import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
-import           Data.List (group, intersect, nub, sort, unfoldr)
-import           Data.Maybe (listToMaybe)
+import           Data.List (elemIndex, group, intersect, nub, sort, unfoldr)
+import           Data.Maybe (fromJust, listToMaybe)
 import           Data.Ratio ((%), Ratio, denominator, numerator)
 
 import qualified Data.Digits as D
@@ -134,6 +135,24 @@ numbersOfLength :: (Num b, Enum b, Integral a)
                 => a    -- ^ Number of digits
                 -> [b]  -- ^ All integers with the given number of digits in base 10
 numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
+
+-- | Returns the length of the recurring cycle of a fraction.
+--
+-- If the fraction does not have a recurring cycle, 0 is returned.
+--
+-- ==== Examples
+--
+-- > cycleLength (1 % 2) == 0
+-- > cycleLength (1 % 7) == 6
+cycleLength :: Integral a => Ratio a -> Int
+cycleLength x = go [] (numerator x) (denominator x)
+  where
+    go rs n d
+      | r == 0 = 0
+      | r `elem` rs = 1 + (fromJust $ elemIndex r rs)
+      | otherwise = go (r : rs) (r * 10) d
+      where
+        r = n `rem` d
 
 -- | True if the number is prime
 isPrime :: Integral a => a -> Bool

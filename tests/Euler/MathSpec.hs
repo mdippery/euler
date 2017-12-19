@@ -4,6 +4,7 @@
 
 module Euler.MathSpec where
 
+import Data.Ratio ((%))
 import Euler.Math
 import Test.Hspec
 
@@ -90,7 +91,7 @@ spec = do
         isPandigitalFromTo 0 5 153302 `shouldBe` False
 
     describe "totient" $ do
-      it "returns the numbers coprime to a given number" $ do
+      it "returns the count of numbers coprime to a given number" $ do
         totient 1 `shouldBe` 1
         totient 2 `shouldBe` 1
         totient 3 `shouldBe` 2
@@ -101,3 +102,15 @@ spec = do
         totient 8 `shouldBe` 4
         totient 9 `shouldBe` 6
         totient 10 `shouldBe` 4
+
+    describe "cycleLength" $ do
+      it "returns the length of a ratio's recurring cycle" $ do
+        cycleLength (1 % 2) `shouldBe` 0
+        cycleLength (1 % 3) `shouldBe` 1
+        cycleLength (1 % 4) `shouldBe` 0
+        cycleLength (1 % 5) `shouldBe` 0
+        cycleLength (1 % 6) `shouldBe` 1
+        cycleLength (1 % 7) `shouldBe` 6
+        cycleLength (1 % 8) `shouldBe` 0
+        cycleLength (1 % 9) `shouldBe` 1
+        cycleLength (1 % 10) `shouldBe` 0

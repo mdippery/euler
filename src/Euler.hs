@@ -297,6 +297,9 @@ problem24 =
 -- | Solves <https://projecteuler.net/problem=25 Project Euler Problem #25>
 problem25 = (maybe (-1) id . elemIndex 1000 . map (length . show)) fibonaccis
 
+-- | Solves <https://projecteuler.net/problem=26 Project Euler Problem #26>
+problem26 = fst $ maximumBy (comparing snd) $ zip [1..999] $ map (cycleLength . (1 %)) [1..999]
+
 -- | Solves <https://projecteuler.net/problem=28 Project Euler Problem #28>
 problem28 = (sumDiagonals . numRings) 1001
 
