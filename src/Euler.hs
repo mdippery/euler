@@ -279,7 +279,7 @@ problem22 = do
   score <- fmap
              (sum
               . map (\(i, s) -> i * stringValue s)
-              . zipWithIndexAt 1
+              . zipWithIndexFrom 1
               . sort
               . map (removeCharacters (CharacterSet "\""))
               . wordsBy (== ','))

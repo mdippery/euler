@@ -34,7 +34,7 @@ module Euler.List
 
     -- * Zipping and unzipping
   , zipWithIndex
-  , zipWithIndexAt
+  , zipWithIndexFrom
   , unzipWithIndex
   ) where
 
@@ -96,7 +96,7 @@ fatten ls = head ls : duplicate (middle ls) <: last ls
 zipWithIndex :: (Enum b, Num b)
              => [a]       -- ^ List
              -> [(b, a)]  -- ^ New list containing a combination of indexes and elements
-zipWithIndex = zipWithIndexAt 0
+zipWithIndex = zipWithIndexFrom 0
 
 -- | Combines all elements with their index in the list, starting with the
 -- given index.
@@ -106,11 +106,11 @@ zipWithIndex = zipWithIndexAt 0
 -- ==== Examples
 --
 -- > zipWithIndex 2 [10,20,30] == [(2,10), (3,20), (4,30)]
-zipWithIndexAt :: (Enum b, Num b)
+zipWithIndexFrom :: (Enum b, Num b)
                => b         -- ^ Starting index
                -> [a]       -- ^ List
                -> [(b, a)]  -- ^ List elements combined with their index in the list
-zipWithIndexAt = zip . enumFrom
+zipWithIndexFrom = zip . enumFrom
 
 -- | Removes indexes from a list of elements.
 --
