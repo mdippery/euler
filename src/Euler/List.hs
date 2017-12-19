@@ -136,7 +136,7 @@ dropNth n =
 -- | Replaces an element at the given index.
 --
 -- If the given index does not exist in the list, the unmodified list is
--- returned. Therefore,
+-- returned.
 --
 -- ==== Examples
 --
