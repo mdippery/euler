@@ -12,7 +12,7 @@
 -}
 module Euler.Math
   (
-    -- * Properties of Numbers
+    -- * Basic properties
     isAbundant
   , isAmicable
   , isCoprime
@@ -34,7 +34,7 @@ module Euler.Math
   , isTruncatablePrime
   , numLength
 
-    -- * Operations and Calculations
+    -- * Operations and calculations
   , binomialCoefficient
   , closestRatio
   , collatzLength
@@ -55,12 +55,12 @@ module Euler.Math
   , totient
   , truncatables
 
-    -- * Roots and Powers
+    -- * Roots and powers
   , cubeRoot
   , nthRoot
   , sqrtI
 
-    -- * Groups, Classes, and Sequences
+    -- * Groups, classes, and sequences
   , abundantNumbers
   , fibonacci
   , fibonaccis
