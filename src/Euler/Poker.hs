@@ -11,7 +11,42 @@
   Provides functions and data types for simulating a game of poker and
   calculating the winner.
 -}
-module Euler.Poker where
+module Euler.Poker
+  (
+    -- * Data types
+    Card (..)
+  , CardValue (..)
+  , HandType (..)
+  , Player (..)
+  , PlayerHand (..)
+  , Suit (..)
+
+    -- * Accessors
+  , cards
+  , orderedCards
+  , player
+
+    -- * Game parsing
+  , parseCard
+  , parseCardSuit
+  , parseCardValue
+  , parseGame
+  , parseHand
+  , winner
+
+    -- * Hand detection
+  , isHighCard
+  , isOnePair
+  , isTwoPair
+  , isThreeKind
+  , isStraight
+  , isFlush
+  , isFullHouse
+  , isFourKind
+  , isStraightFlush
+  , isRoyalFlush
+  , playerHandType
+  ) where
 
 import Data.Function (on)
 import Data.List (groupBy, sort, sortBy)

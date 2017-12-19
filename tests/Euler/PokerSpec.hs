@@ -10,33 +10,6 @@ import Test.Hspec
 spec :: Spec
 spec = do
   describe "Euler.Poker" $ do
-    describe "isSameSuit" $ do
-      it "returns true if all cards are of the same suit" $ do
-        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades) (Card Two Spades)
-        isSameSuit h `shouldBe` True
-
-      it "returns false if not all cards are of the same suit" $ do
-        let h = PlayerHand PlayerOne (Card Two Spades) (Card Two Diamonds) (Card Two Hearts) (Card Two Clubs) (Card Two Spades)
-        isSameSuit h `shouldBe` False
-
-    describe "isConsecutive" $ do
-      it "returns true if the hand contains consecutive values" $ do
-        let h = PlayerHand PlayerOne (Card Nine Spades) (Card Ten Diamonds) (Card Jack Hearts) (Card Queen Diamonds) (Card King Spades)
-        isConsecutive h `shouldBe` True
-
-      it "returns false if the hand does not contain consecutive values" $ do
-        let h = PlayerHand PlayerOne (Card Eight Spades) (Card Ten Diamonds) (Card Jack Hearts) (Card Queen Diamonds) (Card King Spades)
-        isConsecutive h `shouldBe` False
-
-    describe "nKind" $ do
-      it "returns true if the hand if three of a kind" $ do
-        let h = PlayerHand PlayerOne (Card Two Hearts) (Card Three Spades) (Card Two Diamonds) (Card Two Spades) (Card King Spades)
-        nKind 3 h `shouldBe` True
-
-      it "returns false if the hand is not three of a kind" $ do
-        let h = PlayerHand PlayerOne (Card Two Hearts) (Card Three Spades) (Card Two Diamonds) (Card Jack Spades) (Card King Spades)
-        nKind 3 h `shouldBe` False
-
     describe "isHighCard" $ do
       it "returns true if the hand is a high card hand" $ do
         let h = PlayerHand PlayerOne (Card Two Clubs) (Card Three Diamonds) (Card Four Spades) (Card Five Hearts) (Card Seven Diamonds)
