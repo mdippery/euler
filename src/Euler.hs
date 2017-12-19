@@ -275,16 +275,15 @@ problem20 = (sum . digits . factorial) 100
 problem21 = (sum . flattenT . filter (uncurry isAmicable)) [(a,b) | a <- [1..9999], b <- [a..9999]]
 
 -- | Solves <https://projecteuler.net/problem=22 Project Euler Problem #22>
-problem22 = do
-  score <- fmap
-             (sum
-              . map (\(i, s) -> i * stringValue s)
-              . zipWithIndexFrom 1
-              . sort
-              . map (removeCharacters (CharacterSet "\""))
-              . wordsBy (== ','))
-             (readFile "data/names.txt")
-  return score
+problem22 =
+  fmap
+    (sum
+     . map (\(i, s) -> i * stringValue s)
+     . zipWithIndexFrom 1
+     . sort
+     . map (removeCharacters (CharacterSet "\""))
+     . wordsBy (== ','))
+    (readFile "data/names.txt") >>= return
 
 -- | Solves <https://projecteuler.net/problem=23 Project Euler Problem #23>
 problem23 = (sum . filter (not . isAbundantSum)) [1..28123]
@@ -344,14 +343,13 @@ problem40 =
    in (product . map digitToInt . map (s !!) . map (10 ^)) [0..6]
 
 -- | Solves <https://projecteuler.net/problem=42 Project Euler Problem #42>
-problem42 = do
-  count <- fmap
-             (length
-              . filter isTriangleWord
-              . map (removeCharacters (CharacterSet "\""))
-              . wordsBy (== ','))
-             (readFile "data/words.txt")
-  return count
+problem42 =
+  fmap
+    (length
+     . filter isTriangleWord
+     . map (removeCharacters (CharacterSet "\""))
+     . wordsBy (== ','))
+    (readFile "data/words.txt") >>= return
 
 -- | Solves <https://projecteuler.net/problem=44 Project Euler Problem #44>
 problem44 = head [abs (a' - b')
@@ -373,15 +371,14 @@ problem48 =
 problem53 = (length . filter (> 1000000)) [n `choose` r | n <- [1..100], r <- [1..n]]
 
 -- | Solves <https://projecteuler.net/problem=54 Project Euler Problem #54>
-problem54 = do
-  count <- fmap
-             (length
-              . filter (== PlayerOne)
-              . map (uncurry winner)
-              . map parseGame
-              . lines)
-             (readFile "data/poker.txt")
-  return count
+problem54 =
+  fmap
+    (length
+     . filter (== PlayerOne)
+     . map (uncurry winner)
+     . map parseGame
+     . lines)
+    (readFile "data/poker.txt") >>= return
 
 -- | Solves <https://projecteuler.net/problem=55 Project Euler Problem #55>
 problem55 = (length . filter isLychrel) [1..9999]
