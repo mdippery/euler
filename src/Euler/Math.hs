@@ -14,6 +14,7 @@ module Euler.Math
   (
     -- * Basic properties
     isAbundant
+  , isAbundantSum
   , isAmicable
   , isCoprime
   , isCube
@@ -320,6 +321,10 @@ isAbundant = (>) =<< (memoSumDivisors !)
 -- | List of all abundant numbers
 abundantNumbers :: [Integer]
 abundantNumbers = filter (memoAbundantNumbers !) [1..28123]
+
+-- | True if the number is the sum of two abundant numbers
+isAbundantSum :: Integer -> Bool
+isAbundantSum n = any (\x -> isAbundant (n - x)) $ takeWhile (< n) abundantNumbers
 
 -- | The /nth/ Fibonacci number
 fibonacci :: Integral a => Int -> a

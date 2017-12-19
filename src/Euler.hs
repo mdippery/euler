@@ -286,6 +286,9 @@ problem22 = do
              (readFile "data/names.txt")
   return score
 
+-- | Solves <https://projecteuler.net/problem=23 Project Euler Problem #23>
+problem23 = (sum . filter (not . isAbundantSum)) [1..28123]
+
 -- | Solves <https://projecteuler.net/problem=24 Project Euler Problem #24>
 problem24 =
     let millionth = drop 999999

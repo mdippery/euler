@@ -98,6 +98,10 @@ spec = do
       score <- problem22
       score `shouldBe` 871198282
 
+  describe "Verify that problem 23" $ do
+    it "is correct" $ do
+      problem23 `shouldBe` 4179871
+
   describe "Verify that problem 24" $ do
     it "is correct" $ do
       problem24 `shouldBe` "2783915460"
