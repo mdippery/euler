@@ -4,11 +4,11 @@
 
 {-|
   Module      : Euler.Tuple
-  Description : General functions for working with pairs of values
+  Description : General functions for working with tuples
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
-  General functions for working with pairs of values.
+  General functions for working with tuples.
 -}
 module Euler.Tuple
   (
@@ -18,6 +18,9 @@ module Euler.Tuple
   , mapT
   , unzipT
   , zipT
+
+    -- * Triples
+  , fst3
   ) where
 
 import Control.Monad (ap)
@@ -50,3 +53,7 @@ flattenT = foldr (\(a, b) memo -> a : b : memo) []
 -- | True if both elements of a 2-tuple are equal.
 equalT :: Eq a => (a, a) -> Bool
 equalT = uncurry (==)
+
+-- | Returns the first element of a 3-tuple.
+fst3 :: (a,a,a) -> a
+fst3 (a,_,_) = a
