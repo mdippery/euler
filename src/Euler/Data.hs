@@ -16,7 +16,7 @@ import qualified Data.Digits as D
 
 -- | Converts a number into a list of digits.
 --
--- Note that
+-- ==== Examples
 --
 -- > (undigits . digits) n == n
 digits :: Integral a
@@ -26,7 +26,7 @@ digits = D.digits 10
 
 -- | Converts a list of digits into a number.
 --
--- Note that
+-- ==== Examples
 --
 -- > (digits . undigits) [1,2,3] == [1,2,3]
 unDigits :: Integral a

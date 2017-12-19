@@ -10,7 +10,31 @@
 
   Miscellaneous functions for working with text.
 -}
-module Euler.Text where
+module Euler.Text
+  (
+    -- * Data types
+    CharacterSet (..)
+
+    -- * Searching
+  , contains
+  , countLetters
+
+    -- * Transformations
+  , removeCharacters
+
+    -- * Calculations
+  , letterValue
+  , stringValue
+
+    -- * Prose
+  , toWord
+
+    -- * Conversions
+  , ints
+
+    -- * Properties
+  , isTriangleWord
+  ) where
 
 import Data.Bool (bool)
 import Data.Char (ord)

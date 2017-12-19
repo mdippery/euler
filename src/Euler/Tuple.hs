@@ -10,7 +10,15 @@
 
   General functions for working with pairs of values.
 -}
-module Euler.Tuple where
+module Euler.Tuple
+  (
+    -- * Pairs
+    equalT
+  , flattenT
+  , mapT
+  , unzipT
+  , zipT
+  ) where
 
 import Control.Monad (ap)
 
