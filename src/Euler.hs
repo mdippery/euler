@@ -58,7 +58,7 @@ problem6 =
    in squareOfSums - sumOfSquares
 
 -- | Solves <https://projecteuler.net/problem=7 Project Euler Problem #7>
-problem7 = (head . drop 10000 . filter isPrime) [2..]
+problem7 = ((!! 10000) . filter isPrime) [2..]
 
 -- | Solves <https://projecteuler.net/problem=8 Project Euler Problem #8>
 problem8 =
@@ -289,9 +289,7 @@ problem22 =
 problem23 = (sum . filter (not . isAbundantSum)) [1..28123]
 
 -- | Solves <https://projecteuler.net/problem=24 Project Euler Problem #24>
-problem24 =
-    let millionth = drop 999999
-     in (head . millionth . sort . permutations) "0123456789"
+problem24 = ((!! 999999) . sort . permutations) "0123456789"
 
 -- | Solves <https://projecteuler.net/problem=25 Project Euler Problem #25>
 problem25 = (maybe (-1) id . elemIndex 1000 . map (length . show)) fibonaccis
