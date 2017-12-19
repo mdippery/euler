@@ -11,7 +11,33 @@
   Provides functions for working with a grid of numbers as described in
   <https://projecteuler.net/problem=11 Euler Problem #11>.
 -}
-module Euler.Grid where
+module Euler.Grid
+  (
+    -- * Data types
+    Grid (..)
+  , GridDimensions
+  , GridDirection (..)
+  , GridLine
+  , Moveable
+  , Skippable
+  , moveModifier
+  , skipModifier
+
+    -- * Accessors
+  , gridHeight
+  , gridWidth
+
+    -- * Basic functions
+  , gridLines
+  , rows
+
+    -- * Utility functions
+  , canMove
+  , cell
+  , columnIndex
+  , gridLine
+  , rowIndex
+  ) where
 
 import Control.Monad (liftM2)
 import Data.List (nub, sort)
@@ -83,18 +109,15 @@ instance Skippable GridDirection where
      in (+ hm) . (+ rm)
 
 -- | Height of a grid
-gridHeight :: Grid  -- ^ Grid
-           -> Int   -- ^ Height of the grid
+gridHeight :: Grid -> Int
 gridHeight = snd . gridDimensions
 
 -- | Width of a grid
-gridWidth :: Grid   -- ^ Grid
-          -> Int    -- ^ Width of the grid
+gridWidth :: Grid -> Int
 gridWidth = fst . gridDimensions
 
 -- | A list of all the rows contained in a grid
-rows :: Grid      -- ^ Grid
-     -> [[Int]]   -- ^ All the rows of the grid
+rows :: Grid -> [[Int]]
 rows = liftM2 splitEvery gridWidth gridData
 
 -- | Numbered row for the given cell, starting at 0.
