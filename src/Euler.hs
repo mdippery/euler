@@ -121,10 +121,7 @@ problem11 =
    in (head . reverse . sort . map product . gridLines 4) grid
 
 -- | Solves <https://projecteuler.net/problem=12 Project Euler Problem #12>
-problem12 =
-  let lt500 (_, d) = d <= 500
-      numDivisorsP n = (n, numDivisors n)
-   in (fst . head . dropWhile lt500 . map numDivisorsP) triangleNumbers
+problem12 = (head . fst . unzipT . dropWhile ((<= 500) . snd) . zipT numDivisors) triangleNumbers
 
 -- | Solves <https://projecteuler.net/problem=13 Project Euler Problem #13>
 problem13 =
