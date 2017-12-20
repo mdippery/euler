@@ -50,6 +50,7 @@ module Euler.Math
   , modPower
   , modProduct
   , modSum
+  , multiplicands
   , numDivisors
   , numLength
   , rightTriangles
@@ -87,6 +88,7 @@ import           Data.List.Ordered (minus, unionAll)
 
 import           Euler.Data (digits, unDigits)
 import           Euler.List ((<:), isEmpty)
+import           Euler.Tuple (sortT, zipT)
 
 
 -- | True if a number is even.
@@ -308,11 +310,16 @@ factorization = unfoldr f
   where
     f n = listToMaybe [(x, n `div` x) | x <- [2..n], x `divides` n]
 
+-- | Calculates pairs of numbers that can be multiplied together to produce
+-- the given number.
+multiplicands :: Integral a => a -> [(a, a)]
+multiplicands n = nub $ map sortT $ zipT (div n) $ filter (flip divides n) $ enumFromTo 1 n
+
 -- | List of all the prime factors of a given number
 primeFactors :: Integer -> [Integer]
 primeFactors = nub . factorization
 
--- | Number of divisors of a given number
+-- | Number of divisors of a given number.
 numDivisors :: Integer -> Int
 numDivisors = product . map ((+ 1) . length) . group . factorization
 
