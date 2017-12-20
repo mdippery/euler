@@ -15,6 +15,7 @@ module Euler.Tuple
     -- * Pairs
     equalT
   , flattenT
+  , sortT
   , mapT
   , unzipT
   , zipT
@@ -48,6 +49,10 @@ unzipT :: ((a, b) -> c)   -- ^ Mapping function
        -> [(a, b)]        -- ^ Original list of tuples
        -> [c]             -- ^ List of results of mapping function applied to each tuple
 unzipT = map
+
+-- | Sorts a tuple so that the minimum value is first.
+sortT :: Ord a => (a, a) -> (a, a)
+sortT (a, b) = (min a b, max a b)
 
 -- | Flattens a list of 2-tuples into a single list containing all values.
 --
