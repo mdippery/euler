@@ -17,6 +17,8 @@ module Euler.Tuple
   , flattenT
   , sortT
   , mapT
+  , maxT
+  , minT
   , unzipT
   , zipT
 
@@ -24,7 +26,7 @@ module Euler.Tuple
   , fst3
   ) where
 
-import Control.Monad (ap)
+import Control.Monad (ap, liftM2)
 
 -- | Applies a function of two arguments to a list of 2-tuples, where
 -- each element of the tuple is a separate argument to the function,
@@ -52,7 +54,15 @@ unzipT = map
 
 -- | Sorts a tuple so that the minimum value is first.
 sortT :: Ord a => (a, a) -> (a, a)
-sortT (a, b) = (min a b, max a b)
+sortT = liftM2 (,) minT maxT
+
+-- | Returns the maximum element in a 2-tuple.
+maxT :: Ord a => (a, a) -> a
+maxT = uncurry max
+
+-- | Returns the minimum element in a 2-tuple.
+minT :: Ord a => (a, a) -> a
+minT = uncurry min
 
 -- | Flattens a list of 2-tuples into a single list containing all values.
 --
