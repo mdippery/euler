@@ -45,6 +45,7 @@ module Euler.Math
   , divisibleByAny
   , factorial
   , factorization
+  , maximumPandigital
   , modAdd
   , modMult
   , modPower
@@ -184,6 +185,22 @@ isPandigitalFromTo :: Integral a
                    -> a     -- ^ Number
                    -> Bool  -- ^ True if the number contains all the digits from /m/ to /n/, in some order.
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
+
+-- | Calculates the largest /n/-digit pandigital that can be formed by the
+-- given number.
+--
+-- A number is said to be /1 to n pandigital/ if it makes use of all digits
+-- from 1 to /n/ exactly once. For example, 1234 is a 4-digit pandigital. 134
+-- is not pandigital at all.
+--
+-- Returns @Nothing@ if the given number is not a pandigital; otherwise,
+-- returns @Just n@ where /n/ is the maximum /n/-digit pandigital formed
+-- by the number.
+maximumPandigital :: Integral a => a -> Maybe Int
+maximumPandigital n =
+  case elemIndex True (map (flip isPandigitalTo n) [9,8..1]) of
+    Nothing -> Nothing
+    Just i -> Just (9 - i)
 
 -- | True if the decimal number is a whole number.
 --
