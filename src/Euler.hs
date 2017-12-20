@@ -122,7 +122,7 @@ problem11 =
    in (head . reverse . sort . map product . gridLines 4) grid
 
 -- | Solves <https://projecteuler.net/problem=12 Project Euler Problem #12>
-problem12 = (head . fst . unzipT . dropWhile ((<= 500) . snd) . zipT numDivisors) triangleNumbers
+problem12 = (head . unzipT fst . dropWhile ((<= 500) . snd) . zipT numDivisors) triangleNumbers
 
 -- | Solves <https://projecteuler.net/problem=13 Project Euler Problem #13>
 problem13 =
@@ -305,7 +305,7 @@ problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 problem30 =
     let nums = [2..355000]
         pow = sum . map (^ 5) . digits
-     in (sum . fst . unzipT . filter equalT . zipT pow) nums
+     in (sum . unzipT fst . filter equalT . zipT pow) nums
 
 -- | Solves <https://projecteuler.net/problem=31 Project Euler Problem #31>
 problem31 = coinCombos 200 TwoHundredPence
@@ -314,7 +314,7 @@ problem31 = coinCombos 200 TwoHundredPence
 problem34 =
     let nums = [3..2540160]
         fact = sum . map factorial . digits
-     in (sum . fst . unzipT . filter equalT . zipT fact) nums
+     in (sum . unzipT fst . filter equalT . zipT fact) nums
 
 -- | Solves <https://projecteuler.net/problem=35 Project Euler Problem #35>
 problem35 = (length . filter f) [1..1000000]

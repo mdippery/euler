@@ -40,11 +40,14 @@ zipT :: (a -> b)    -- ^ Mapping function
      -> [(a, b)]    -- ^ List of 2-tuples containing the original value and the output value
 zipT = map . ap (,)
 
--- | Unzips a list of 2-tuples, returning a 2-tuple containing the first set
--- of values in the first element, and the second set of values in the
--- second element.
-unzipT :: [(a, b)] -> ([a], [b])
-unzipT = unzip
+-- | Unzips a list of 2-tuples by passing the 2-tuple to the given function,
+-- returning a list of the output of that function.
+--
+-- This is a counterpart to 'zipT'.
+unzipT :: ((a, b) -> c)   -- ^ Mapping function
+       -> [(a, b)]        -- ^ Original list of tuples
+       -> [c]             -- ^ List of results of mapping function applied to each tuple
+unzipT = map
 
 -- | Flattens a list of 2-tuples into a single list containing all values.
 flattenT :: [(a, a)] -> [a]
