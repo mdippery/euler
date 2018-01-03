@@ -38,8 +38,6 @@ module Euler.List
   , unzipWithIndex
   ) where
 
-import Euler.Tuple (flattenT)
-
 -- | Appends a value to a list.
 (<:) :: [a]   -- ^ List
      -> a     -- ^ Value to append to the list
