@@ -13,12 +13,18 @@
 module Euler.Tuple
   (
     -- * Pairs
+
+    -- ** Equality and ordering
     equalT
-  , flattenT
-  , sortT
-  , mapT
   , maxT
   , minT
+  , sortT
+
+    -- ** Transformations
+  , flattenT
+  , mapT
+
+    -- ** Zipping and unzipping
   , unzipT
   , zipT
 
