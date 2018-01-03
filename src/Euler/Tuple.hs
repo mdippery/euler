@@ -68,7 +68,8 @@ minT = uncurry min
 --
 -- ==== Examples
 --
--- > flattenT [(1,2),(3,4)] == [1,2,3,4]
+-- >>> flattenT [(1,2),(3,4)]
+-- [1,2,3,4]
 flattenT :: [(a, a)] -> [a]
 flattenT = foldr (\(a, b) memo -> a : b : memo) []
 

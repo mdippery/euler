@@ -154,8 +154,10 @@ numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
 --
 -- ==== Examples
 --
--- > cycleLength (1 % 2) == 0
--- > cycleLength (1 % 7) == 6
+-- >>> cycleLength (1 % 2)
+-- 0
+-- >>> cycleLength (1 % 7)
+-- 6
 cycleLength :: Integral a => Ratio a -> Int
 cycleLength x = go [] (numerator x) (denominator x)
   where
@@ -208,9 +210,12 @@ compositesTo = filter isComposite . enumFromTo 4
 --
 -- ==== Examples
 --
--- > isOtherGoldbach 9 == True
--- > isOtherGoldbach 23 == False
--- > (head . filter (not . isOtherGoldbach)) composites == 5777
+-- >>> isOtherGoldbach 9
+-- True
+-- >>> isOtherGoldbach 23
+-- False
+-- >>> (head . filter (not . isOtherGoldbach)) composites
+-- 5777
 isOtherGoldbach :: Integer -> Bool
 isOtherGoldbach n = isEven n || isPrime n || (not . isEmpty) (go n)
   where
@@ -251,8 +256,10 @@ isPandigitalFromTo s e = (== [s..e]) . sort . digits
 --
 -- ==== Examples
 --
--- > maximumPandigital 1234 == Just 4
--- > maximumPandigital 134 == Nothing
+-- >>> maximumPandigital 1234
+-- Just 4
+-- >>> maximumPandigital 134
+-- Nothing
 maximumPandigital :: Integral a => a -> Maybe Int
 maximumPandigital n =
   case elemIndex True (map (flip isPandigitalTo n) [9,8..1]) of
@@ -263,8 +270,10 @@ maximumPandigital n =
 --
 -- ==== Examples
 --
--- > isInteger 10.0 == True
--- > isInteger 10.1 == False
+-- >>> isInteger 10.0
+-- True
+-- >>> isInteger 10.1
+-- False
 isInteger :: RealFrac a => a -> Bool
 isInteger = ap (==) (fromIntegral . floor)
 
@@ -333,8 +342,10 @@ factorial = product . enumFromTo 1
 --
 -- ==== Examples
 --
--- > 10 `divides` 100 == True
--- > 9 `divides` 100 == False
+-- >>> 10 `divides` 100
+-- True
+-- >>> 9 `divides` 100
+-- False
 divides :: Integral a
         => a      -- ^ /a/
         -> a      -- ^ /b/
@@ -345,7 +356,8 @@ divides = ((== 0) .) . flip rem
 --
 -- ==== Examples
 --
--- > divisibleBy [3,8] 24 == True
+-- >>> divisibleBy [3,8] 24
+-- True
 divisibleBy :: Integral a
             => [a]    -- ^ List of numbers that the number in question /must/ be divisible by
             -> a      -- ^ Number
@@ -356,15 +368,17 @@ divisibleBy = (. (flip divides)) . flip all
 --
 -- ==== Examples
 --
--- > divisibleByAny [7,8] 24 == True
--- > divisibleByAny [9,16] 24 == False
+-- >>> divisibleByAny [7,8] 24
+-- True
+-- >>> divisibleByAny [9,16] 24
+-- False
 divisibleByAny :: Integral a
                => [a]   -- ^ List of possible divisors
                -> a     -- ^ Number
                -> Bool  -- ^ True if a number is divisible by any number in the list
 divisibleByAny = (. (flip divides)) . flip any
 
--- | List of all factors of the given number
+-- | List of all factors of the given number.
 factorization :: Integer -> [Integer]
 factorization = unfoldr f
   where
@@ -424,7 +438,8 @@ fibonaccis = 0 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
 --
 -- ==== Examples
 --
--- > truncateN 3797 == [3797, 797, 97, 7, 379, 37, 3]
+-- >>> truncateN 3797
+-- [3797, 797, 97, 7, 379, 37, 3]
 --
 -- That is, the returned list consists of the original number, plus all
 -- the numbers formed by successively removing digits from both ends.
@@ -481,7 +496,8 @@ modSum m = foldr (modAdd m) 0 . map (`mod` m)
 --
 -- ==== Examples
 --
--- > 10 `choose` 5 == 252
+-- >>> 10 `choose` 5
+-- 252
 choose :: Integral a
        => a   -- ^ /n/
        -> a   -- ^ /k/

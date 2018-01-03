@@ -18,7 +18,8 @@ import qualified Data.Digits as D
 --
 -- ==== Examples
 --
--- > (undigits . digits) n == n
+-- >>> (undigits . digits) 123
+-- 123
 digits :: Integral a
        => a   -- ^ Value to convert to individual digits
        -> [a] -- ^ List of digits in base 10
@@ -28,7 +29,8 @@ digits = D.digits 10
 --
 -- ==== Examples
 --
--- > (digits . undigits) [1,2,3] == [1,2,3]
+-- >>> (digits . undigits) [1,2,3]
+-- [1,2,3]
 unDigits :: Integral a
          => [a]   -- ^ List of digits in base 10
          -> a     -- ^ Number represented by the list of digits

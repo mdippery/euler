@@ -57,7 +57,8 @@ isEmpty _  = False
 --
 -- ==== Examples
 --
--- > middle [1..10] == [2,3,4,5,6,7,8,9]
+-- >>> middle [1..10]
+-- [2,3,4,5,6,7,8,9]
 middle :: [a] -> [a]
 middle = init . tail
 
@@ -69,7 +70,8 @@ penultimate = last . init
 --
 -- ==== Examples
 --
--- > duplicate [1,2,3,4,5] == [1,1,2,2,3,3,4,4,5,5]
+-- >>> duplicate [1,2,3,4,5]
+-- [1,1,2,2,3,3,4,4,5,5]
 duplicate :: [a] -> [a]
 duplicate = foldr (\e memo -> e : e : memo) []
 
@@ -77,7 +79,8 @@ duplicate = foldr (\e memo -> e : e : memo) []
 --
 -- ==== Examples
 --
--- > fatten [1,2,3,4,5] == [1,2,2,3,3,4,4,5]
+-- >>> fatten [1,2,3,4,5]
+-- [1,2,2,3,3,4,4,5]
 fatten :: [a] -> [a]
 fatten ls = head ls : duplicate (middle ls) <: last ls
 
@@ -87,7 +90,8 @@ fatten ls = head ls : duplicate (middle ls) <: last ls
 --
 -- ==== Examples
 --
--- > zipWithIndex [10,20,30] == [(0,10), (1,20), (2,30)]
+-- >>> zipWithIndex [10,20,30]
+-- [(0,10), (1,20), (2,30)]
 zipWithIndex :: (Enum b, Num b)
              => [a]       -- ^ List
              -> [(b, a)]  -- ^ New list containing a combination of indexes and elements
@@ -100,7 +104,8 @@ zipWithIndex = zipWithIndexFrom 0
 --
 -- ==== Examples
 --
--- > zipWithIndex 2 [10,20,30] == [(2,10), (3,20), (4,30)]
+-- >>> zipWithIndex 2 [10,20,30]
+-- [(2,10), (3,20), (4,30)]
 zipWithIndexFrom :: (Enum b, Num b)
                => b         -- ^ Starting index
                -> [a]       -- ^ List
@@ -119,7 +124,10 @@ unzipWithIndex = map snd
 
 -- | Removes every /nth/ element from a list.
 --
--- > dropNth 2 [1..10] == [1,3,5,7,9]
+-- ==== Examples
+--
+-- >>> dropNth 2 [1..10]
+-- [1,3,5,7,9]
 dropNth :: Integral b
         => b    -- ^ /nth/ element to remove
         -> [a]  -- ^ List
@@ -135,9 +143,12 @@ dropNth n =
 --
 -- ==== Examples
 --
--- > replaceAt 3 20 [1..10] == [1,2,3,20,5,6,7,8,9,10]
--- > replaceAt 100 20 [1..10] == [1,2,3,4,5,6,7,8,9,10]
--- > replaceAt 0 20 [] == []
+-- >>> replaceAt 3 20 [1..10]
+-- [1,2,3,20,5,6,7,8,9,10]
+-- >>> replaceAt 100 20 [1..10]
+-- [1,2,3,4,5,6,7,8,9,10]
+-- >>> replaceAt 0 20 []
+-- []
 replaceAt :: Int  -- ^ Index to replace
           -> a    -- ^ Replacement element
           -> [a]  -- ^ List
@@ -152,7 +163,8 @@ replaceAt i e ls =
 --
 -- ==== Examples
 --
--- > windows 4 [1..6] == [[1,2,3,4], [2,3,4,5], [3,4,5,6]]
+-- >>> windows 4 [1..6]
+-- [[1,2,3,4], [2,3,4,5], [3,4,5,6]]
 windows :: Int    -- ^ Desired size of sublists
         -> [a]    -- ^ List
         -> [[a]]  -- ^ Sublists of the desired size
@@ -165,7 +177,8 @@ windows n ls
 --
 -- ==== Examples
 --
--- > rotateOnce [1..5] == [5,1,2,3,4]
+-- >>> rotateOnce [1..5]
+-- [5,1,2,3,4]
 rotateOnce :: [a] -> [a]
 rotateOnce ls = last ls : init ls
 
@@ -173,7 +186,8 @@ rotateOnce ls = last ls : init ls
 --
 -- ==== Examples
 --
--- > rotations [1,2,3] == [[1,2,3], [2,3,1], [3,1,2]]
+-- >>> rotations [1,2,3]
+-- [[1,2,3], [2,3,1], [3,1,2]]
 rotations :: [a] -> [[a]]
 rotations ls = go ls (length ls) []
   where
