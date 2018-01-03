@@ -31,6 +31,7 @@ module Euler.Math
   , isPentagonal
   , isPowerOf
   , isPrime
+  , isSquare
   , isTriangle
   , isTruncatablePrime
 
@@ -112,6 +113,10 @@ sqrtI = round . sqrt . fromIntegral
 -- | Calculates the cube root of a number.
 cubeRoot :: Integer -> Double
 cubeRoot = nthRoot 3
+
+-- | True if a number is the square of some number.
+isSquare :: Integer -> Bool
+isSquare = isPowerOf 2
 
 -- | True if a number is the cube of some number.
 isCube :: Integer -> Bool
