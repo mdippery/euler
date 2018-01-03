@@ -32,6 +32,9 @@ module Euler.List
   , splitEvery
   , windows
 
+    -- * Searching
+  , findConsecutive
+
     -- * Zipping and unzipping
   , zipWithIndex
   , zipWithIndexFrom
@@ -207,3 +210,16 @@ splitEvery _ [] = []
 splitEvery n ls =
   let (h,rest) = genericSplitAt n ls
    in h : splitEvery n rest
+
+-- | Finds a sublist of consecutive elements of length /n/. Returns the
+-- first sublist found, or @Nothing@ if there is not a consecutive
+-- subsquence of length /n/.
+findConsecutive :: Integer          -- ^ Length of desired subsequence
+                -> [Integer]        -- ^ List to search
+                -> Maybe [Integer]  -- ^ Subsequence of consecutive elements of length /n/
+findConsecutive n ls =
+  case dropWhile (not . f n) (windows n ls) of
+    [] -> Nothing
+    ws -> Just (head ws)
+  where
+    f n ls = head ls == (last ls) - n + 1
