@@ -360,6 +360,9 @@ problem45 = (head . dropWhile (<= 40755) . filter (\n -> isTriangle n && isPenta
 -- | Solves <https://projecteuler.net/problem=46 Project Euler Problem #46>
 problem46 = (head . filter (not . isOtherGoldbach)) composites
 
+-- | Solves <https://projecteuler.net/problem=47 Project Euler Problem #47>
+problem47 = 0
+
 -- | Solves <https://projecteuler.net/problem=48 Project Euler Problem #48>
 problem48 =
   let p = 10 ^ 10

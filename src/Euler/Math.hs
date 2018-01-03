@@ -38,6 +38,7 @@ module Euler.Math
   , isTruncatablePrime
 
     -- * Operations and calculations
+  , bigOmega
   , binomialCoefficient
   , closestRatio
   , collatzLength
@@ -48,6 +49,7 @@ module Euler.Math
   , divisibleByAny
   , factorial
   , factorization
+  , littleOmega
   , maximumPandigital
   , modAdd
   , modMult
@@ -382,14 +384,24 @@ factorization = unfoldr f
   where
     f n = listToMaybe [(x, n `div` x) | x <- [2..n], x `divides` n]
 
+-- | List of all the prime factors of a given number
+primeFactors :: Integer -> [Integer]
+primeFactors = nub . factorization
+
+-- | Number of prime factors of /n/.
+--
+-- For the number of /distinct/ prime factors, use 'littleOmega'.
+bigOmega :: Integer -> Integer
+bigOmega = genericLength . factorization
+
+-- | Number of /distinct/ prime factors of /n/.
+littleOmega :: Integer -> Integer
+littleOmega = genericLength . primeFactors
+
 -- | Calculates pairs of numbers that can be multiplied together to produce
 -- the given number.
 multiplicands :: Integral a => a -> [(a, a)]
 multiplicands n = nub $ map sortT $ zipT (div n) $ filter (flip divides n) $ enumFromTo 1 n
-
--- | List of all the prime factors of a given number
-primeFactors :: Integer -> [Integer]
-primeFactors = nub . factorization
 
 -- | Number of divisors of a given number.
 numDivisors :: Integral a => Integer -> a
