@@ -16,6 +16,7 @@ module Euler.Math
     isAbundant
   , isAbundantSum
   , isAmicable
+  , isComposite
   , isCoprime
   , isCube
   , isEven
@@ -170,6 +171,10 @@ isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty . ap (filter . flip divides) (enumFromTo 2 . sqrtI) $ n
 
+-- | True if the number is a composite number
+isComposite :: Integral a => a -> Bool
+isComposite = not . isPrime
+
 -- | Infinite list of all prime numbers.
 primes :: [Integer]
 primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
@@ -186,13 +191,13 @@ primesTo = flip takeWhile primes . flip (<=)
 
 -- | Infinite list of all composite numbers.
 composites :: [Integer]
-composites = (filter (not . isPrime) . enumFrom) 4
+composites = (filter isComposite . enumFrom) 4
 
 -- | All composite numbers less than or equal to the given number.
 compositesTo :: Integral a
              => a     -- ^ Upper bound, inclusive
              -> [a]   -- ^ All composite numbers less than or equal to the upper bound
-compositesTo n = filter (\x -> isOdd x && (not . isPrime) x) [4..n]
+compositesTo = filter isComposite . enumFromTo 4
 
 -- | True if the number contains all the digits from 1 to 9, in some order.
 --
