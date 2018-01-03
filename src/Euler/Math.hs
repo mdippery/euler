@@ -60,7 +60,7 @@ module Euler.Math
   , rightTriangles
   , sumDivisors
   , totient
-  , truncatables
+  , truncateN
 
     -- * Roots and powers
   , cubeRoot
@@ -420,12 +420,12 @@ fibonaccis = 0 : 1 : zipWith (+) fibonaccis (tail fibonaccis)
 --
 -- ==== Examples
 --
--- > truncatables 3797 == [3797, 797, 97, 7, 379, 37, 3]
+-- > truncateN 3797 == [3797, 797, 97, 7, 379, 37, 3]
 --
 -- That is, the returned list consists of the original number, plus all
 -- the numbers formed by successively removing digits from both ends.
-truncatables :: Integral a => a -> [a]
-truncatables n = n : go' tail n ++ go' init n
+truncateN :: Integral a => a -> [a]
+truncateN n = n : go' tail n ++ go' init n
   where
     go' f n = go f ((f . digits) n)
     go _ [] = []
@@ -433,7 +433,7 @@ truncatables n = n : go' tail n ++ go' init n
 
 -- | True if a number, all with all its associated truncated numbers, are prime.
 isTruncatablePrime :: Integer -> Bool
-isTruncatablePrime = all isPrime . truncatables
+isTruncatablePrime = all isPrime . truncateN
 
 -- | <https://en.wikipedia.org/wiki/Binomial_coefficient Binomial coefficient> of /n/.
 binomialCoefficient :: Integral a => a -> a

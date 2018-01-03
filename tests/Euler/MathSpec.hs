@@ -65,9 +65,9 @@ spec = do
       it "returns the sum of the divisors of 284" $ do
         sumDivisors 284 `shouldBe` 220
 
-    describe "truncatables" $ do
+    describe "truncateN" $ do
       it "returns a list of numbers truncated" $ do
-        truncatables 3797 `shouldBe` [3797, 797, 97, 7, 379, 37, 3]
+        truncateN 3797 `shouldBe` [3797, 797, 97, 7, 379, 37, 3]
 
     describe "isPandigital" $ do
       it "returns true if a number is 1-9 pandigital" $ do
