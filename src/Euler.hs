@@ -361,7 +361,7 @@ problem45 = (head . dropWhile (<= 40755) . filter (liftM2 (&&) isTriangle isPent
 problem46 = (head . filter (not . isOtherGoldbach)) composites
 
 -- | Solves <https://projecteuler.net/problem=47 Project Euler Problem #47>
-problem47 = 0
+problem47 = maybe 0 head $ findConsecutive 4 $ map fst $ filter ((== 4) . snd) $ zip [1..] $ map littleOmega [1..]
 
 -- | Solves <https://projecteuler.net/problem=48 Project Euler Problem #48>
 problem48 =
