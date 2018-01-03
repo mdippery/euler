@@ -12,7 +12,7 @@
 -}
 module Euler where
 
-import Control.Monad (ap)
+import Control.Monad (ap, liftM2)
 import Data.Char (digitToInt)
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort)
@@ -355,7 +355,7 @@ problem44 = head [abs (a' - b')
                     isPentagonal (a' - b')]
 
 -- | Solves <https://projecteuler.net/problem=45 Project Euler Problem #45>
-problem45 = (head . dropWhile (<= 40755) . filter (\n -> isTriangle n && isPentagonal n)) hexagonalNumbers
+problem45 = (head . dropWhile (<= 40755) . filter (liftM2 (&&) isTriangle isPentagonal)) hexagonalNumbers
 
 -- | Solves <https://projecteuler.net/problem=46 Project Euler Problem #46>
 problem46 = (head . filter (not . isOtherGoldbach)) composites
