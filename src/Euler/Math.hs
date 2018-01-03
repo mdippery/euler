@@ -245,10 +245,8 @@ isPandigitalFromTo :: Integral a
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
 
 -- | Calculates the largest /n/-digit pandigital that can be formed by the
--- given number.
---
--- A number is said to be /1 to n pandigital/ if it makes use of all digits
--- from 1 to /n/ exactly once.
+-- given number. A number is said to be /1 to n pandigital/ if it makes use of
+-- all digits from 1 to /n/ exactly once.
 --
 -- Returns @Nothing@ if the given number is not a pandigital; otherwise,
 -- returns @Just n@ where /n/ is the maximum /n/-digit pandigital formed
@@ -336,7 +334,7 @@ isPalindromeIn base n = D.digits base n == reverse (D.digits base n)
 factorial :: (Enum a, Num a) => a -> a
 factorial = product . enumFromTo 1
 
--- | True if /a/ divides /b/, that is, b divided by a yields no remainder.
+-- | True if /a/ divides /b/, that is, /b/ divided by /a/ yields no remainder.
 --
 -- This is best used as an infix operator.
 --
@@ -397,7 +395,7 @@ primeFactors = nub . factorization
 numDivisors :: Integer -> Int
 numDivisors = product . map ((+ 1) . length) . group . factorization
 
--- | Sum of the divisors of a given number
+-- | Sum of the divisors of a given number.
 sumDivisors :: Integer -> Integer
 sumDivisors = (-) =<< go
   where
@@ -418,7 +416,7 @@ isAmicable a b = a < b && d a == b && d b == a
 isAbundant :: Integer -> Bool
 isAbundant = (>) =<< (memoSumDivisors !)
 
--- | List of all abundant numbers
+-- | List of all abundant numbers.
 abundantNumbers :: [Integer]
 abundantNumbers = filter (memoAbundantNumbers !) [1..28123]
 
@@ -426,7 +424,7 @@ abundantNumbers = filter (memoAbundantNumbers !) [1..28123]
 isAbundantSum :: Integer -> Bool
 isAbundantSum n = any (\x -> isAbundant (n - x)) $ takeWhile (< n) abundantNumbers
 
--- | The /nth/ Fibonacci number
+-- | The /nth/ Fibonacci number.
 fibonacci :: Integral a => Int -> a
 fibonacci = (fibonaccis !!)
 
@@ -478,7 +476,7 @@ modPower :: Integral a
          -> a     -- ^ /bth/ power of /a/, modulo /m/
 modPower m a b = (modProduct m . take b . repeat) a
 
--- | Adds two numbers, modulo some other number
+-- | Adds two numbers, modulo some other number.
 modAdd :: Integral a
        => a   -- ^ /m/
        -> a   -- ^ /a/
