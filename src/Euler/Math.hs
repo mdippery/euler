@@ -174,7 +174,7 @@ cycleLength x = go [] (numerator x) (denominator x)
 isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
-isPrime n = isEmpty . ap (filter . flip divides) (enumFromTo 2 . sqrtI) $ n
+isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
 
 -- | True if the number is a composite number.
 isComposite :: Integral a => a -> Bool
