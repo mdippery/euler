@@ -41,7 +41,7 @@ module Euler.List
   , unzipWithIndex
   ) where
 
-import Data.List (genericLength, genericSplitAt, genericTake)
+import Data.List (genericLength, genericSplitAt, genericTake, tails, transpose)
 
 -- | Appends a value to a list.
 (<:) :: [a]   -- ^ List
@@ -173,10 +173,7 @@ windows :: Integral a
         => a      -- ^ Desired size of sublists
         -> [b]    -- ^ List
         -> [[b]]  -- ^ Sublists of the desired size
-windows n [] = []
-windows n ls
-  | genericLength ls >= n = genericTake n ls : windows n (tail ls)
-  | otherwise = []
+windows n ls = transpose $ genericTake n $ tails ls
 
 -- | Moves the last element of a list to the front.
 --
