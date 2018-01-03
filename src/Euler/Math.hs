@@ -243,12 +243,16 @@ isPandigitalFromTo s e = (== [s..e]) . sort . digits
 -- given number.
 --
 -- A number is said to be /1 to n pandigital/ if it makes use of all digits
--- from 1 to /n/ exactly once. For example, 1234 is a 4-digit pandigital. 134
--- is not pandigital at all.
+-- from 1 to /n/ exactly once.
 --
 -- Returns @Nothing@ if the given number is not a pandigital; otherwise,
 -- returns @Just n@ where /n/ is the maximum /n/-digit pandigital formed
 -- by the number.
+--
+-- ==== Examples
+--
+-- > maximumPandigital 1234 == Just 4
+-- > maximumPandigital 134 == Nothing
 maximumPandigital :: Integral a => a -> Maybe Int
 maximumPandigital n =
   case elemIndex True (map (flip isPandigitalTo n) [9,8..1]) of
@@ -441,9 +445,9 @@ binomialCoefficient n = factorial (2 * n) `div` (factorial n * factorial n)
 
 -- | Multiplies two numbers, modulo some other number.
 modMult :: Integral a
-        => a  -- ^ Modulus
-        -> a  -- ^ First operand
-        -> a  -- ^ Second operand
+        => a  -- ^ /m/
+        -> a  -- ^ /a/
+        -> a  -- ^ /b/
         -> a  -- ^ /(a * b) % m/
 modMult m a b = (a * b) `mod` m
 
@@ -453,17 +457,17 @@ modProduct m = foldr (modMult m) 1 . map (`mod` m)
 
 -- | Raises a number to a given power, modulo another number.
 modPower :: Integral a
-         => a     -- ^ Modulus
-         -> a     -- ^ Base number
-         -> Int   -- ^ Power
+         => a     -- ^ /m/
+         -> a     -- ^ /a/
+         -> Int   -- ^ /b/
          -> a     -- ^ /bth/ power of /a/, modulo /m/
 modPower m a b = (modProduct m . take b . repeat) a
 
 -- | Adds two numbers, modulo some other number
 modAdd :: Integral a
-       => a   -- ^ Modulus
-       -> a   -- ^ First operand
-       -> a   -- ^ Second operand
+       => a   -- ^ /m/
+       -> a   -- ^ /a/
+       -> a   -- ^ /b/
        -> a   -- ^ /(a + b) % m/
 modAdd m a b = (a + b) `mod` m
 
