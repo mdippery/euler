@@ -104,7 +104,7 @@ zipWithIndex = zipWithIndexFrom 0
 --
 -- ==== Examples
 --
--- >>> zipWithIndex 2 [10,20,30]
+-- >>> zipWithIndexFrom 2 [10,20,30]
 -- [(2,10), (3,20), (4,30)]
 zipWithIndexFrom :: (Enum b, Num b)
                => b         -- ^ Starting index
@@ -130,8 +130,8 @@ unzipWithIndex = map snd
 -- [1,3,5,7,9]
 dropNth :: Integral b
         => b    -- ^ /nth/ element to remove
-        -> [a]  -- ^ List
-        -> [a]  -- ^ List with every /n/ elements removed
+        -> [a]  -- ^ Original list
+        -> [a]  -- ^ New list with every /n/ elements removed
 dropNth n =
   let step n (i, x) acc = if i `rem` n == 0 then acc else (i, x):acc
    in unzipWithIndex . foldr (step n) [] . zipWithIndex
