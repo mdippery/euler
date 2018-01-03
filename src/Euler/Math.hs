@@ -85,7 +85,7 @@ module Euler.Math
 
 import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
-import           Data.List (elemIndex, genericIndex, group, intersect, nub, sort, unfoldr)
+import           Data.List (elemIndex, genericIndex, genericLength, genericTake, group, intersect, nub, sort, unfoldr)
 import           Data.Maybe (fromJust, listToMaybe)
 import           Data.Ratio ((%), Ratio, denominator, numerator)
 
@@ -138,9 +138,9 @@ isPowerOf p n = round (nthRoot p n) ^ p == n
 
 -- | Number of digits in a given number in base 10.
 numLength :: (Integral a)
-          => a    -- ^ Number
-          -> Int  -- ^ Number of digits in the number
-numLength = length . digits
+          => a  -- ^ Number
+          -> a  -- ^ Number of digits in the number
+numLength = genericLength . digits
 
 -- | All numbers with the given number of digits in base 10.
 numbersOfLength :: (Num b, Enum b, Integral a)
@@ -392,14 +392,14 @@ primeFactors :: Integer -> [Integer]
 primeFactors = nub . factorization
 
 -- | Number of divisors of a given number.
-numDivisors :: Integer -> Int
-numDivisors = product . map ((+ 1) . length) . group . factorization
+numDivisors :: Integral a => Integer -> a
+numDivisors = product . map ((+ 1) . genericLength) . group . factorization
 
 -- | Sum of the divisors of a given number.
 sumDivisors :: Integer -> Integer
 sumDivisors = (-) =<< go
   where
-    pow' = liftM2 (,) head length
+    pow' = liftM2 (,) head genericLength
     sum' = uncurry ((. enumFromTo 0) . (sum .) . map . (^))
     go = product . map (sum' . pow') . group . factorization
 
@@ -472,9 +472,9 @@ modProduct m = foldr (modMult m) 1 . map (`mod` m)
 modPower :: Integral a
          => a     -- ^ /m/
          -> a     -- ^ /a/
-         -> Int   -- ^ /b/
+         -> a     -- ^ /b/
          -> a     -- ^ /bth/ power of /a/, modulo /m/
-modPower m a b = (modProduct m . take b . repeat) a
+modPower m a b = (modProduct m . genericTake b . repeat) a
 
 -- | Adds two numbers, modulo some other number.
 modAdd :: Integral a

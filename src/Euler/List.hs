@@ -38,6 +38,8 @@ module Euler.List
   , unzipWithIndex
   ) where
 
+import Data.List (genericLength, genericSplitAt, genericTake)
+
 -- | Appends a value to a list.
 (<:) :: [a]   -- ^ List
      -> a     -- ^ Value to append to the list
@@ -147,12 +149,13 @@ dropNth n =
 -- [1,2,3,4,5,6,7,8,9,10]
 -- >>> replaceAt 0 20 []
 -- []
-replaceAt :: Int  -- ^ Index to replace
-          -> a    -- ^ Replacement element
-          -> [a]  -- ^ List
-          -> [a]  -- ^ List with the /nth/ element replaced by the given value
+replaceAt :: Integral a
+          => a    -- ^ Index to replace
+          -> b    -- ^ Replacement element
+          -> [b]  -- ^ List
+          -> [b]  -- ^ List with the /nth/ element replaced by the given value
 replaceAt i e ls =
-  case splitAt i ls of
+  case genericSplitAt i ls of
     ([], []) -> []
     (h, []) -> ls
     (h, rest) -> h ++ [e] ++ tail rest
@@ -163,13 +166,14 @@ replaceAt i e ls =
 --
 -- >>> windows 4 [1..6]
 -- [[1,2,3,4], [2,3,4,5], [3,4,5,6]]
-windows :: Int    -- ^ Desired size of sublists
-        -> [a]    -- ^ List
-        -> [[a]]  -- ^ Sublists of the desired size
+windows :: Integral a
+        => a      -- ^ Desired size of sublists
+        -> [b]    -- ^ List
+        -> [[b]]  -- ^ Sublists of the desired size
 windows n [] = []
 windows n ls
-  | length ls >= n = take n ls : windows n (tail ls)
-  | otherwise      = []
+  | genericLength ls >= n = genericTake n ls : windows n (tail ls)
+  | otherwise = []
 
 -- | Moves the last element of a list to the front.
 --
@@ -195,10 +199,11 @@ rotations ls = go ls (length ls) []
        in go ls' (n - 1) (ls' : acc)
 
 -- | Splits a list into /n/-sized chunks.
-splitEvery :: Int     -- ^ Desired size of chunks
-           -> [a]     -- ^ List
-           -> [[a]]   -- ^ List of lists of size /n/
+splitEvery :: Integral a
+           => a       -- ^ Desired size of chunks
+           -> [b]     -- ^ List
+           -> [[b]]   -- ^ List of lists of size /n/
 splitEvery _ [] = []
 splitEvery n ls =
-  let (h,rest) = splitAt n ls
+  let (h,rest) = genericSplitAt n ls
    in h : splitEvery n rest
