@@ -431,7 +431,7 @@ truncateN n = n : go' tail n ++ go' init n
     go _ [] = []
     go f ns = unDigits ns : go f (f ns)
 
--- | True if a number, all with all its associated truncated numbers, are prime.
+-- | True if a number, along with all its associated truncated numbers, are prime.
 isTruncatablePrime :: Integer -> Bool
 isTruncatablePrime = all isPrime . truncateN
 
