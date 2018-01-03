@@ -211,9 +211,10 @@ splitEvery n ls =
 -- | Finds a sublist of consecutive elements of length /n/. Returns the
 -- first sublist found, or @Nothing@ if there is not a consecutive
 -- subsquence of length /n/.
-findConsecutive :: Integer          -- ^ Length of desired subsequence
-                -> [Integer]        -- ^ List to search
-                -> Maybe [Integer]  -- ^ Subsequence of consecutive elements of length /n/
+findConsecutive :: Integral a
+                => a          -- ^ Length of desired subsequence
+                -> [a]        -- ^ List to search
+                -> Maybe [a]  -- ^ Subsequence of consecutive elements of length /n/
 findConsecutive n ls =
   case dropWhile (not . f n) (windows n ls) of
     [] -> Nothing
