@@ -66,6 +66,8 @@ module Euler.Math
 
     -- * Groups, classes, and sequences
   , abundantNumbers
+  , composites
+  , compositesTo
   , fibonacci
   , fibonaccis
   , hexagonalNumbers
@@ -163,6 +165,30 @@ isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty . ap (filter . flip divides) (enumFromTo 2 . sqrtI) $ n
 
+-- | Infinite list of all prime numbers.
+primes :: [Integer]
+primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
+
+-- | All prime numbers less than the given number.
+primesBelow :: Integer    -- ^ Upper bound, exclusive
+            -> [Integer]  -- ^ All prime numbers less than the upper bound
+primesBelow = primesTo . (flip (-) 1)
+
+-- | All prime numbers less than or equal to the given number.
+primesTo :: Integer     -- ^ Upper bound, inclusive
+         -> [Integer]   -- ^ All prime numbers less than or equal to the upper bound
+primesTo = flip takeWhile primes . flip (<=)
+
+-- | Infinite list of all composite numbers.
+composites :: [Integer]
+composites = (filter (not . isPrime) . enumFrom) 4
+
+-- | All composite numbers less than or equal to the given number.
+compositesTo :: Integral a
+             => a     -- ^ Upper bound, inclusive
+             -> [a]   -- ^ All composite numbers less than or equal to the upper bound
+compositesTo n = filter (\x -> isOdd x && (not . isPrime) x) [4..n]
+
 -- | True if the number contains all the digits from 1 to 9, in some order.
 --
 -- This is equivalent to @isPandigital 9@.
@@ -253,20 +279,6 @@ isHexagonal n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
       p = (sqn + 1) / 4
    in isInteger p
-
--- | Infinite list of all prime numbers.
-primes :: [Integer]
-primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
-
--- | All prime numbers less than the given number.
-primesBelow :: Integer    -- ^ Upper bound, exclusive
-            -> [Integer]  -- ^ All prime numbers less than the upper bound
-primesBelow = primesTo . (flip (-) 1)
-
--- | All prime numbers less than or equal to the given number.
-primesTo :: Integer     -- ^ Upper bound, inclusive
-         -> [Integer]   -- ^ All prime numbers less than or equal to the upper bound
-primesTo = flip takeWhile primes . flip (<=)
 
 -- | True if the number is <https://en.wikipedia.org/wiki/Palindromic_number palindromic>
 -- in base 10.
