@@ -357,6 +357,9 @@ problem44 = head [abs (a' - b')
 -- | Solves <https://projecteuler.net/problem=45 Project Euler Problem #45>
 problem45 = (head . dropWhile (<= 40755) . filter (\n -> isTriangle n && isPentagonal n)) hexagonalNumbers
 
+-- | Solves <https://projecteuler.net/problem=46 Project Euler Problem #46>
+problem46 = (head . filter (not . isOtherGoldbach)) composites
+
 -- | Solves <https://projecteuler.net/problem=48 Project Euler Problem #48>
 problem48 =
   let p = 10 ^ 10

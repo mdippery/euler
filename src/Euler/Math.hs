@@ -24,6 +24,7 @@ module Euler.Math
   , isInteger
   , isLychrel
   , isOdd
+  , isOtherGoldbach
   , isPalindrome
   , isPalindromeIn
   , isPandigital
@@ -165,13 +166,13 @@ cycleLength x = go [] (numerator x) (denominator x)
       where
         r = n `rem` d
 
--- | True if the number is prime
+-- | True if the number is prime.
 isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
 isPrime n = isEmpty . ap (filter . flip divides) (enumFromTo 2 . sqrtI) $ n
 
--- | True if the number is a composite number
+-- | True if the number is a composite number.
 isComposite :: Integral a => a -> Bool
 isComposite = not . isPrime
 
@@ -198,6 +199,22 @@ compositesTo :: Integral a
              => a     -- ^ Upper bound, inclusive
              -> [a]   -- ^ All composite numbers less than or equal to the upper bound
 compositesTo = filter isComposite . enumFromTo 4
+
+-- | True if /n/ is an odd composite number that can be expressed as the
+-- sum of a prime and twice a square.
+--
+-- The results of this function are further elaborated upon in
+-- <https://projecteuler.net/problem=46 Euler Problem #46>.
+--
+-- ==== Examples
+--
+-- > isOtherGoldbach 9 == True
+-- > isOtherGoldbach 23 == False
+-- > (head . filter (not . isOtherGoldbach)) composites == 5777
+isOtherGoldbach :: Integer -> Bool
+isOtherGoldbach n = isEven n || isPrime n || (not . isEmpty) (go n)
+  where
+    go n = [x | x <- primesTo n, isSquare ((n - x) `div` 2)]
 
 -- | True if the number contains all the digits from 1 to 9, in some order.
 --
