@@ -85,7 +85,7 @@ module Euler.Math
 
 import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
-import           Data.List (elemIndex, group, intersect, nub, sort, unfoldr)
+import           Data.List (elemIndex, genericIndex, group, intersect, nub, sort, unfoldr)
 import           Data.Maybe (fromJust, listToMaybe)
 import           Data.Ratio ((%), Ratio, denominator, numerator)
 
@@ -295,8 +295,8 @@ pentagonalNumbers = map pn [1..]
     pn n = n * (3 * n - 1) `div` 2
 
 -- | /nth/ <https://en.wikipedia.org/wiki/Pentagonal_number pentagonal number>.
-pentagonalNumber :: Int -> Integer
-pentagonalNumber = ((0 : pentagonalNumbers) !!)
+pentagonalNumber :: Integral a => a -> Integer
+pentagonalNumber = genericIndex (0 : pentagonalNumbers)
 
 -- | True if a number is a <https://en.wikipedia.org/wiki/Pentagonal_number pentagonal number>.
 isPentagonal :: Integer -> Bool
@@ -425,8 +425,8 @@ isAbundantSum :: Integer -> Bool
 isAbundantSum n = any (\x -> isAbundant (n - x)) $ takeWhile (< n) abundantNumbers
 
 -- | The /nth/ Fibonacci number.
-fibonacci :: Integral a => Int -> a
-fibonacci = (fibonaccis !!)
+fibonacci :: Integral a => a -> a
+fibonacci = genericIndex fibonaccis
 
 -- | Infinite list of Fibonacci numbers
 fibonaccis :: Integral a => [a]
