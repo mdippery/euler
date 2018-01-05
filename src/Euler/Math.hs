@@ -78,6 +78,7 @@ module Euler.Math
   , fibonaccis
   , hexagonalNumbers
   , numbersOfLength
+  , nextPrime
   , pentagonalNumber
   , pentagonalNumbers
   , primes
@@ -194,6 +195,10 @@ primesBelow = primesTo . (flip (-) 1)
 primesTo :: Integer     -- ^ Upper bound, inclusive
          -> [Integer]   -- ^ All prime numbers less than or equal to the upper bound
 primesTo = flip takeWhile primes . flip (<=)
+
+-- | First prime number greater than /n/.
+nextPrime :: Integer -> Integer
+nextPrime n = (head . dropWhile (<= n)) primes
 
 -- | Infinite list of all composite numbers.
 composites :: [Integer]
