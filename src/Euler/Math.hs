@@ -59,6 +59,7 @@ module Euler.Math
   , multiplicands
   , numDivisors
   , numLength
+  , primeFactors
   , rightTriangles
   , sumDivisors
   , totient
@@ -145,7 +146,7 @@ numLength :: (Integral a)
 numLength = genericLength . digits
 
 -- | All numbers with the given number of digits in base 10.
-numbersOfLength :: (Num b, Enum b, Integral a)
+numbersOfLength :: (Integral a, Num b, Enum b)
                 => a    -- ^ Number of digits
                 -> [b]  -- ^ All integers with the given number of digits in base 10
 numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
@@ -379,12 +380,31 @@ divisibleByAny :: Integral a
 divisibleByAny = (. (flip divides)) . flip any
 
 -- | List of all factors of the given number.
+--
+-- The result may include duplicates, since it includes /all/ the prime
+-- factors that can be multiplied together to get the original number. To
+-- get only the unique prime factors, use 'primeFactors' instead.
+--
+-- ==== Examples
+--
+-- >>> factorization 28
+-- [2,2,7]
+-- >>> (product . factorization) 28
+-- 28
 factorization :: Integer -> [Integer]
 factorization = unfoldr f
   where
     f n = listToMaybe [(x, n `div` x) | x <- [2..n], x `divides` n]
 
--- | List of all the prime factors of a given number
+-- | List of all the prime factors of a given number.
+--
+-- These are the /unique/ prime factors of the given number. For the
+-- full factorization, use 'factorization' instead.
+--
+-- ==== Examples
+--
+-- >>> primeFactors 28
+-- [2,7]
 primeFactors :: Integer -> [Integer]
 primeFactors = nub . factorization
 
