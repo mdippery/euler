@@ -30,7 +30,7 @@ import Euler.List
 import Euler.Math
 import Euler.Poker
 import Euler.Pyramid
-import Euler.Ring
+import Euler.Spiral
 import Euler.Text
 import Euler.Tuple
 

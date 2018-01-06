@@ -3,16 +3,15 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Euler.Ring
-  Description : Calculates the sum of the diagonals of "rings" of numbers
+  Module      : Euler.Spiral
+  Description : Calculates the sum of the diagonals of "spirals" of numbers
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
-  Calculates the sum of the diagonals of "rings" of numbers. These are not
-  "rings" in the mathematical sense; for more information, see
-  <https://projecteuler.net/problem=28 Euler Problem #28>.
+  Calculates the sum of the diagonals of "spirals" of numbers. These "spirals"
+  are defined in <https://projecteuler.net/problem=28 Euler Problem #28>.
 -}
-module Euler.Ring where
+module Euler.Spiral where
 
 -- | Calculates the sum of the diagonals of spiral (a series of /n/ rings).
 sumDiagonals :: Integer   -- ^ Number of rings in the spiral
