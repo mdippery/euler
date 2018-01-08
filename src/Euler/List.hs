@@ -39,6 +39,9 @@ module Euler.List
   , zipWithIndex
   , zipWithIndexFrom
   , unzipWithIndex
+
+    -- * Special folds
+  , atLeast
   ) where
 
 import Data.List (genericLength, genericSplitAt, genericTake)
@@ -224,3 +227,11 @@ findConsecutive n ls =
     ws -> Just (head ws)
   where
     f n ls = head ls == (last ls) - n + 1
+
+-- | True if at least /n/ elements satisfy the given predicate.
+atLeast :: (Num b, Ord b)
+        => (a -> Bool)  -- ^ Predicate function
+        -> b            -- ^ Minimum number of list elements that must satisfy the predicate
+        -> [a]          -- ^ List
+        -> Bool         -- ^ True if at least /n/ elements satisfy the predicate
+atLeast f n ls = genericLength (filter f ls) >= n
