@@ -64,6 +64,7 @@ module Euler.Math
   , sameDigits
   , sumDivisors
   , totient
+  , totientRatio
   , truncateN
 
     -- * Roots and powers
@@ -558,11 +559,14 @@ isCoprime a b = (null . uncurry intersect) (factorization a, factorization b)
 --
 -- The totient function counts the number of positive integers up to /n/ that
 -- are relatively prime to /n/.
-totient :: Integer  -- ^ /n/
-        -> Integer  -- ^ Number of integers from 1 to /n/ that are relatively prime to /n/
+totient :: Integer -> Integer
 totient n =
   let ratio = foldr (\x memo -> memo * (1 - (1 % x))) (n % 1) $ primeFactors n
    in (liftM2 div numerator denominator) ratio
+
+-- | Calculates /n \/ 'totient'(n)/.
+totientRatio :: Fractional a => Integer -> a
+totientRatio n = fromIntegral n / fromIntegral (totient n)
 
 -- | Counts the number of steps to get from an arbitrary integer to 1 by
 -- the process described in the <https://en.wikipedia.org/wiki/Collatz_conjecture Collatz conjecture>.
