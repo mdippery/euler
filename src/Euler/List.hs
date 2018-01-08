@@ -41,9 +41,7 @@ module Euler.List
 import Data.List (genericLength, genericSplitAt, genericTake)
 
 -- | Appends a value to a list.
-(<:) :: [a]   -- ^ List
-     -> a     -- ^ Value to append to the list
-     -> [a]   -- ^ New list with the given value appended
+(<:) :: [a] -> a -> [a]
 as <: b = as ++ [b]
 
 -- | Returns the middle elements of a list.
@@ -87,9 +85,7 @@ fatten ls = head ls : duplicate (middle ls) <: last ls
 --
 -- >>> zipWithIndex [10,20,30]
 -- [(0,10), (1,20), (2,30)]
-zipWithIndex :: (Enum b, Num b)
-             => [a]       -- ^ List
-             -> [(b, a)]  -- ^ New list containing a combination of indexes and elements
+zipWithIndex :: (Enum b, Num b) => [a] -> [(b, a)]
 zipWithIndex = zipWithIndexFrom 0
 
 -- | Combines all elements with their index in the list, starting with the
@@ -113,8 +109,7 @@ zipWithIndexFrom = zip . enumFrom
 --
 -- > (unzipWithIndex . zipWithIndex) ls == ls
 -- > (unzipWithIndex . zipWithIndexAt 10) ls == ls
-unzipWithIndex :: [(b, a)]  -- ^ List
-               -> [a]       -- ^ List with indexes removed
+unzipWithIndex :: [(b, a)] -> [a]
 unzipWithIndex = map snd
 
 -- | Removes every /nth/ element from a list.
