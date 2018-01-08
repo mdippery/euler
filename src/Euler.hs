@@ -369,6 +369,10 @@ problem48 =
       mp n = modPower p n n
    in (modSum p . map mp) [1..1000]
 
+-- | Solves <https://projecteuler.net/problem=52 Project Euler Problem #52>
+problem52 = (head . filter (f 6) . filter (f 5) . filter (f 4) . filter (f 3) . filter (f 2)) [1..]
+  where f m x = sameDigits x (m * x)
+
 -- | Solves <https://projecteuler.net/problem=53 Project Euler Problem #53>
 problem53 = (length . filter (> 1000000)) [n `choose` r | n <- [1..100], r <- [1..n]]
 
