@@ -17,6 +17,7 @@ module Euler.Foldable
 
     -- * Special folds
   , atLeast
+  , exactly
   ) where
 
 import Control.Applicative (pure)
@@ -42,3 +43,12 @@ atLeast :: (Applicative f, Foldable f, Monoid (f a))
         -> f a            -- ^ Foldable
         -> Bool           -- ^ True if at least /n/ elements satisfy the predicate
 atLeast p n f = length (filterF p f) >= n
+
+-- | True if the foldable containts /exactly/ /n/ elements that satisfy the
+-- given predicate.
+exactly :: (Applicative f, Foldable f, Monoid (f a))
+        => (a -> Bool)    -- ^ Predicate
+        -> Int            -- ^ Exact number of elements that must satisfy the predicate
+        -> f a            -- ^ Foldable
+        -> Bool           -- ^ True if exactly /n/ elements satisfy the predicate
+exactly p n f = length (filterF p f) == n
