@@ -90,6 +90,7 @@ module Euler.Math
 
 import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
+import           Data.Foldable (null)
 import           Data.List (elemIndex, genericIndex, genericLength, genericTake, group, intersect, nub, sort, unfoldr)
 import           Data.Maybe (fromJust, listToMaybe)
 import           Data.Ratio ((%), Ratio, denominator, numerator)
@@ -98,7 +99,7 @@ import qualified Data.Digits as D
 import           Data.List.Ordered (minus, unionAll)
 
 import           Euler.Data (digits, unDigits)
-import           Euler.List ((<:), isEmpty)
+import           Euler.List ((<:))
 import           Euler.Tuple (sortT, zipT)
 
 
@@ -183,7 +184,7 @@ cycleLength x = go [] (numerator x) (denominator x)
 isPrime :: Integral a => a -> Bool
 isPrime 1 = False
 isPrime 2 = True
-isPrime n = isEmpty $ filter (flip divides n) [2..sqrtI n]
+isPrime n = null $ filter (flip divides n) [2..sqrtI n]
 
 -- | True if the number is a composite number.
 isComposite :: Integral a => a -> Bool
@@ -232,7 +233,7 @@ compositesTo = filter isComposite . enumFromTo 4
 -- >>> (head . filter (not . isOtherGoldbach)) composites
 -- 5777
 isOtherGoldbach :: Integer -> Bool
-isOtherGoldbach n = isEven n || isPrime n || (not . isEmpty) (go n)
+isOtherGoldbach n = isEven n || isPrime n || (not . null) (go n)
   where
     go n = [x | x <- primesTo n, isSquare ((n - x) `div` 2)]
 
@@ -551,7 +552,7 @@ choose n r = factorial n `div` (factorial r * factorial (n - r))
 -- Two integers are <https://en.wikipedia.org/wiki/Coprime_integers coprime>
 -- if their greatest common divisor is 1.
 isCoprime :: Integer -> Integer -> Bool
-isCoprime a b = (isEmpty . uncurry intersect) (factorization a, factorization b)
+isCoprime a b = (null . uncurry intersect) (factorization a, factorization b)
 
 -- | <https://en.wikipedia.org/wiki/Euler's_totient_function Euler's totient function>.
 --

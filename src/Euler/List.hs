@@ -12,11 +12,8 @@
 -}
 module Euler.List
   (
-    -- * Basic properties
-    isEmpty
-
     -- * Basic functions
-  , (<:)
+    (<:)
   , middle
   , penultimate
 
@@ -48,11 +45,6 @@ import Data.List (genericLength, genericSplitAt, genericTake)
      -> a     -- ^ Value to append to the list
      -> [a]   -- ^ New list with the given value appended
 as <: b = as ++ [b]
-
--- | True if the list is empty.
-isEmpty :: [a] -> Bool
-isEmpty [] = True
-isEmpty _  = False
 
 -- | Returns the middle elements of a list.
 --
