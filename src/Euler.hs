@@ -506,3 +506,6 @@ problem69 = product $ unfoldr f (1,2)
 
 -- | Solves <https://projecteuler.net/problem=71 Project Euler Problem #71>
 problem71 = (numerator . closestRatio) (3 % 7)
+
+-- | Solves <https://projecteuler.net/problem=74 Project Euler Problem #74>
+problem74 = (length . filter (== 60) . map (length . factorialChain)) [1..999999]

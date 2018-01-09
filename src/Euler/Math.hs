@@ -44,10 +44,12 @@ module Euler.Math
   , collatzLength
   , choose
   , cycleLength
+  , digitFactorial
   , divides
   , divisibleBy
   , divisibleByAny
   , factorial
+  , factorialChain
   , factorization
   , littleOmega
   , maximumPandigital
@@ -62,6 +64,7 @@ module Euler.Math
   , primeFactors
   , rightTriangles
   , sameDigits
+  , sumDigitFactorial
   , sumDivisors
   , totient
   , totientRatio
@@ -350,6 +353,40 @@ isPalindromeIn base n = D.digits base n == reverse (D.digits base n)
 -- | Factorial of /n/.
 factorial :: (Enum a, Num a) => a -> a
 factorial = product . enumFromTo 1
+
+-- | Calculates the factorial of each digit of /n/.
+--
+-- ==== Examples
+--
+-- >>> digitFactorial 169
+-- [1,720,362880]
+digitFactorial :: Integral a => a -> [a]
+digitFactorial = map factorial . digits
+
+-- | Sum of the factorial of each digit of /n/.
+--
+-- Essentially this is @sum . 'digitFactorial'@.
+--
+-- ==== Examples
+--
+-- >>> sumDigitFactorial 169
+-- 363301
+sumDigitFactorial :: Integral a => a -> a
+sumDigitFactorial = sum . digitFactorial
+
+-- | Calculates the chain of numbers such that, when 'sumDigitFactorial' is
+-- applied to each subsequence link in the chain, the chain begins to repeat
+-- again.
+--
+-- It is known that /every/ starting number will eventually get stuck in a
+-- loop. The chain returned by this function will contain all the unique
+-- elements of that sequence, in order, before it begins to loop again.
+factorialChain :: Integral a => a -> [a]
+factorialChain = go []
+  where
+    go memo n
+      | n `elem` memo = reverse memo
+      | otherwise = go (n : memo) (sumDigitFactorial n)
 
 -- | True if /a/ divides /b/, that is, /b/ divided by /a/ yields no remainder.
 --

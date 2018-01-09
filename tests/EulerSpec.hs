@@ -207,3 +207,7 @@ spec = do
   describe "Verify that problem 71" $ do
     it "is correct" $ do
       problem71 `shouldBe` 428570
+
+  describe "Verify that problem 74" $ do
+    it "is correct" $ do
+      problem74 `shouldBe` 402
