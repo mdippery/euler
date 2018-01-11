@@ -360,8 +360,10 @@ factorial = product . enumFromTo 1
 --
 -- >>> digitFactorial 169
 -- [1,720,362880]
-digitFactorial :: Integral a => a -> [a]
-digitFactorial = map factorial . digits
+digitFactorial :: Integer -> [Integer]
+digitFactorial = map factorial' . digits
+  where
+    factorial' = (memoFactorials !)
 
 -- | Sum of the factorial of each digit of /n/.
 --
@@ -371,7 +373,7 @@ digitFactorial = map factorial . digits
 --
 -- >>> sumDigitFactorial 169
 -- 363301
-sumDigitFactorial :: Integral a => a -> a
+sumDigitFactorial :: Integer -> Integer
 sumDigitFactorial = sum . digitFactorial
 
 -- | Calculates the chain of numbers such that, when 'sumDigitFactorial' is
@@ -381,7 +383,7 @@ sumDigitFactorial = sum . digitFactorial
 -- It is known that /every/ starting number will eventually get stuck in a
 -- loop. The chain returned by this function will contain all the unique
 -- elements of that sequence, in order, before it begins to loop again.
-factorialChain :: Integral a => a -> [a]
+factorialChain :: Integer -> [Integer]
 factorialChain = go []
   where
     go memo n
@@ -675,3 +677,6 @@ memoSumDivisors = listArray (1, 30000) $ map sumDivisors [1..30000]
 
 memoAbundantNumbers :: Array Integer Bool
 memoAbundantNumbers = listArray (1, 28123) $ map isAbundant [1..28123]
+
+memoFactorials :: Array Integer Integer
+memoFactorials = listArray (0, 1000000) $ map factorial [0..1000000]
