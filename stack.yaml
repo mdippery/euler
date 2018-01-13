@@ -4,4 +4,4 @@ packages:
 - .
 extra-deps:
 - dates-0.2.2.1
-resolver: lts-10.2
+resolver: lts-10.3
