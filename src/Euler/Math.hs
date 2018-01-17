@@ -360,9 +360,7 @@ factorial = product . enumFromTo 1
 -- >>> digitFactorial 169
 -- [1,720,362880]
 digitFactorial :: Integer -> [Integer]
-digitFactorial = map factorial' . digits
-  where
-    factorial' = (memoFactorials !)
+digitFactorial = map (memoFactorials !) . digits
 
 -- | Sum of the factorial of each digit of /n/.
 --
@@ -387,7 +385,10 @@ factorialChain = go []
   where
     go memo n
       | n `elem` memo = reverse memo
-      | otherwise = go (n : memo) (sumDigitFactorial n)
+      | otherwise = go (n : memo) (sdf n)
+    sdf n
+      | inRange (bounds memoSumDigitFactorials) n = memoSumDigitFactorials ! n
+      | otherwise = sumDigitFactorial n
 
 -- | True if /a/ divides /b/, that is, /b/ divided by /a/ yields no remainder.
 --
@@ -666,3 +667,6 @@ memoAbundantNumbers = listArray (1, 28123) $ map isAbundant [1..28123]
 
 memoFactorials :: Array Integer Integer
 memoFactorials = listArray (0, 1000000) $ map factorial [0..1000000]
+
+memoSumDigitFactorials :: Array Integer Integer
+memoSumDigitFactorials = listArray (0, 1000000) $ map sumDigitFactorial [0..1000000]
