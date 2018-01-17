@@ -516,8 +516,8 @@ problem99 =
     (fst
      . maximumBy (comparing snd)
      . zip [1..]
-     . map (uncurry (^))
-     . map (\(a,b) -> (read a :: Integer, read b :: Integer))
+     . map (\(x,y) -> y * log x)
+     . map (\(a,b) -> (read a :: Double, read b :: Double))
      . map (\(h,r) -> (h, tail r))
      . map (span (/= ','))
      . lines)
