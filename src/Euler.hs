@@ -323,10 +323,7 @@ problem35 = (length . filter f) [1..1000000]
     f = all isPrime . map unDigits . nub . rotations . digits
 
 -- | Solves <https://projecteuler.net/problem=36 Project Euler Problem #36>
-problem36 =
-  let p n = isPalindromeIn 10 n && isPalindromeIn 2 n
-      ns  = [1..999999]
-   in (sum . filter p) ns
+problem36 = (sum . filter (liftM2 (&&) (isPalindromeIn 10) (isPalindromeIn 2))) [1..999999]
 
 -- | Solves <https://projecteuler.net/problem=37 Project Euler Problem #37>
 problem37 = (sum . take 11 . filter isTruncatablePrime) [8..]
