@@ -212,6 +212,10 @@ spec = do
     it "is correct" $ do
       problem74 `shouldBe` 402
 
+  describe "Verify that problem 97" $ do
+    it "is correct" $ do
+      problem97 `shouldBe` 8739992577
+
   describe "Verify that problem 99" $ do
     it "is correct" $ do
       val <- problem99

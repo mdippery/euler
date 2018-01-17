@@ -510,6 +510,14 @@ problem71 = (numerator . closestRatio) (3 % 7)
 -- | Solves <https://projecteuler.net/problem=74 Project Euler Problem #74>
 problem74 = (length . filter (== 60) . map (length . factorialChain)) [1..999999]
 
+-- | Solves <https://projecteuler.net/problem=97 Project Euler Problem #97>
+problem97 =
+  let m = 10 ^ 10
+      a = 2
+      b = 7830457
+      n = 28433
+   in modMult m n (modPower m a b) + 1
+
 -- | Solves <https://projecteuler.net/problem=99 Project Euler Problem #99>
 problem99 =
   fmap
