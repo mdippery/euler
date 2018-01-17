@@ -510,6 +510,19 @@ problem71 = (numerator . closestRatio) (3 % 7)
 -- | Solves <https://projecteuler.net/problem=74 Project Euler Problem #74>
 problem74 = (length . filter (== 60) . map (length . factorialChain)) [1..999999]
 
+-- | Solves <https://projecteuler.net/problem=99 Project Euler Problem #99>
+problem99 =
+  fmap
+    (fst
+     . maximumBy (comparing snd)
+     . zip [1..]
+     . map (uncurry (^))
+     . map (\(a,b) -> (read a :: Integer, read b :: Integer))
+     . map (\(h,r) -> (h, tail r))
+     . map (span (/= ','))
+     . lines)
+    (readFile "data/base_exp.txt") >>= return
+
 -- | Solves <https://projecteuler.net/problem=100 Project Euler Problem #100>
 problem100 = (fst . until (( > 10 ^ 12) . snd) nextBN) (15,21)
   where
