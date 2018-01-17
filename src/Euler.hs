@@ -32,6 +32,7 @@ import Euler.Poker
 import Euler.Pyramid
 import Euler.Spiral
 import Euler.Text
+import Euler.Triangle
 import Euler.Tuple
 
 -- | Solves <https://projecteuler.net/problem=1 Project Euler Problem #1>

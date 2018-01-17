@@ -62,7 +62,6 @@ module Euler.Math
   , numDivisors
   , numLength
   , primeFactors
-  , rightTriangles
   , sameDigits
   , sumDigitFactorial
   , sumDivisors
@@ -635,19 +634,6 @@ closestRatio target = foldr closest (0 % 1) [1000000,999999..2]
        in if p * s > r * q
              then p % q
              else r % s
-
--- | Generates triplets for a right triangle of the given perimeter.
-rightTriangles :: Integral a
-               => a           -- ^ Perimeter
-               -> [(a,a,a)]   -- ^ Solutions for right triangles of the given perimeter
-rightTriangles p = map toT $ nub $ map sort $ filter sqfits $ filter pfits [[a, b a, c a] | a <- [1..u]]
-  where
-    u = p `div` 3
-    b a = (p ^ 2 - 2 * p * a) `div` (2 * p - 2 * a)
-    c a = p - b a - a
-    pfits = (== p) . sum
-    sqfits ns = (ns !! 2) ^ 2 == (ns !! 0) ^ 2 + (ns !! 1) ^ 2
-    toT ns = (ns !! 0, ns !! 1, ns !! 2)
 
 -- | True if a number is a /Lychrel number/, i.e., if you reverse its digits
 -- and add them together, and keep applying that operation, you will never
