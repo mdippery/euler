@@ -312,10 +312,7 @@ problem30 =
 problem31 = coinCombos 200 TwoHundredPence
 
 -- | Solves <https://projecteuler.net/problem=34 Project Euler Problem #34>
-problem34 =
-    let nums = [3..2540160]
-        fact = sum . map factorial . digits
-     in (sum . unzipT fst . filter equalT . zipT fact) nums
+problem34 = (sum . unzipT fst . filter equalT . zipT sumDigitFactorial) [3..2540160]
 
 -- | Solves <https://projecteuler.net/problem=35 Project Euler Problem #35>
 problem35 = (length . filter f) [1..1000000]
