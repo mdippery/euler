@@ -95,7 +95,7 @@ module Euler.Math
 import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import           Data.Foldable (null)
-import           Data.List (elemIndex, genericIndex, genericLength, genericTake, group, intersect, nub, sort, unfoldr)
+import           Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, nub, sort, unfoldr)
 import           Data.Maybe (fromJust, listToMaybe)
 import           Data.Ratio ((%), Ratio, denominator, numerator)
 
@@ -551,7 +551,7 @@ modMult m a b = (a * b) `mod` m
 
 -- | A 'product' function that uses modular multiplication.
 modProduct :: Integral a => a -> [a] -> a
-modProduct m = foldr (modMult m) 1 . map (`mod` m)
+modProduct m = foldl' (modMult m) 1 . map (`mod` m)
 
 -- | Raises a number to a given power, modulo another number.
 modPower :: Integral a
