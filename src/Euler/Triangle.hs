@@ -8,15 +8,23 @@
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
-  Easily work with and generate triangles.
+  Calculations involving geometric triangles.
 -}
 module Euler.Triangle
   (
+    -- * Basic properties
+    isIntegralTriangle
+
+    -- * Operations and calculations
+  , triangleArea
+  , trianglePerimeter
+
     -- * Sequences and generators
-    rightTriangles
+  , rightTriangles
   ) where
 
 import Data.List (nub, sort)
+import Euler.Math (isInteger)
 
 -- | Generates triplets for a right triangle of the given perimeter.
 rightTriangles :: Integral a
@@ -30,3 +38,21 @@ rightTriangles p = map toT $ nub $ map sort $ filter sqfits $ filter pfits [[a, 
     pfits = (== p) . sum
     sqfits ns = (ns !! 2) ^ 2 == (ns !! 0) ^ 2 + (ns !! 1) ^ 2
     toT ns = (ns !! 0, ns !! 1, ns !! 2)
+
+-- | Area of a triangle given its three sides.
+triangleArea :: Floating a => (a,a,a) -> a
+triangleArea (a,b,c) =
+  let p = (a + b + c) / 2
+      pa = p - a
+      pb = p - b
+      pc = p - c
+   in sqrt (p * pa * pb * pc)
+
+-- | Perimeter of a triangle given its three sides.
+trianglePerimeter :: Num a => (a,a,a) -> a
+trianglePerimeter (a,b,c) = a + b + c
+
+-- | True if the triangle defined by its three sides has integral side
+-- lengths and integral perimeter.
+isIntegralTriangle :: (RealFrac a, Floating a) => (a,a,a) -> Bool
+isIntegralTriangle t@(a,b,c) = isInteger a && isInteger b && isInteger c && (isInteger . triangleArea) t
