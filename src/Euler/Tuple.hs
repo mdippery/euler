@@ -29,10 +29,16 @@ module Euler.Tuple
   , zipT
 
     -- * Triples
+
+    -- ** Accessing elements
   , fst3
+
+    -- ** Equality and ordering
+  , sort3
   ) where
 
 import Control.Monad (ap, liftM2)
+import Data.List (sort)
 
 -- | Applies a function of two arguments to a list of 2-tuples, where
 -- each element of the tuple is a separate argument to the function,
@@ -58,9 +64,15 @@ unzipT :: ((a, b) -> c)   -- ^ Mapping function
        -> [c]             -- ^ List of results of mapping function applied to each tuple
 unzipT = map
 
--- | Sorts a tuple so that the minimum value is first.
-sortT :: Ord a => (a, a) -> (a, a)
+-- | Sorts a 2-tuple so that the minimum value is first.
+sortT :: Ord a => (a,a) -> (a, a)
 sortT = liftM2 (,) minT maxT
+
+-- | Sorts a 3-tuple so that the elements are ordered from least to greatest
+sort3 :: Ord a => (a,a,a) -> (a,a,a)
+sort3 (a,b,c) =
+  let ls = sort [a, b, c]
+   in (ls !! 0, ls !! 1, ls !! 2)
 
 -- | Returns the maximum element in a 2-tuple.
 maxT :: Ord a => (a, a) -> a

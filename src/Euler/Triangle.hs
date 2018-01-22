@@ -20,24 +20,30 @@ module Euler.Triangle
   , trianglePerimeter
 
     -- * Sequences and generators
+  , almostEquilateralTriangles
   , rightTriangles
   ) where
 
+import Control.Monad (liftM2)
 import Data.List (nub, sort)
+
 import Euler.Math (isInteger)
+import Euler.Tuple (sort3)
 
 -- | Generates triplets for a right triangle of the given perimeter.
 rightTriangles :: Integral a
                => a           -- ^ Perimeter
                -> [(a,a,a)]   -- ^ Solutions for right triangles of the given perimeter
-rightTriangles p = map toT $ nub $ map sort $ filter sqfits $ filter pfits [[a, b a, c a] | a <- [1..u]]
+rightTriangles p = nub $ map sort3 $ filter (liftM2 (&&) sqfits pfits) [(a, b a, c a) | a <- [1..u]]
   where
     u = p `div` 3
     b a = (p ^ 2 - 2 * p * a) `div` (2 * p - 2 * a)
     c a = p - b a - a
-    pfits = (== p) . sum
-    sqfits ns = (ns !! 2) ^ 2 == (ns !! 0) ^ 2 + (ns !! 1) ^ 2
-    toT ns = (ns !! 0, ns !! 1, ns !! 2)
+    pfits (a,b,c) = a + b + c == p
+    sqfits (a,b,c) = c ^ 2 == a ^ 2 + b ^ 2
+
+-- almostEquilateralTriangles :: [(Double,Double,Double)]
+almostEquilateralTriangles = []
 
 -- | Area of a triangle given its three sides.
 triangleArea :: Floating a => (a,a,a) -> a
