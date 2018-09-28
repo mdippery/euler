@@ -47,7 +47,6 @@ module Euler.Math
   , digitFactorial
   , divides
   , divisibleBy
-  , divisibleByAny
   , factorial
   , factorialChain
   , factorization
@@ -417,20 +416,6 @@ divisibleBy :: Integral a
             -> a      -- ^ Number
             -> Bool   -- ^ True if a number is divisible by the entire list of numbers
 divisibleBy = (. (flip divides)) . flip all
-
--- | True if a number is divisible by /any/ of the numbers in a list.
---
--- ==== Examples
---
--- >>> divisibleByAny [7,8] 24
--- True
--- >>> divisibleByAny [9,16] 24
--- False
-divisibleByAny :: Integral a
-               => [a]   -- ^ List of possible divisors
-               -> a     -- ^ Number
-               -> Bool  -- ^ True if a number is divisible by any number in the list
-divisibleByAny = (. (flip divides)) . flip any
 
 -- | List of all factors of the given number.
 --

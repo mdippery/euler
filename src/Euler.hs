@@ -36,7 +36,7 @@ import Euler.Triangle
 import Euler.Tuple
 
 -- | Solves <https://projecteuler.net/problem=1 Project Euler Problem #1>
-problem1 = (sum . filter (divisibleByAny [3,5])) [1..999]
+problem1 = sum $ nub $ (enumFromThenTo 3 6 999) ++ (enumFromThenTo 5 10 999)
 
 -- | Solves <https://projecteuler.net/problem=2 Project Euler Problem #2>
 problem2 = (sum . filter isEven . takeWhile (<= 4000000)) fibonaccis
