@@ -478,7 +478,7 @@ multiplicands n = nub $ map sortT $ zipT (div n) $ filter (flip divides n) $ enu
 
 -- | Number of divisors of a given number.
 numDivisors :: Integral a => Integer -> a
-numDivisors = product . map ((+ 1) . genericLength) . group . factorization
+numDivisors = product . map (succ . genericLength) . group . factorization
 
 -- | Sum of the divisors of a given number.
 sumDivisors :: Integer -> Integer
@@ -650,7 +650,7 @@ isLychrel = isLychrel' 0
     isLychrel' i n =
       let n' = (unDigits . reverse . digits) n
           n'' = n + n'
-       in if isPalindrome n'' then False else isLychrel' (i + 1) n''
+       in if isPalindrome n'' then False else isLychrel' (succ i) n''
 
 
 --  Stored values for memoization
