@@ -344,7 +344,8 @@ problem42 =
 
 -- | Solves <https://projecteuler.net/problem=44 Project Euler Problem #44>
 problem44 = head [abs (a' - b')
-                  | a <- [1..], b' <- take a pentagonalNumbers,
+                  | a  <- [1..],
+                    b' <- take a pentagonalNumbers,
                     let a' = pentagonalNumber a,
                     isPentagonal (a' + b'),
                     isPentagonal (a' - b')]
