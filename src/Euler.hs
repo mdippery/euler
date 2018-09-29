@@ -313,7 +313,7 @@ problem31 = coinCombos 200 TwoHundredPence
 problem34 = (sum . unzipT fst . filter equalT . zipT sumDigitFactorial) [3..2540160]
 
 -- | Solves <https://projecteuler.net/problem=35 Project Euler Problem #35>
-problem35 = (length . filter f) [1..1000000]
+problem35 = (length . filter f) (primesTo 999999)
   where
     f = all isPrime . map unDigits . nub . rotations . digits
 
