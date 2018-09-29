@@ -58,7 +58,7 @@ problem6 =
    in squareOfSums - sumOfSquares
 
 -- | Solves <https://projecteuler.net/problem=7 Project Euler Problem #7>
-problem7 = ((!! 10000) . filter isPrime) [2..]
+problem7 = (head . drop 10000) primes
 
 -- | Solves <https://projecteuler.net/problem=8 Project Euler Problem #8>
 problem8 =
