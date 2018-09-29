@@ -42,9 +42,7 @@ problem1 = sum $ nub $ (enumFromThenTo 3 6 999) ++ (enumFromThenTo 5 10 999)
 problem2 = (sum . filter isEven . takeWhile (<= 4000000)) fibonaccis
 
 -- | Solves <https://projecteuler.net/problem=3 Project Euler Problem #3>
-problem3 =
-  let n = 600851475143
-   in (head . reverse . filter (flip divides n) . primesTo . sqrtI) n
+problem3 = (head . reverse . primeFactors) 600851475143
 
 -- | Solves <https://projecteuler.net/problem=4 Project Euler Problem #4>
 problem4 = (head . reverse . sort . filter isPalindrome) [x * y | x <- [100..999], y <- [100..999]]
