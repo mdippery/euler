@@ -309,6 +309,9 @@ problem30 =
 -- | Solves <https://projecteuler.net/problem=31 Project Euler Problem #31>
 problem31 = coinCombos 200 TwoHundredPence
 
+-- | Solves <https://projecteuler.net/problem=32 Project Euler Problem #32>
+problem32 = (sum . nub . map (uncurry (*)) . filter (uncurry isProductPandigital)) [(m, n) | m <- [1..99], n <- [100..9999]]
+
 -- | Solves <https://projecteuler.net/problem=34 Project Euler Problem #34>
 problem34 = (sum . unzipT fst . filter equalT . zipT sumDigitFactorial) [3..2540160]
 

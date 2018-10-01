@@ -33,6 +33,7 @@ module Euler.Math
   , isPentagonal
   , isPowerOf
   , isPrime
+  , isProductPandigital
   , isSquare
   , isTriangle
   , isTruncatablePrime
@@ -261,6 +262,18 @@ isPandigitalFromTo :: Integral a
                    -> a     -- ^ Number
                    -> Bool  -- ^ True if the number contains all the digits from /m/ to /n/, in some order.
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
+
+-- | True if /m/, /n/, and the product of /m/ and /n/ are pandigital when
+-- all three numbers are concatenated together.
+isProductPandigital :: (Num a, Show a) => a -> a -> Bool
+isProductPandigital m n =
+  let p    = m * n
+      m'   = show m
+      n'   = show n
+      p'   = show p
+      p''  = m' ++ n' ++ p'
+      p''' = sort p''
+   in p''' == "123456789"
 
 -- | Calculates the largest /n/-digit pandigital that can be formed by the
 -- given number. A number is said to be /1 to n pandigital/ if it makes use of
