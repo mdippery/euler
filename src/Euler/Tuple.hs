@@ -96,5 +96,5 @@ equalT :: Eq a => (a, a) -> Bool
 equalT = uncurry (==)
 
 -- | Returns the first element of a 3-tuple.
-fst3 :: (a,a,a) -> a
+fst3 :: (a,b,c) -> a
 fst3 (a,_,_) = a
