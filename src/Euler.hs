@@ -360,7 +360,8 @@ problem47 = maybe 0 head $ findConsecutive 4 $ map fst $ filter ((== 4) . snd) $
 -- | Solves <https://projecteuler.net/problem=48 Project Euler Problem #48>
 problem48 =
   let p = 10 ^ 10
-      mp n = modPower p n n
+      (%^) = modPower p
+      mp n = n %^ n
    in (modSum p . map mp) [1..1000]
 
 -- | Solves <https://projecteuler.net/problem=52 Project Euler Problem #52>
@@ -510,7 +511,9 @@ problem97 =
       a = 2
       b = 7830457
       n = 28433
-   in modMult m n (modPower m a b) + 1
+      (%*) = modMult m
+      (%^) = modPower m
+   in n %* (a %^ b) + 1
 
 -- | Solves <https://projecteuler.net/problem=99 Project Euler Problem #99>
 problem99 =
