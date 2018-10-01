@@ -373,7 +373,7 @@ sumDigitFactorial :: Integer -> Integer
 sumDigitFactorial = sum . digitFactorial
 
 -- | Calculates the chain of numbers such that, when 'sumDigitFactorial' is
--- applied to each subsequence link in the chain, the chain begins to repeat
+-- applied to each subsequent link in the chain, the chain begins to repeat
 -- again.
 --
 -- It is known that /every/ starting number will eventually get stuck in a
