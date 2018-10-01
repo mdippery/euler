@@ -20,17 +20,16 @@ module Euler.Text
   , countLetters
 
     -- * Transformations
+  , keepCharacters
   , removeCharacters
 
     -- * Calculations
   , letterValue
   , stringValue
 
-    -- * Prose
-  , toWord
-
     -- * Conversions
-  , ints
+  , toInts
+  , toWord
 
     -- * Properties
   , isTriangleWord
@@ -39,14 +38,14 @@ module Euler.Text
 import Data.Bool (bool)
 import Data.Char (ord)
 
-import Euler.Math (triangleNumbers)
+import Euler.Math (isTriangle)
 
 -- | A set of characters
-data CharacterSet = CharacterSet [Char]
+data CharacterSet = CharacterSet { characterSet :: [Char] } deriving Show
 
 -- | True if a set of characters contains the given character.
 contains :: CharacterSet -> Char -> Bool
-contains (CharacterSet set) ch = ch `elem` set
+contains = flip elem . characterSet
 
 -- | Value of a letter, starting with 1 for 'A'.
 letterValue :: Char -> Int
@@ -60,17 +59,23 @@ stringValue = sum . map letterValue
 removeCharacters :: CharacterSet  -- ^ Character set
                  -> String        -- ^ Original string
                  -> String        -- ^ String with characters removed
-removeCharacters cs = foldr (\ch memo -> bool (ch : memo) memo (cs `contains` ch)) ""
+removeCharacters cs = filter (not . contains cs)
+
+-- | Keeps characters from the given character set that appear in a string.
+keepCharacters :: CharacterSet    -- ^ Character set
+               -> String          -- ^ Original string
+               -> String          -- ^ String retaining only the characters in the given set
+keepCharacters cs = filter (contains cs)
 
 -- | Number of /letters/ in a string.
 --
 -- This excludes non-alpha characters.
-countLetters :: String -> Integer
-countLetters = sum . map (bool 0 1 . flip elem ['a'..'z'])
+countLetters :: String -> Int
+countLetters = length . keepCharacters (CharacterSet ['a'..'z'])
 
 -- | Converts a string to a list of integers.
-ints :: String -> [Int]
-ints = map (read . (:""))
+toInts :: String -> [Int]
+toInts = map (read . (:""))
 
 -- | Converts a number to its word form.
 toWord :: Integer -> String
@@ -114,7 +119,4 @@ toWord n
 -- A "triangle word" is a word whose 'stringValue' is a triangle number,
 -- as defined in <https://projecteuler.net/problem=42 Euler Problem #42>.
 isTriangleWord :: String -> Bool
-isTriangleWord s =
-  let v = stringValue s
-      tns = takeWhile (<= v) triangleNumbers
-   in v `elem` tns
+isTriangleWord = isTriangle . toInteger . stringValue

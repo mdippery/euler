@@ -82,7 +82,7 @@ problem8 =
            "84580156166097919133875499200524063689912560717606" ++
            "05886116467109405077541002256983155200055935729725" ++
            "71636269561882670428252483600823257530420752963450"
-   in (head . reverse . sort . map product . windows 13 . ints) ds
+   in (head . reverse . sort . map product . windows 13 . toInts) ds
 
 -- | Solves <https://projecteuler.net/problem=9 Project Euler Problem #9>
 problem9 =
