@@ -35,7 +35,6 @@ module Euler.Text
   , isTriangleWord
   ) where
 
-import Data.Bool (bool)
 import Data.Char (ord)
 
 import Euler.Math (isTriangle)
