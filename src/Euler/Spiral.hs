@@ -19,6 +19,7 @@ module Euler.Spiral
 
     -- * Basic functions
   , numRings
+  , ringSize
   , sumDiagonals
   ) where
 
@@ -58,3 +59,7 @@ ring n =
       ul = (delta - 4) + upperLeft prev
       ur = (delta - 6) + upperRight prev
    in Ring ur ul ll lr
+
+-- | Number of elements in the /nth/ ring of a spiral of integers.
+ringSize :: Integer -> Integer
+ringSize = max 1 . (8 *)
