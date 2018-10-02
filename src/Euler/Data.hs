@@ -10,7 +10,15 @@
 
   Various functions for working with general datatypes.
 -}
-module Euler.Data where
+module Euler.Data
+  (
+    -- * Numbers
+    allDigits
+  , digits
+  , unDigits
+  ) where
+
+import           Data.List (sort)
 
 import qualified Data.Digits as D
 
@@ -35,3 +43,10 @@ unDigits :: Integral a
          => [a]   -- ^ List of digits in base 10
          -> a     -- ^ Number represented by the list of digits
 unDigits = D.unDigits 10
+
+-- | Converts a number into a list of digits, sorted in ascending
+-- order.
+allDigits :: Integral a
+          => a      -- ^ Value to convert to individual digits
+          -> [a]    -- ^ List of digits in base 10, sorted in ascending order
+allDigits = sort . digits

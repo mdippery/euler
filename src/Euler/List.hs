@@ -26,6 +26,7 @@ module Euler.List
 
     -- * Sublists
   , dropNth
+  , longestPrefix
   , splitEvery
   , windows
 
@@ -39,6 +40,7 @@ module Euler.List
   ) where
 
 import Data.List (genericLength, genericSplitAt, genericTake)
+import Euler.Tuple (equalT)
 
 -- | Appends a value to a list.
 (<:) :: [a] -> a -> [a]
@@ -125,6 +127,19 @@ dropNth :: Integral b
 dropNth n =
   let step n (i, x) acc = if i `rem` n == 0 then acc else (i, x):acc
    in unzipWithIndex . foldr (step n) [] . zipWithIndex
+
+-- | Returns the longest prefix common to both of the given lists, which may
+-- be an empty list.
+--
+-- ==== Examples
+--
+-- >>> longestPrefix "124" "123456789"
+-- "12"
+longestPrefix :: Eq a
+              => [a]      -- ^ First list
+              -> [a]      -- ^ Second list
+              -> [a]      -- ^ Prefix common to both lists
+longestPrefix xs ys = map fst $ filter equalT $ zip xs ys
 
 -- | Replaces an element at the given index.
 --

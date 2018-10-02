@@ -102,8 +102,8 @@ import           Data.Ratio ((%), Ratio, denominator, numerator)
 import qualified Data.Digits as D
 import           Data.List.Ordered (minus, unionAll)
 
-import           Euler.Data (digits, unDigits)
-import           Euler.List ((<:))
+import           Euler.Data (allDigits, digits, unDigits)
+import           Euler.List ((<:), longestPrefix)
 import           Euler.Tuple (sortT, zipT)
 
 
@@ -148,9 +148,7 @@ isPowerOf p n = round (nthRoot p n) ^ p == n
 
 -- | True if both numbers contain exactly the same digits.
 sameDigits :: Integral a => a -> a -> Bool
-sameDigits x y = f x == f y
-  where
-    f = sort . digits
+sameDigits x y = allDigits x == allDigits y
 
 -- | Number of digits in a given number in base 10.
 numLength :: (Integral a)
@@ -262,11 +260,11 @@ isPandigitalFromTo :: Integral a
                    -> a     -- ^ Upper bound of digit range
                    -> a     -- ^ Number
                    -> Bool  -- ^ True if the number contains all the digits from /m/ to /n/, in some order.
-isPandigitalFromTo s e = (== [s..e]) . sort . digits
+isPandigitalFromTo s e = (== [s..e]) . allDigits
 
 -- | True if the number is some n-digit pandigital number.
-isPandigitalN :: Show a => a -> Bool
-isPandigitalN x = ((sort . show) x) `isPrefixOf` "123456789"
+isPandigitalN :: Integral a => a -> Bool
+isPandigitalN x = allDigits x `isPrefixOf` [1..9]
 
 -- | True if /m/, /n/, and the product of /m/ and /n/ are pandigital when
 -- all three numbers are concatenated together.
@@ -296,9 +294,10 @@ isProductPandigital m n =
 -- Nothing
 maximumPandigital :: Integral a => a -> Maybe Int
 maximumPandigital n =
-  case elemIndex True (map (flip isPandigitalTo n) [9,8..1]) of
-    Nothing -> Nothing
-    Just i -> Just (9 - i)
+  let prefix = longestPrefix (allDigits n) [1..9]
+   in case length prefix of
+        0 -> Nothing
+        x -> Just x
 
 -- | True if the decimal number is a whole number.
 --
