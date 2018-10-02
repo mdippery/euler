@@ -15,6 +15,7 @@ module Euler.Data
     -- * Numbers
     allDigits
   , digits
+  , sameDigits
   , unDigits
   ) where
 
@@ -50,3 +51,7 @@ allDigits :: Integral a
           => a      -- ^ Value to convert to individual digits
           -> [a]    -- ^ List of digits in base 10, sorted in ascending order
 allDigits = sort . digits
+
+-- | True if both numbers contain exactly the same digits.
+sameDigits :: Integral a => a -> a -> Bool
+sameDigits x y = allDigits x == allDigits y

@@ -63,7 +63,6 @@ module Euler.Math
   , numDivisors
   , numLength
   , primeFactors
-  , sameDigits
   , sumDigitFactorial
   , sumDivisors
   , totient
@@ -145,10 +144,6 @@ isPowerOf :: Integer  -- ^ /nth/ power
           -> Integer  -- ^ Number
           -> Bool     -- ^ True if the number is the /nth/ power of some number
 isPowerOf p n = round (nthRoot p n) ^ p == n
-
--- | True if both numbers contain exactly the same digits.
-sameDigits :: Integral a => a -> a -> Bool
-sameDigits x y = allDigits x == allDigits y
 
 -- | Number of digits in a given number in base 10.
 numLength :: (Integral a)
