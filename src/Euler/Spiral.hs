@@ -9,7 +9,8 @@
   Maintainer  : michael@monkey-robot.com
 
   Calculates the sum of the diagonals of "spirals" of numbers. These "spirals"
-  are defined in <https://projecteuler.net/problem=28 Euler Problem #28>.
+  are defined in <https://projecteuler.net/problem=28 Euler Problem #28> and
+  <https://projecteuler.net/problem=58 Euler Problem #58>.
 -}
 module Euler.Spiral
   (
@@ -52,8 +53,8 @@ sumDiagonals n =
    in ur + ul + ll + lr + sumDiagonals (n - 1)
 
 -- | Number of rings in a spiral with length and width of size /n/.
-numRings :: Integer   -- ^ Size of length and width
-         -> Integer   -- ^ Number of spirals
+numRings :: Integer   -- ^ Length and width of spiral
+         -> Integer   -- ^ Number of rings in the spiral
 numRings = flip div 2
 
 -- | List of rings that make up the spiral with /n/ total rings.
@@ -77,15 +78,24 @@ ringSize :: Integer -> Integer
 ringSize = max 1 . (8 *)
 
 -- | Number of elements in the diagonal portions of a spiral with /n/ rings.
-diagonalSize :: Integer -> Integer
+diagonalSize :: Integer   -- ^ Number of rings in the spiral
+             -> Integer   -- ^ Total size of diagonals in the spiral
 diagonalSize = (+) 1 . (*) 4
 
--- | Number of primes in the /nth/ ring of a spiral of integers.
+-- | Number of primes in the ring.
 primesInRing :: Num a => Ring -> a
 primesInRing (Ring ur ul ll lr) = (sum . map (bool 0 1 . isPrime)) [ur,ul,ll,lr]
 
-primeRatio :: Fractional a => Integer -> a
+-- | Calculates the ratio of prime numbers to all numbers in the diagonals of
+-- a spiral with /n/ rings.
+primeRatio :: Fractional a
+           => Integer   -- ^ Total number of rings comprising the spiral
+           -> a         -- ^ Ratio of prime numbers to all numbers in the diagonal of the spiral
 primeRatio n = (fromIntegral . sum . map primesInRing . rings) n / (fromIntegral . diagonalSize) n
 
-primeRatioWithSideLength :: Fractional a => Integer -> a
+-- | Calculates the ratio of prime numbers to all numbers in the diagonals of
+-- a spiral with sides of length /n/.
+primeRatioWithSideLength :: Fractional a
+                         => Integer   -- ^ Length of a side of the given spiral
+                         -> a         -- ^ Ratio of prime numbers to all numbers in the diagonal of the spiral
 primeRatioWithSideLength = primeRatio . numRings
