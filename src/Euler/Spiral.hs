@@ -18,6 +18,7 @@ module Euler.Spiral
   , ring
 
     -- * Basic functions
+  , diagonalSize
   , numRings
   , ringSize
   , sumDiagonals
@@ -63,3 +64,7 @@ ring n =
 -- | Number of elements in the /nth/ ring of a spiral of integers.
 ringSize :: Integer -> Integer
 ringSize = max 1 . (8 *)
+
+-- | Number of elements in the diagonal portions of the /nth/ ring of a
+-- spiral of integers.
+diagonalSize = (+) 1 . (*) 4
