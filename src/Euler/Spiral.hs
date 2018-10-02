@@ -29,7 +29,7 @@ module Euler.Spiral
   , sumDiagonals
   ) where
 
-import Data.Bool (bool)
+import Data.List (genericLength)
 
 import Euler.Math (isPrime)
 
@@ -84,7 +84,7 @@ diagonalSize = (+) 1 . (*) 4
 
 -- | Number of primes in the ring.
 primesInRing :: Num a => Ring -> a
-primesInRing (Ring ur ul ll lr) = (sum . map (bool 0 1 . isPrime)) [ur,ul,ll,lr]
+primesInRing (Ring ur ul ll lr) = (genericLength . filter isPrime) [ur,ul,ll,lr]
 
 -- | Calculates the ratio of prime numbers to all numbers in the diagonals of
 -- a spiral with /n/ rings.
