@@ -15,16 +15,22 @@ module Euler.Spiral
   (
     -- * Data types
     Ring (..)
+  , primesInRing
   , ring
 
     -- * Basic functions
   , diagonalSize
   , numRings
+  , primeRatio
+  , primeRatioWithSideLength
+  , rings
   , ringSize
   , sumDiagonals
   ) where
 
-import Euler.Math (nextPrime)
+import Data.Bool (bool)
+
+import Euler.Math (isPrime)
 
 -- | Describes a single ring in a spiral of integers
 data Ring = Ring
@@ -50,6 +56,11 @@ numRings :: Integer   -- ^ Size of length and width
          -> Integer   -- ^ Number of spirals
 numRings = flip div 2
 
+-- | List of rings that make up the spiral with /n/ total rings.
+rings :: Integer -> [Ring]
+rings 0 = [ring 0]
+rings n = ring n : rings (n - 1)
+
 -- | Retrieves the /nth/ ring of a spiral.
 ring 0 = Ring 1 1 1 1
 ring n =
@@ -65,6 +76,16 @@ ring n =
 ringSize :: Integer -> Integer
 ringSize = max 1 . (8 *)
 
--- | Number of elements in the diagonal portions of the /nth/ ring of a
--- spiral of integers.
+-- | Number of elements in the diagonal portions of a spiral with /n/ rings.
+diagonalSize :: Integer -> Integer
 diagonalSize = (+) 1 . (*) 4
+
+-- | Number of primes in the /nth/ ring of a spiral of integers.
+primesInRing :: Num a => Ring -> a
+primesInRing (Ring ur ul ll lr) = (sum . map (bool 0 1 . isPrime)) [ur,ul,ll,lr]
+
+primeRatio :: Fractional a => Integer -> a
+primeRatio n = (fromIntegral . sum . map primesInRing . rings) n / (fromIntegral . diagonalSize) n
+
+primeRatioWithSideLength :: Fractional a => Integer -> a
+primeRatioWithSideLength = primeRatio . numRings
