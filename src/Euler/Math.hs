@@ -30,6 +30,7 @@ module Euler.Math
   , isPandigital
   , isPandigitalFromTo
   , isPandigitalTo
+  , isPandigitalN
   , isPentagonal
   , isPowerOf
   , isPrime
@@ -94,7 +95,7 @@ module Euler.Math
 import           Control.Monad (ap, liftM2)
 import           Data.Array ((!), Array, bounds, inRange, listArray)
 import           Data.Foldable (null)
-import           Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, nub, sort, unfoldr)
+import           Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, isPrefixOf, nub, sort, unfoldr)
 import           Data.Maybe (fromJust, listToMaybe)
 import           Data.Ratio ((%), Ratio, denominator, numerator)
 
@@ -262,6 +263,10 @@ isPandigitalFromTo :: Integral a
                    -> a     -- ^ Number
                    -> Bool  -- ^ True if the number contains all the digits from /m/ to /n/, in some order.
 isPandigitalFromTo s e = (== [s..e]) . sort . digits
+
+-- | True if the number is some n-digit pandigital number.
+isPandigitalN :: Show a => a -> Bool
+isPandigitalN x = ((sort . show) x) `isPrefixOf` "123456789"
 
 -- | True if /m/, /n/, and the product of /m/ and /n/ are pandigital when
 -- all three numbers are concatenated together.

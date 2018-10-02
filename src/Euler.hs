@@ -334,6 +334,9 @@ problem40 =
   let s = (foldr (++) "" . map show) [0..]
    in (product . map digitToInt . map (s !!) . map (10 ^)) [0..6]
 
+-- | Solves <https://projecteuler.net/problem=41 Project Euler Problem #41>
+problem41 = (fst . head . filter snd . zipT isPandigitalN . reverse . primesTo) 7654321
+
 -- | Solves <https://projecteuler.net/problem=42 Project Euler Problem #42>
 problem42 =
   fmap
