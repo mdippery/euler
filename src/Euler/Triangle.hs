@@ -20,7 +20,6 @@ module Euler.Triangle
   , trianglePerimeter
 
     -- * Sequences and generators
-  , almostEquilateralTriangles
   , rightTriangles
   ) where
 
@@ -41,9 +40,6 @@ rightTriangles p = nub $ map sort3 $ filter (liftM2 (&&) sqfits pfits) [(a, b a,
     c a = p - b a - a
     pfits (a,b,c) = a + b + c == p
     sqfits (a,b,c) = c ^ 2 == a ^ 2 + b ^ 2
-
--- almostEquilateralTriangles :: [(Double,Double,Double)]
-almostEquilateralTriangles = []
 
 -- | Area of a triangle given its three sides.
 triangleArea :: Floating a => (a,a,a) -> a
