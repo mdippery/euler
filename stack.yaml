@@ -1,7 +1,5 @@
-flags: {}
-extra-package-dbs: []
 packages:
 - .
 extra-deps:
-- dates-0.2.2.1
-resolver: lts-10.3
+- dates-0.2.2.2
+resolver: lts-12.11
