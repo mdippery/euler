@@ -16,6 +16,7 @@ cabal-version:       >=1.10
 library
   exposed-modules:
     Euler,
+    Euler.Bool,
     Euler.Calendar,
     Euler.Currency,
     Euler.Data,

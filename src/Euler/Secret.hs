@@ -31,6 +31,7 @@ import Data.List (cycle, words)
 
 import Data.List.Split (splitOn)
 
+import Euler.Bool (($||))
 import Euler.Text (toInt)
 
 -- | List of all possible three-letter encryption keys.
@@ -55,7 +56,7 @@ tryDecrypt :: [Int]       -- ^ Encrypted message
            -> [String]    -- ^ Result of decrypting the message using every key in 'allKeys'
 tryDecrypt bytes = filter (all isValid) (msgs bytes)
   where
-    isValid ch = isLetter ch || isNumber ch || isPunctuation ch || isSeparator ch
+    isValid = flip ($||) [isLetter, isNumber, isPunctuation, isSeparator]
     msgs bs = map (flip decrypt bs) allKeys
 
 -- | Passes the contents of the encrypted file through every key returned by 'allKeys'.
