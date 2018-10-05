@@ -99,7 +99,9 @@ module Euler.Math
   , pentagonalNumber
 
     -- *** Listing
+  , squareNumbers
   , triangleNumbers
+  , heptagonalNumbers
   , hexagonalNumbers
   , pentagonalNumbers
   , octagonalNumbers
@@ -319,6 +321,10 @@ maximumPandigital n =
 isInteger :: RealFrac a => a -> Bool
 isInteger = ap (==) (fromIntegral . floor)
 
+-- | Infinite list of square numbers.
+squareNumbers :: [Integer]
+squareNumbers = map (^ 2) [1..]
+
 -- | Infinite list of all <https://en.wikipedia.org/wiki/Triangular_number triangle numbers>.
 triangleNumbers :: Integral a => [a]
 triangleNumbers = map tn [1..]
@@ -361,6 +367,12 @@ isHexagonal n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
       p = (sqn + 1) / 4
    in isInteger p
+
+-- | Infinite list of <https://en.wikipedia.org/wiki/Heptagonal_number heptagonal numbers>.
+heptagonalNumbers :: [Integer]
+heptagonalNumbers = map hn [1..]
+  where
+    hn n = ((5 * n ^ 2) - (3 * n)) `div` 2
 
 -- | True if the given number is a <https://en.wikipedia.org/wiki/Heptagonal_number heptagonal number>.
 isHeptagonal :: Integer -> Bool
