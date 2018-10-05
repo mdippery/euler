@@ -20,11 +20,8 @@ module Euler.Math
   , isCoprime
   , isCube
   , isEven
-  , isHeptagonal
-  , isHexagonal
   , isInteger
   , isLychrel
-  , isOctagonal
   , isOdd
   , isOtherGoldbach
   , isPalindrome
@@ -33,12 +30,10 @@ module Euler.Math
   , isPandigitalFromTo
   , isPandigitalTo
   , isPandigitalN
-  , isPentagonal
   , isPowerOf
   , isPrime
   , isProductPandigital
   , isSquare
-  , isTriangle
   , isTruncatablePrime
 
     -- * Operations and calculations
@@ -83,16 +78,29 @@ module Euler.Math
   , compositesTo
   , fibonacci
   , fibonaccis
-  , hexagonalNumbers
   , numbersOfLength
   , nextPrime
-  , octagonalNumbers
-  , pentagonalNumber
-  , pentagonalNumbers
   , primes
   , primesBelow
   , primesTo
+
+    -- ** Figurate numbers
+
+    -- *** Identifying
+  , isTriangle
+  , isPentagonal
+  , isHexagonal
+  , isHeptagonal
+  , isOctagonal
+
+    -- *** Retrieving
+  , pentagonalNumber
+
+    -- *** Listing
   , triangleNumbers
+  , hexagonalNumbers
+  , pentagonalNumbers
+  , octagonalNumbers
   ) where
 
 import           Control.Monad (ap, liftM2)
