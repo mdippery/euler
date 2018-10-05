@@ -74,11 +74,13 @@ module Euler.Math
 
     -- * Groups, classes, and sequences
   , abundantNumbers
-  , composites
-  , compositesTo
   , fibonacci
   , fibonaccis
   , numbersOfLength
+
+    -- ** Primes and composites
+  , composites
+  , compositesTo
   , nextPrime
   , primes
   , primesBelow
