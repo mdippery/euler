@@ -28,6 +28,7 @@ module Euler.Text
   , stringValue
 
     -- * Conversions
+  , toInt
   , toInts
   , toWord
 
@@ -71,6 +72,10 @@ keepCharacters cs = filter (contains cs)
 -- This excludes non-alpha characters.
 countLetters :: String -> Int
 countLetters = length . keepCharacters (CharacterSet ['a'..'z'])
+
+-- | Converts a string to an integer.
+toInt :: String -> Int
+toInt = read
 
 -- | Converts a string to a list of integers.
 toInts :: String -> [Int]

@@ -25,6 +25,7 @@ library
     Euler.Math,
     Euler.Poker,
     Euler.Pyramid,
+    Euler.Secret,
     Euler.Spiral,
     Euler.Text,
     Euler.Triangle,

@@ -13,7 +13,7 @@
 module Euler where
 
 import Control.Monad (ap, liftM2)
-import Data.Char (digitToInt)
+import Data.Char (digitToInt, ord)
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort, unfoldr)
 import Data.Ord (comparing)
@@ -30,6 +30,7 @@ import Euler.List
 import Euler.Math
 import Euler.Poker
 import Euler.Pyramid
+import Euler.Secret
 import Euler.Spiral
 import Euler.Text
 import Euler.Triangle
@@ -392,6 +393,12 @@ problem55 = (length . filter isLychrel) [1..9999]
 
 -- | Solves <https://projecteuler.net/problem=56 Project Euler Problem #56>
 problem56 = (maximum . map (sum . digits)) [a ^ b | a <- [1..99], b <- [1..99]]
+
+-- | Solves <https://projecteuler.net/problem=59 Project Euler Problem #59>
+problem59 = do
+  msgs <- tryDecryptFile "data/cipher.txt"
+  let ascii = map ord $ head msgs
+  return $ sum ascii
 
 -- | Solves <https://projecteuler.net/problem=67 Project Euler Problem #67>
 problem67 =

@@ -204,6 +204,11 @@ spec = do
     it "is correct" $ do
       problem56 `shouldBe` 972
 
+  describe "Verify that problem 59" $ do
+    it "is correct" $ do
+      total <- problem59
+      total `shouldBe` 107359
+
   describe "Verify that problem 67" $ do
     it "is correct" $ do
       problem67 `shouldBe` 7273
