@@ -57,7 +57,7 @@ tryDecrypt :: [Int]       -- ^ Encrypted message
 tryDecrypt bytes = filter (all isValid) (msgs bytes)
   where
     isValid = flip ($||) [isLetter, isNumber, isPunctuation, isSeparator]
-    msgs bs = map (flip decrypt bs) allKeys
+    msgs = flip map allKeys . flip decrypt
 
 -- | Passes the contents of the encrypted file through every key returned by 'allKeys'.
 tryDecryptFile :: FilePath      -- ^ Path to the encrypted file
