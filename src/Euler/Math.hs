@@ -20,9 +20,11 @@ module Euler.Math
   , isCoprime
   , isCube
   , isEven
+  , isHeptagonal
   , isHexagonal
   , isInteger
   , isLychrel
+  , isOctagonal
   , isOdd
   , isOtherGoldbach
   , isPalindrome
@@ -346,6 +348,20 @@ isHexagonal :: Integer -> Bool
 isHexagonal n =
   let sqn = sqrt $ 8 * (fromInteger n) + 1
       p = (sqn + 1) / 4
+   in isInteger p
+
+-- | True if the given number is a <https://en.wikipedia.org/wiki/Heptagonal_number heptagonal number>.
+isHeptagonal :: Integer -> Bool
+isHeptagonal n =
+  let sqn = sqrt $ 40 * (fromInteger n) + 9
+      p = (sqn + 3) / 10
+   in isInteger p
+
+-- | True if the given number is an <https://en.wikipedia.org/wiki/Octagonal_number octagonal number>.
+isOctagonal :: Integer -> Bool
+isOctagonal n =
+  let sqn = sqrt $ 3 * (fromInteger n) + 1
+      p = (sqn + 1) / 3
    in isInteger p
 
 -- | True if the number is <https://en.wikipedia.org/wiki/Palindromic_number palindromic>
