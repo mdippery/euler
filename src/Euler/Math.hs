@@ -85,6 +85,7 @@ module Euler.Math
   , hexagonalNumbers
   , numbersOfLength
   , nextPrime
+  , octagonalNumbers
   , pentagonalNumber
   , pentagonalNumbers
   , primes
@@ -356,6 +357,12 @@ isHeptagonal n =
   let sqn = sqrt $ 40 * (fromInteger n) + 9
       p = (sqn + 3) / 10
    in isInteger p
+
+-- | Infinite list of <https://en.wikipedia.org/wiki/Octagonal_number octagonal numbers>.
+octagonalNumbers :: [Integer]
+octagonalNumbers = map hn [1..]
+  where
+    hn n = 3 * n ^ 2 - 2 * n
 
 -- | True if the given number is an <https://en.wikipedia.org/wiki/Octagonal_number octagonal number>.
 isOctagonal :: Integer -> Bool
