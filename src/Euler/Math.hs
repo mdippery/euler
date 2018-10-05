@@ -42,6 +42,7 @@ module Euler.Math
   , isTruncatablePrime
 
     -- * Operations and calculations
+  , between
   , bigOmega
   , binomialCoefficient
   , closestRatio
@@ -486,6 +487,15 @@ primeFactors = nub . factorization
 -- For the number of /distinct/ prime factors, use 'littleOmega'.
 bigOmega :: Integer -> Integer
 bigOmega = genericLength . factorization
+
+-- | True if the given number is greater than or equal to the lower bound
+-- and less than or equal to the upper bound.
+between :: Ord a
+        => a      -- ^ Lower bound, inclusive
+        -> a      -- ^ Upper bound, inclusive
+        -> a      -- ^ /n/
+        -> Bool   -- ^ True if lower bound <= /n/ <= upper bound
+between lower upper n = n >= lower && n <= upper
 
 -- | Number of /distinct/ prime factors of /n/.
 littleOmega :: Integer -> Integer
