@@ -12,4 +12,14 @@
 -}
 module Euler.Bool where
 
+-- | Chains the given foldable together using the '||' operator and returns
+-- the result.
+--
+-- ==== Examples
+--
+-- >>> 1 $|| [(== 1), (== 2), (== 3)]
+-- True
+-- >>> 1 $|| [(== 2), (== 3)]
+-- False
+($||) :: Foldable t => a -> t (a -> Bool) -> Bool
 ($||) x = any ($ x)
