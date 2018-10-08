@@ -39,7 +39,8 @@ library
     data-ordlist >= 0.4.7.0,
     dates >= 0.2.2.1,
     digits >= 0.3.1,
-    split >= 0.2.3.2
+    split >= 0.2.3.2,
+    unordered-containers >= 0.2.9.0
 
 test-suite tests
   type:               exitcode-stdio-1.0
