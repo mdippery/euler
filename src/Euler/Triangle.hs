@@ -12,11 +12,8 @@
 -}
 module Euler.Triangle
   (
-    -- * Basic properties
-    isIntegralTriangle
-
     -- * Operations and calculations
-  , triangleArea
+    triangleArea
   , trianglePerimeter
 
     -- * Sequences and generators
@@ -24,9 +21,8 @@ module Euler.Triangle
   ) where
 
 import Control.Monad (liftM2)
-import Data.List (nub, sort)
+import Data.List (nub)
 
-import Euler.Math (isInteger)
 import Euler.Tuple (sort3)
 
 -- | Generates triplets for a right triangle of the given perimeter.
@@ -53,8 +49,3 @@ triangleArea (a,b,c) =
 -- | Perimeter of a triangle given its three sides.
 trianglePerimeter :: Num a => (a,a,a) -> a
 trianglePerimeter (a,b,c) = a + b + c
-
--- | True if the triangle defined by its three sides has integral side
--- lengths and integral perimeter.
-isIntegralTriangle :: (RealFrac a, Floating a) => (a,a,a) -> Bool
-isIntegralTriangle t@(a,b,c) = isInteger a && isInteger b && isInteger c && (isInteger . triangleArea) t
