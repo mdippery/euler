@@ -15,7 +15,7 @@ module Euler where
 import Control.Monad (ap, liftM2)
 import Data.Char (digitToInt, ord)
 import Data.Function (on)
-import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort, unfoldr)
+import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort, sortOn, unfoldr)
 import Data.Ord (comparing)
 import Data.Ratio ((%), numerator)
 
@@ -294,6 +294,15 @@ problem25 = (maybe (-1) id . elemIndex 1000 . map (length . show)) fibonaccis
 
 -- | Solves <https://projecteuler.net/problem=26 Project Euler Problem #26>
 problem26 = (fst . maximumBy (comparing snd) . ap (zip . enumFromTo 1) (map (cycleLength . (1 %)) . enumFromTo 1)) 999
+
+-- | Solves <https://projecteuler.net/problem=27 Project Euler Problem #27>
+problem27 = (uncurry (*) . extract . last . sortOn fst3 . map (apply3 . uncurry mk)) [(a,b) | a <- [-999,-997..999], b <- [-1000..1000]]
+  where
+    apply3 (a,b) = (consecutiveQuadraticPrimes a b, a, b)
+    extract (_,a,b) = (a,b)
+    mk a b
+      | isEven b = (a - 1, b)
+      | isOdd b  = (a, b)
 
 -- | Solves <https://projecteuler.net/problem=28 Project Euler Problem #28>
 problem28 = (sumDiagonals . numRings) 1001

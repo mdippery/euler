@@ -114,3 +114,8 @@ spec = do
         cycleLength (1 % 8) `shouldBe` 0
         cycleLength (1 % 9) `shouldBe` 1
         cycleLength (1 % 10) `shouldBe` 0
+
+    describe "consecutiveQuadraticPrimes" $ do
+      it "returns the number of consecutive quadratic primes" $ do
+        consecutiveQuadraticPrimes 1 41 `shouldBe` 40
+        consecutiveQuadraticPrimes (-79) 1601 `shouldBe` 80
