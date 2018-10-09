@@ -275,19 +275,19 @@ isPandigitalFromTo s e = (== [s..e]) . allDigits
 
 -- | True if the number is some n-digit pandigital number.
 isPandigitalN :: Integral a => a -> Bool
-isPandigitalN x = allDigits x `isPrefixOf` [1..9]
+isPandigitalN = flip isPrefixOf [1..9] . allDigits
 
 -- | True if /m/, /n/, and the product of /m/ and /n/ are pandigital when
 -- all three numbers are concatenated together.
-isProductPandigital :: (Num a, Show a) => a -> a -> Bool
+isProductPandigital :: Integral a => a -> a -> Bool
 isProductPandigital m n =
   let p    = m * n
-      m'   = show m
-      n'   = show n
-      p'   = show p
+      m'   = digits m
+      n'   = digits n
+      p'   = digits p
       p''  = m' ++ n' ++ p'
       p''' = sort p''
-   in p''' == "123456789"
+   in p''' == [1..9]
 
 -- | Calculates the largest /n/-digit pandigital that can be formed by the
 -- given number. A number is said to be /1 to n pandigital/ if it makes use of
@@ -559,7 +559,7 @@ abundantNumbers = filter (memoAbundantNumbers !) [1..28123]
 
 -- | True if the number is the sum of two abundant numbers
 isAbundantSum :: Integer -> Bool
-isAbundantSum n = any (\x -> isAbundant (n - x)) $ takeWhile (< n) abundantNumbers
+isAbundantSum n = any (isAbundant . (n -)) $ takeWhile (< n) abundantNumbers
 
 -- | The /nth/ Fibonacci number.
 fibonacci :: Integral a => a -> a
@@ -623,7 +623,7 @@ modAdd m a b = (a + b) `mod` m
 
 -- | A 'sum' function that uses modular addition.
 modSum :: Integral a => a -> [a] -> a
-modSum m = foldr (modAdd m) 0 . map (`mod` m)
+modSum m = foldr (modAdd m) 0 . map (flip mod m)
 
 -- | <https://en.wikipedia.org/wiki/Combination Combination> function.
 --
@@ -652,7 +652,7 @@ isCoprime a b = (null . uncurry intersect) (factorization a, factorization b)
 -- are relatively prime to /n/.
 totient :: Integer -> Integer
 totient n =
-  let ratio = foldr (\x memo -> memo * (1 - (1 % x))) (n % 1) $ primeFactors n
+  let ratio = foldr ((*) . (1 -) . (1 %)) (n % 1) $ primeFactors n
    in (liftM2 div numerator denominator) ratio
 
 -- | Calculates /n \/ 'totient'(n)/.
@@ -696,13 +696,13 @@ closestRatio target = foldr closest (0 % 1) [1000000,999999..2]
 -- either produce a palindrome or prove to be Lychrel in 50 iterations or
 -- less, as described in <https://projecteuler.net/problem=55 Euler Problem #55>.
 isLychrel :: Integral a => a -> Bool
-isLychrel = isLychrel' 0
+isLychrel = go 0
   where
-    isLychrel' 50 _ = True
-    isLychrel' i n =
+    go 50 _ = True
+    go i n =
       let n' = (unDigits . reverse . digits) n
           n'' = n + n'
-       in if isPalindrome n'' then False else isLychrel' (succ i) n''
+       in if isPalindrome n'' then False else go (succ i) n''
 
 
 --  Stored values for memoization

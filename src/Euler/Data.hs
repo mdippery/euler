@@ -54,4 +54,4 @@ allDigits = sort . digits
 
 -- | True if both numbers contain exactly the same digits.
 sameDigits :: Integral a => a -> a -> Bool
-sameDigits x y = allDigits x == allDigits y
+sameDigits = (. allDigits) . (==) . allDigits
