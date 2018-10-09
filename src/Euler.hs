@@ -17,7 +17,7 @@ import Data.Char (digitToInt, ord)
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort, sortOn, unfoldr)
 import Data.Ord (comparing)
-import Data.Ratio ((%), numerator)
+import Data.Ratio ((%), denominator, numerator)
 
 import Data.Dates (DateTime(..))
 import Data.List.Split (wordsBy)
@@ -321,6 +321,15 @@ problem31 = coinCombos 200 TwoHundredPence
 
 -- | Solves <https://projecteuler.net/problem=32 Project Euler Problem #32>
 problem32 = (sum . nub . map (uncurry (*)) . filter (uncurry isProductPandigital)) [(m, n) | m <- [1..99], n <- [100..9999]]
+
+-- | Solves <https://projecteuler.net/problem=33 Project Euler Problem #33>
+problem33 = (denominator . toFrac . foldl1 mult . map extract . filter cancelsF . map cancels) [(i,n,d) | i <- [1..9], d <- [1..(i - 1)], n <- [1..(d - 1)]]
+  where
+    cancels (i,n,d) = (cancelsUnorthodoxically i n d, i, n, d)
+    cancelsF (b,_,_,_) = b
+    extract (_,i,n,d) = (10 * n + i, 10 * i + d)
+    mult (n1,d1) (n2,d2) = (n1 * n2, d1 * d2)
+    toFrac = uncurry (%)
 
 -- | Solves <https://projecteuler.net/problem=34 Project Euler Problem #34>
 problem34 = (sum . unzipT fst . filter equalT . zipT sumDigitFactorial) [3..2540160]
