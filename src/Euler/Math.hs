@@ -86,6 +86,7 @@ module Euler.Math
   , fibonacci
   , fibonaccis
   , numbersOfLength
+  , palindromes
 
     -- ** Primes and composites
   , composites
@@ -116,19 +117,20 @@ module Euler.Math
   , octagonalNumbers
   ) where
 
-import           Control.Monad (ap, liftM2)
-import           Data.Array ((!), Array, bounds, inRange, listArray)
-import           Data.Foldable (null)
-import           Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, isPrefixOf, nub, sort, unfoldr)
-import           Data.Maybe (fromJust, listToMaybe)
-import           Data.Ratio ((%), Ratio, denominator, numerator)
+import                Control.Monad (ap, liftM2)
+import                Data.Array ((!), Array, bounds, inRange, listArray)
+import                Data.Foldable (null)
+import                Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, isPrefixOf, nub, permutations, sort, unfoldr)
+import                Data.Maybe (fromJust, listToMaybe)
+import                Data.Ratio ((%), Ratio, denominator, numerator)
 
-import qualified Data.Digits as D
-import           Data.List.Ordered (minus, unionAll)
+import qualified      Data.Digits as D
+import                Data.List.Ordered (minus, unionAll)
 
-import           Euler.Data (allDigits, digits, unDigits)
-import           Euler.List ((<:), longestPrefix)
-import           Euler.Tuple (sortT, zipT)
+import                Euler.Data (allDigits, digits, unDigits)
+import                Euler.List ((<:), longestPrefix)
+import {-# SOURCE #-} Euler.Text (toInt)
+import                Euler.Tuple (sortT, zipT)
 
 
 -- | True if a number is even.
@@ -181,6 +183,10 @@ numbersOfLength :: (Integral a, Num b, Enum b)
                 => a    -- ^ Number of digits
                 -> [b]  -- ^ All integers with the given number of digits in base 10
 numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
+
+-- | List of all 0-9 palindromic numbers.
+palindromes :: [Int]
+palindromes = map toInt $ filter ((/= '0') . head) $ permutations "0123456789"
 
 -- | Returns the length of the recurring cycle of a fraction.
 --
