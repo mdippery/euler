@@ -35,6 +35,9 @@ module Euler.Tuple
 
     -- ** Equality and ordering
   , sort3
+
+    -- ** Currying
+  , uncurry3
   ) where
 
 import Control.Monad (ap, liftM2)
@@ -98,3 +101,7 @@ equalT = uncurry (==)
 -- | Returns the first element of a 3-tuple.
 fst3 :: (a,b,c) -> a
 fst3 (a,_,_) = a
+
+-- | Converts a curried function to a function on triples.
+uncurry3 :: (a -> b -> c -> d) -> (a,b,c) -> d
+uncurry3 f (x,y,z) = f x y z
