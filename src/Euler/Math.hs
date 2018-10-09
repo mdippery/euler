@@ -46,8 +46,11 @@ module Euler.Math
   , choose
   , cycleLength
   , digitFactorial
+  , digitsIn
   , divides
   , divisibleBy
+  , extract1
+  , extract3
   , factorial
   , factorialChain
   , factorization
@@ -748,6 +751,34 @@ isLychrel = go 0
       let n' = (unDigits . reverse . digits) n
           n'' = n + n'
        in if isPalindrome n'' then False else go (succ i) n''
+
+-- | Extracts the /nth/ digit from the number. Digit numbering starts from
+-- the left at 1.
+extract1 :: (Integral a, Integral b)
+         => a   -- ^ /n/
+         -> b   -- ^ The number
+         -> b   -- ^ The /nth/ digit in the base 10 representation of the number.
+extract1 n x =
+  let n' = digitsIn x - n + 1
+   in x `rem` (10 ^ n') `div` (10 ^ (n' - 1))
+
+-- | Extracts the number formed by taking the 3 consecutive digits starting
+-- at /n/ from the number. Digit number starts from the left at 1
+extract3 :: (Integral a, Integral b)
+         => a   -- ^ /n/
+         -> b   -- ^ The number
+         -> b   -- ^ The /nth/ digit in the base 10 representation of the number.
+extract3 n x =
+  let a = extract1 n x
+      b = extract1 (n + 1) x
+      c = extract1 (n + 2) x
+   in 100 * a + 10 * b + c
+
+-- | Number of digits in the base 10 representation of the number.
+digitsIn :: (Integral a, Num b) => a -> b
+digitsIn n
+  | n < 10  = 1
+  | n >= 10 = 1 + digitsIn (n `div` 10)
 
 
 --  Stored values for memoization

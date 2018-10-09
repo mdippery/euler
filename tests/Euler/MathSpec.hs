@@ -119,3 +119,24 @@ spec = do
       it "returns the number of consecutive quadratic primes" $ do
         consecutiveQuadraticPrimes 1 41 `shouldBe` 40
         consecutiveQuadraticPrimes (-79) 1601 `shouldBe` 80
+
+    describe "digitsIn" $ do
+      it "returns the number of digits in the base 10 representation of a number" $ do
+        digitsIn 0 `shouldBe` 1
+        digitsIn 5 `shouldBe` 1
+        digitsIn 10 `shouldBe` 2
+        digitsIn 503 `shouldBe` 3
+
+    describe "extract1" $ do
+      it "extracts the nth digit in the base 10 representation of a number" $ do
+        extract1 1 1406357289 `shouldBe` 1
+        extract1 2 1406357289 `shouldBe` 4
+        extract1 5 1406357289 `shouldBe` 3
+        extract1 9 1406357289 `shouldBe` 8
+        extract1 10 1406357289 `shouldBe` 9
+
+    describe "extract3" $ do
+      it "extracts the number formed by the 3 digits starting at the nth digit" $ do
+        extract3 2 1406357289 `shouldBe` 406
+        extract3 3 1406357289 `shouldBe` 63
+        extract3 6 1406357289 `shouldBe` 572
