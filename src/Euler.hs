@@ -12,7 +12,7 @@
 -}
 module Euler where
 
-import Control.Monad (ap, liftM2)
+import Control.Monad (ap, join, liftM2)
 import Data.Char (digitToInt, ord)
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort, sortOn, unfoldr)
@@ -385,7 +385,7 @@ problem47 = maybe 0 head $ findConsecutive 4 $ map fst $ filter ((== 4) . snd) $
 problem48 =
   let p = 10 ^ 10
       (%^) = modPower p
-      mp n = n %^ n
+      mp = join (%^)
    in (modSum p . map mp) [1..1000]
 
 -- | Solves <https://projecteuler.net/problem=52 Project Euler Problem #52>
