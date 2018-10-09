@@ -14,8 +14,11 @@ module Euler.Tuple
   (
     -- * Pairs
 
+    -- ** Operators
+    (*%)
+
     -- ** Equality and ordering
-    equalT
+  , equalT
   , maxT
   , minT
   , sortT
@@ -42,6 +45,12 @@ module Euler.Tuple
 
 import Control.Monad (ap, liftM2)
 import Data.List (sort)
+
+-- | Multiplies two pairs together such that the result is the product of the
+-- first two elements of each pair and the product of the second two elements
+-- of each pair.
+(*%) :: (Num a, Num b) => (a,b) -> (a,b) -> (a,b)
+(*%) (n1,d1) (n2,d2) = (n1 * n2, d1 * d2)
 
 -- | Applies a function of two arguments to a list of 2-tuples, where
 -- each element of the tuple is a separate argument to the function,

@@ -323,12 +323,11 @@ problem31 = coinCombos 200 TwoHundredPence
 problem32 = (sum . nub . map (uncurry (*)) . filter (uncurry isProductPandigital)) [(m, n) | m <- [1..99], n <- [100..9999]]
 
 -- | Solves <https://projecteuler.net/problem=33 Project Euler Problem #33>
-problem33 = (denominator . toFrac . foldl1 mult . map extract . filter cancelsF . map cancels) [(i,n,d) | i <- [1..9], d <- [1..(i - 1)], n <- [1..(d - 1)]]
+problem33 = (denominator . toFrac . foldl1 (*%) . map extract . filter cancelsF . map cancels) [(i,n,d) | i <- [1..9], d <- [1..(i - 1)], n <- [1..(d - 1)]]
   where
     cancels (i,n,d) = (cancelsUnorthodoxically i n d, i, n, d)
     cancelsF (b,_,_,_) = b
     extract (_,i,n,d) = (10 * n + i, 10 * i + d)
-    mult (n1,d1) (n2,d2) = (n1 * n2, d1 * d2)
     toFrac = uncurry (%)
 
 -- | Solves <https://projecteuler.net/problem=34 Project Euler Problem #34>
