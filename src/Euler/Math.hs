@@ -67,6 +67,10 @@ module Euler.Math
   , totientRatio
   , truncateN
 
+    -- ** Quadratic equations
+  , isPrimeQuadratic
+  , quadratic
+
     -- * Roots and powers
   , cubeRoot
   , nthRoot
@@ -584,6 +588,23 @@ truncateN n = n : go' tail n ++ go' init n
     go' f n = go f ((f . digits) n)
     go _ [] = []
     go f ns = unDigits ns : go f (f ns)
+
+-- | Evaluates the result of the quadratic equation /n^2/ + /an/ + /b/.
+quadratic :: Num a
+          => a    -- ^ /a/
+          -> a    -- ^ /b/
+          -> a    -- ^ /n/
+          -> a    -- ^ /n ^ 2/ + /an/ + /b/
+quadratic a b n = n ^ 2 + a * n + b
+
+-- | Returns true if the result of evaluating the quadratic expression
+-- /n ^ 2/ + /an/ + /b/ is a prime number.
+isPrimeQuadratic :: Integral a
+                 => a       -- ^ /a/
+                 -> a       -- ^ /b/
+                 -> a       -- ^ /n/
+                 -> Bool    -- ^ True if /n ^ 2/ + /an/ + /b/ is prime
+isPrimeQuadratic = ((isPrime .) .) . quadratic
 
 -- | True if a number, along with all its associated truncated numbers, are prime.
 isTruncatablePrime :: Integer -> Bool
