@@ -5,8 +5,8 @@
 module Euler.MathSpec where
 
 import Data.Ratio ((%))
-import Euler.Math
 import Test.Hspec
+import Euler.Math
 
 spec :: Spec
 spec = do

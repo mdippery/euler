@@ -54,7 +54,6 @@ module Euler.Math
   , factorial
   , factorialChain
   , factorization
-  , hasDivisibilityProperty
   , littleOmega
   , maximumPandigital
   , modAdd
@@ -64,7 +63,6 @@ module Euler.Math
   , modSum
   , multiplicands
   , numDivisors
-  , numericalSubstrings
   , primeFactors
   , sumDigitFactorial
   , sumDivisors
@@ -118,20 +116,20 @@ module Euler.Math
   , octagonalNumbers
   ) where
 
-import                Control.Monad (ap, liftM2)
-import                Data.Array ((!), Array, bounds, inRange, listArray)
-import                Data.Foldable (null)
-import                Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, isPrefixOf, nub, permutations, sort, unfoldr)
-import                Data.Maybe (fromJust, listToMaybe)
-import                Data.Ratio ((%), Ratio, denominator, numerator)
+import           Control.Monad (ap, liftM2)
+import           Data.Array ((!), Array, bounds, inRange, listArray)
+import           Data.Foldable (null)
+import           Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, isPrefixOf, nub, permutations, sort, unfoldr)
+import           Data.Maybe (fromJust, listToMaybe)
+import           Data.Ratio ((%), Ratio, denominator, numerator)
 
-import qualified      Data.Digits as D
-import                Data.List.Ordered (minus, unionAll)
+import qualified Data.Digits as D
+import           Data.List.Ordered (minus, unionAll)
 
-import                Euler.Data (allDigits, digits, unDigits)
-import                Euler.List ((<:), longestPrefix)
-import {-# SOURCE #-} Euler.Text (toInt)
-import                Euler.Tuple (sortT, zipT)
+import           Euler.Data (allDigits, digits, unDigits)
+import           Euler.List ((<:), longestPrefix)
+import           Euler.Text (toInt)
+import           Euler.Tuple (sortT, zipT)
 
 
 -- | True if a number is even.
@@ -753,6 +751,12 @@ isLychrel = go 0
           n'' = n + n'
        in if isPalindrome n'' then False else go (succ i) n''
 
+-- | Number of digits in the base 10 representation of the number.
+digitsIn :: (Integral a, Num b) => a -> b
+digitsIn n
+  | n < 10  = 1
+  | n >= 10 = 1 + digitsIn (n `div` 10)
+
 -- | Extracts the /nth/ digit from the number. Digit numbering starts from
 -- the left at 1.
 extract1 :: (Integral a, Integral b)
@@ -774,36 +778,6 @@ extract3 n x =
       b = extract1 (n + 1) x
       c = extract1 (n + 2) x
    in 100 * a + 10 * b + c
-
--- | Number of digits in the base 10 representation of the number.
-digitsIn :: (Integral a, Num b) => a -> b
-digitsIn n
-  | n < 10  = 1
-  | n >= 10 = 1 + digitsIn (n `div` 10)
-
--- | Retrieves all 3-digit "substrings" of a number, starting at the
--- given indexes.
---
--- Specifically, this function is useful in solving
--- <https://projecteuler.net/problem=43 Euler Problem #43>.
---
--- ==== Examples
--- >>> let x = 1406357289
--- >>> numericalSubstrings x [2..8]
--- [406,63,635,357,572,728,289]
-numericalSubstrings :: (Integral a, Integral b)
-                    => a      -- ^ Base number
-                    -> [b]    -- ^ Indexes from which 3-digit "substrings" should be extracted
-                    -> [a]    -- ^ All 3-digit substrings for the given indexes
-numericalSubstrings = map . flip extract3
-
--- | True if a number fits the divisibility rules as defined in
--- <https://projecteuler.net/problem=43 Euler Problem #43>.
-hasDivisibilityProperty :: Integral a => a -> Bool
-hasDivisibilityProperty x =
-  let ixs = [2..8]
-      ds  = [2,3,5,7,11,13,17]
-   in all (== 0) $ map (uncurry mod) $ zip (numericalSubstrings x ixs) ds
 
 
 --  Stored values for memoization

@@ -31,14 +31,9 @@ module Euler.Text
   , toInt
   , toInts
   , toWord
-
-    -- * Properties
-  , isTriangleWord
   ) where
 
 import Data.Char (ord)
-
-import Euler.Math (isTriangle)
 
 -- | A set of characters
 data CharacterSet = CharacterSet { characterSet :: [Char] } deriving Show
@@ -117,10 +112,3 @@ toWord n
   | n < 1000  = toWord ((n `div` 100) * 100) ++ " and " ++ toWord r100
   where r10 = n `rem` 10
         r100 = n `rem` 100
-
--- | True if the word is a triangle word.
---
--- A "triangle word" is a word whose 'stringValue' is a triangle number,
--- as defined in <https://projecteuler.net/problem=42 Euler Problem #42>.
-isTriangleWord :: String -> Bool
-isTriangleWord = isTriangle . toInteger . stringValue

@@ -28,11 +28,13 @@ import Euler.Data
 import Euler.Grid
 import Euler.List
 import Euler.Math
+import Euler.Math.Internal
 import Euler.Poker
 import Euler.Pyramid
 import Euler.Secret
 import Euler.Spiral
 import Euler.Text
+import Euler.Text.Internal
 import Euler.Triangle
 import Euler.Tuple
 
