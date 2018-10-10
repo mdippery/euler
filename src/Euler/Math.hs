@@ -64,7 +64,6 @@ module Euler.Math
   , modSum
   , multiplicands
   , numDivisors
-  , numLength
   , numericalSubstrings
   , primeFactors
   , sumDigitFactorial
@@ -173,12 +172,6 @@ isPowerOf :: Integer  -- ^ /nth/ power
           -> Integer  -- ^ Number
           -> Bool     -- ^ True if the number is the /nth/ power of some number
 isPowerOf p n = round (nthRoot p n) ^ p == n
-
--- | Number of digits in a given number in base 10.
-numLength :: (Integral a)
-          => a  -- ^ Number
-          -> a  -- ^ Number of digits in the number
-numLength = genericLength . digits
 
 -- | All numbers with the given number of digits in base 10.
 numbersOfLength :: (Integral a, Num b, Enum b)
