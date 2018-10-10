@@ -54,6 +54,7 @@ module Euler.Math
   , factorial
   , factorialChain
   , factorization
+  , hasDivisibilityProperty
   , littleOmega
   , maximumPandigital
   , modAdd
@@ -64,6 +65,7 @@ module Euler.Math
   , multiplicands
   , numDivisors
   , numLength
+  , numericalSubstrings
   , primeFactors
   , sumDigitFactorial
   , sumDivisors
@@ -785,6 +787,30 @@ digitsIn :: (Integral a, Num b) => a -> b
 digitsIn n
   | n < 10  = 1
   | n >= 10 = 1 + digitsIn (n `div` 10)
+
+-- | Retrieves all 3-digit "substrings" of a number, starting at the
+-- given indexes.
+--
+-- Specifically, this function is useful in solving
+-- <https://projecteuler.net/problem=43 Euler Problem #43>.
+--
+-- ==== Examples
+-- >>> let x = 1406357289
+-- >>> numericalSubstrings x [2..8]
+-- [406,63,635,357,572,728,289]
+numericalSubstrings :: (Integral a, Integral b)
+                    => a      -- ^ Base number
+                    -> [b]    -- ^ Indexes from which 3-digit "substrings" should be extracted
+                    -> [a]    -- ^ All 3-digit substrings for the given indexes
+numericalSubstrings = map . flip extract3
+
+-- | True if a number fits the divisibility rules as defined in
+-- <https://projecteuler.net/problem=43 Euler Problem #43>.
+hasDivisibilityProperty :: Integral a => a -> Bool
+hasDivisibilityProperty x =
+  let ixs = [2..8]
+      ds  = [2,3,5,7,11,13,17]
+   in all (== 0) $ map (uncurry mod) $ zip (numericalSubstrings x ixs) ds
 
 
 --  Stored values for memoization

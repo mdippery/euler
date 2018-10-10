@@ -364,6 +364,9 @@ problem42 =
      . wordsBy (== ','))
     (readFile "data/words.txt") >>= return
 
+-- | Solves <https://projecteuler.net/problem=43 Project Euler Problem #43>
+problem43 = sum $ map fst $ filter snd $ zipT hasDivisibilityProperty palindromes
+
 -- | Solves <https://projecteuler.net/problem=44 Project Euler Problem #44>
 problem44 = head [abs (a' - b')
                   | a  <- [1..],
