@@ -67,14 +67,16 @@ zipT :: (a -> b)    -- ^ Mapping function
      -> [(a, b)]    -- ^ List of 2-tuples containing the original value and the output value
 zipT = map . ap (,)
 
--- | Unzips a list of 2-tuples by passing the 2-tuple to the given function,
--- returning a list of the output of that function.
+-- | Unzips a list of 2-tuples in the format specified by 'zipT'.
 --
--- This is a counterpart to 'zipT'.
-unzipT :: ((a, b) -> c)   -- ^ Mapping function
-       -> [(a, b)]        -- ^ Original list of tuples
-       -> [c]             -- ^ List of results of mapping function applied to each tuple
-unzipT = map
+-- This is a counterpart to 'zipT'. It returns the first value passed to the
+-- function in 'zipT'. Often it is used in a filtering chain:
+--
+-- >>> (unzipT . filter g . zipT f) [1,2,3]
+-- [1,2,3]
+unzipT :: [(a, b)]  -- ^ Original list of tuples
+       -> [a]       -- ^ List of results of mapping function applied to each tuple
+unzipT = map fst
 
 -- | Sorts a 2-tuple so that the minimum value is first.
 sortT :: Ord a => (a,a) -> (a, a)
