@@ -129,7 +129,7 @@ import           Data.List.Ordered (minus, unionAll)
 import           Euler.Data (allDigits, digits, unDigits)
 import           Euler.List ((<:), longestPrefix)
 import           Euler.Text (toInt)
-import           Euler.Tuple (sortT, zipT)
+import           Euler.Tuple (sortT)
 
 
 -- | True if a number is even.
@@ -535,7 +535,9 @@ littleOmega = genericLength . primeFactors
 -- | Calculates pairs of numbers that can be multiplied together to produce
 -- the given number.
 multiplicands :: Integral a => a -> [(a, a)]
-multiplicands n = nub $ map sortT $ zipT (div n) $ filter (flip divides n) $ enumFromTo 1 n
+multiplicands n = nub $ map zipT $ filter (flip divides n) $ enumFromTo 1 n
+  where
+    zipT = sortT . ap (,) (div n)
 
 -- | Number of divisors of a given number.
 numDivisors :: Integral a => Integer -> a

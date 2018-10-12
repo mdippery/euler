@@ -27,10 +27,6 @@ module Euler.Tuple
   , flattenT
   , mapT
 
-    -- ** Zipping and unzipping
-  , unzipT
-  , zipT
-
     -- * Triples
 
     -- ** Accessing elements
@@ -59,24 +55,6 @@ mapT :: (a -> b -> c)   -- ^ Mapping function
      -> [(a, b)]        -- ^ List of function arguments
      -> [c]             -- ^ List of outputs of the mapping function
 mapT = map . uncurry
-
--- | Applies a function to each element of a list, returning a list of 2-tuples
--- in the form (x, f x).
-zipT :: (a -> b)    -- ^ Mapping function
-     -> [a]         -- ^ Original list of values
-     -> [(a, b)]    -- ^ List of 2-tuples containing the original value and the output value
-zipT = map . ap (,)
-
--- | Unzips a list of 2-tuples in the format specified by 'zipT'.
---
--- This is a counterpart to 'zipT'. It returns the first value passed to the
--- function in 'zipT'. Often it is used in a filtering chain:
---
--- >>> (unzipT . filter g . zipT f) [1,2,3]
--- [1,2,3]
-unzipT :: [(a, b)]  -- ^ Original list of tuples
-       -> [a]       -- ^ List of results of mapping function applied to each tuple
-unzipT = map fst
 
 -- | Sorts a 2-tuple so that the minimum value is first.
 sortT :: Ord a => (a,a) -> (a, a)
