@@ -786,7 +786,9 @@ extract1 :: Integral a
          -> a   -- ^ The /nth/ digit in the base 10 representation of the number
 extract1 n x =
   let n' = digitsIn x - n + 1
-   in x `rem` (10 ^ n') `div` (10 ^ (n' - 1))
+      p = 10 ^ n'
+      p' = p `div` 10
+   in x `rem` p `div` p'
 
 -- | Extracts the number formed by taking the 3 consecutive digits starting
 -- at /n/ from the number. Digit number starts from the left at 1
