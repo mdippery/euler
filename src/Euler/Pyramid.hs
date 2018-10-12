@@ -22,8 +22,7 @@ module Euler.Pyramid
   , maximumPath
   ) where
 
-import Euler.List
-import Euler.Tuple
+import Euler.List (duplicate, fatten, splitEvery)
 
 -- | A single row in a pyramid
 data PyramidRow a = PyramidRow
@@ -50,7 +49,7 @@ maxR :: (Num a, Ord a)
 maxR (PyramidRow b) (PyramidRow t) =
   let t' = duplicate t
       b' = fatten b
-   in (PyramidRow . map maximum . splitEvery 2 . mapT (+) . zip t') b'
+   in (PyramidRow . map maximum . splitEvery 2 . map (uncurry (+)) . zip t') b'
 
 -- | Reduces a pyramid down to one row with one element containing the
 -- maximum path through the pyramid.
