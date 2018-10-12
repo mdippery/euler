@@ -124,7 +124,7 @@ problem11 =
    in (head . reverse . sort . map product . gridLines 4) grid
 
 -- | Solves <https://projecteuler.net/problem=12 Project Euler Problem #12>
-problem12 = (head . unzipT . dropWhile ((<= 500) . snd) . zipT numDivisors) triangleNumbers
+problem12 = (head . dropWhile ((<= 500) . numDivisors)) triangleNumbers
 
 -- | Solves <https://projecteuler.net/problem=13 Project Euler Problem #13>
 problem13 =
@@ -316,7 +316,8 @@ problem29 = (length . nub) [a ^ b | a <- [2..100], b <- [2..100]]
 problem30 =
     let nums = [2..355000]
         pow = sum . map (^ 5) . digits
-     in (sum . unzipT . filter equalT . zipT pow) nums
+        eq = (==) =<< pow
+     in (sum . filter eq) nums
 
 -- | Solves <https://projecteuler.net/problem=31 Project Euler Problem #31>
 problem31 = coinCombos 200 TwoHundredPence
@@ -333,7 +334,7 @@ problem33 = (denominator . toFrac . foldl1 (*%) . map extract . filter cancelsF 
     toFrac = uncurry (%)
 
 -- | Solves <https://projecteuler.net/problem=34 Project Euler Problem #34>
-problem34 = (sum . unzipT . filter equalT . zipT sumDigitFactorial) [3..2540160]
+problem34 = (sum . filter ((==) =<< sumDigitFactorial)) [3..2540160]
 
 -- | Solves <https://projecteuler.net/problem=35 Project Euler Problem #35>
 problem35 = (length . filter f) (primesTo 999999)
@@ -355,7 +356,7 @@ problem40 =
    in (product . map digitToInt . map (s !!) . map (10 ^)) [0..6]
 
 -- | Solves <https://projecteuler.net/problem=41 Project Euler Problem #41>
-problem41 = (fst . head . filter snd . zipT isPandigitalN . reverse . primesTo) 7654321
+problem41 = (head . filter isPandigitalN . reverse . primesTo) 7654321
 
 -- | Solves <https://projecteuler.net/problem=42 Project Euler Problem #42>
 problem42 =
@@ -367,7 +368,7 @@ problem42 =
     (readFile "data/words.txt") >>= return
 
 -- | Solves <https://projecteuler.net/problem=43 Project Euler Problem #43>
-problem43 = sum $ map fst $ filter snd $ zipT hasDivisibilityProperty palindromes
+problem43 = (sum . filter hasDivisibilityProperty) palindromes
 
 -- | Solves <https://projecteuler.net/problem=44 Project Euler Problem #44>
 problem44 = head [abs (a' - b')
