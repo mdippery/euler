@@ -40,7 +40,6 @@ module Euler.Math
   , between
   , bigOmega
   , binomialCoefficient
-  , cancelsUnorthodoxically
   , closestRatio
   , collatzLength
   , choose
@@ -625,15 +624,6 @@ consecutiveQuadraticPrimes a b = go 0 0
       | (not . isPrimeQuadratic a b) n = acc
       | otherwise = go (1 + acc) (n + 1)
 
--- | True if the fraction "cancels" according to the rules outlined in
--- <https://projecteuler.net/problem=33 Euler Problem #33>.
-cancelsUnorthodoxically :: (Num a, Eq a)
-                        => a      -- ^ Digit multiplier
-                        -> a      -- ^ Digit in numerator
-                        -> a      -- ^ Digit in denominator
-                        -> Bool   -- ^ True if the fraction "cancels"
-cancelsUnorthodoxically i n d = d * (10 * n + i) == n * (10 * i + d)
-
 -- | True if a number, along with all its associated truncated numbers, are prime.
 isTruncatablePrime :: Integer -> Bool
 isTruncatablePrime = all isPrime . truncateN
@@ -704,7 +694,7 @@ totient n =
   let ratio = foldr ((*) . (1 -) . (1 %)) (n % 1) $ primeFactors n
    in (liftM2 div numerator denominator) ratio
 
--- | Calculates /n \/ 'totient'(n)/.
+-- | Calculates /n/ \/ 'totient'(n).
 totientRatio :: Fractional a => Integer -> a
 totientRatio n = fromIntegral n / fromIntegral (totient n)
 

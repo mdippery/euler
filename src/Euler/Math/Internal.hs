@@ -37,3 +37,12 @@ hasDivisibilityProperty x =
   let ixs = [2..8]
       ds  = [2,3,5,7,11,13,17]
    in all (== 0) $ map (uncurry mod) $ zip (numericalSubstrings x ixs) ds
+
+-- | True if the fraction "cancels" according to the rules outlined in
+-- <https://projecteuler.net/problem=33 Euler Problem #33>.
+cancelsUnorthodoxically :: (Num a, Eq a)
+                        => a      -- ^ Digit multiplier
+                        -> a      -- ^ Digit in numerator
+                        -> a      -- ^ Digit in denominator
+                        -> Bool   -- ^ True if the fraction "cancels"
+cancelsUnorthodoxically i n d = d * (10 * n + i) == n * (10 * i + d)
