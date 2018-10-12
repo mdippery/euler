@@ -24,9 +24,9 @@ import Euler.Math (extract3)
 -- >>> let x = 1406357289
 -- >>> numericalSubstrings x [2..8]
 -- [406,63,635,357,572,728,289]
-numericalSubstrings :: (Integral a, Integral b)
+numericalSubstrings :: Integral a
                     => a      -- ^ Base number
-                    -> [b]    -- ^ Indexes from which 3-digit "substrings" should be extracted
+                    -> [a]    -- ^ Indexes from which 3-digit "substrings" should be extracted
                     -> [a]    -- ^ All 3-digit substrings for the given indexes
 numericalSubstrings = map . flip extract3
 
