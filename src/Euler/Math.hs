@@ -63,6 +63,8 @@ module Euler.Math
   , multiplicands
   , numDivisors
   , primeFactors
+  , reverseNum
+  , reverseNumIn
   , sumDigitFactorial
   , sumDivisors
   , totient
@@ -115,20 +117,19 @@ module Euler.Math
   , octagonalNumbers
   ) where
 
-import           Control.Monad (ap, liftM2)
-import           Data.Array ((!), Array, bounds, inRange, listArray)
-import           Data.Foldable (null)
-import           Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, isPrefixOf, nub, permutations, sort, unfoldr)
-import           Data.Maybe (fromJust, listToMaybe)
-import           Data.Ratio ((%), Ratio, denominator, numerator)
+import Control.Monad (ap, liftM2)
+import Data.Array ((!), Array, bounds, inRange, listArray)
+import Data.Foldable (null)
+import Data.List (elemIndex, foldl', genericIndex, genericLength, genericTake, group, intersect, isPrefixOf, nub, permutations, sort, unfoldr)
+import Data.Maybe (fromJust, listToMaybe)
+import Data.Ratio ((%), Ratio, denominator, numerator)
 
-import qualified Data.Digits as D
-import           Data.List.Ordered (minus, unionAll)
+import Data.List.Ordered (minus, unionAll)
 
-import           Euler.Data (allDigits, digits, unDigits)
-import           Euler.List ((<:), longestPrefix)
-import           Euler.Text (toInt)
-import           Euler.Tuple (sortT)
+import Euler.Data (allDigits, digits, unDigits)
+import Euler.List ((<:), longestPrefix)
+import Euler.Text (toInt)
+import Euler.Tuple (sortT)
 
 
 -- | True if a number is even.
@@ -412,7 +413,34 @@ isPalindromeIn :: Integral a
                => a     -- ^ Base
                -> a     -- ^ Number
                -> Bool  -- ^ True if the number is palindromic in the given base
-isPalindromeIn base n = D.digits base n == reverse (D.digits base n)
+isPalindromeIn = ap (==) . reverseNumIn
+
+-- | Returns the reversed representation of the number.
+--
+-- ==== Examples
+--
+-- >>> reverseNum 1234
+-- 4321
+reverseNum :: Integral a => a -> a
+reverseNum = reverseNumIn 10
+
+-- | Returns the reversed representation of the number in the given base.
+--
+-- ==== Examples
+--
+-- >>> reverseNumIn 10 1234
+-- 4321
+reverseNumIn :: Integral a
+             => a   -- ^ Base
+             -> a   -- ^ /n/
+             -> a   -- ^ Reversed representation of /n/ in the given base
+reverseNumIn base n = go 0 n
+  where
+    go acc n'
+      | n' < base = base * acc + n'
+      | otherwise =
+        let (q,r) = n' `quotRem` base
+         in go (acc * base + r) q
 
 -- | Factorial of /n/.
 factorial :: (Enum a, Num a) => a -> a
