@@ -179,7 +179,7 @@ numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
 
 -- | List of all 0-9 palindromic numbers.
 palindromes :: [Int]
-palindromes = map toInt $ filter ((/= '0') . head) $ permutations "0123456789"
+palindromes = filter (>= 1000000000) $ map toInt $ permutations "0123456789"
 
 -- | Returns the length of the recurring cycle of a fraction.
 --
