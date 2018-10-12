@@ -139,7 +139,7 @@ longestPrefix :: Eq a
               => [a]      -- ^ First list
               -> [a]      -- ^ Second list
               -> [a]      -- ^ Prefix common to both lists
-longestPrefix xs ys = map fst $ filter equalT $ zip xs ys
+longestPrefix = ((map fst . filter equalT) .) . zip
 
 -- | Replaces an element at the given index.
 --
