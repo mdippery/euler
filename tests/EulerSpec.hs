@@ -195,6 +195,10 @@ spec = do
     it "is correct" $ do
       problem48 `shouldBe` 9110846700
 
+  describe "Verify that problem 49" $ do
+    it "is correct" $ do
+      problem49 `shouldBe` 296962999629
+
   describe "Verify that problem 52" $ do
     it "is correct" $ do
       problem52 `shouldBe` 142857

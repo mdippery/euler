@@ -391,6 +391,16 @@ problem48 =
       mp = join (%^)
    in (modSum p . map mp) [1..1000]
 
+-- | Solves <https://projecteuler.net/problem=49 Project Euler Problem #49>
+problem49 = unDigits $ concatT $ head $ tail $ filter has3 $ filter isPrime3 $ filter same3 $ filter seq3 $ map mkSeq primes
+  where
+    concatT (a,b,c) = digits a ++ digits b ++ digits c
+    has3 (a,b,c) = digitsIn a == 4 && digitsIn b == 4 && digitsIn c == 4
+    isPrime3 (a,b,c) = isPrime a && isPrime b && isPrime c
+    same3 (a,b,c) = sameDigits a b && sameDigits b c
+    seq3 (a,b,c) = b - a == 3330 && c - b == 3330
+    mkSeq n = (n, n + 3330, n + 3330 * 2)
+
 -- | Solves <https://projecteuler.net/problem=52 Project Euler Problem #52>
 problem52 = (head . filter (f 6) . filter (f 5) . filter (f 4) . filter (f 3) . filter (f 2)) [1..]
   where f m x = sameDigits x (m * x)
