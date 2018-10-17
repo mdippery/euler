@@ -140,3 +140,12 @@ spec = do
         extract3 2 1406357289 `shouldBe` 406
         extract3 3 1406357289 `shouldBe` 63
         extract3 6 1406357289 `shouldBe` 572
+
+    describe "approxPi" $ do
+      it "returns the number of primes <= n" $ do
+        approxPi 10 `shouldBe` 8
+        approxPi 100 `shouldBe` 28
+        approxPi 1000 `shouldBe` 169
+        approxPi 10000 `shouldBe` 1218
+        approxPi 100000 `shouldBe` 9512
+        approxPi 1000000 `shouldBe` 78030

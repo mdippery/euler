@@ -89,6 +89,7 @@ module Euler.Math
   , palindromes
 
     -- ** Primes and composites
+  , approxPi
   , composites
   , compositesTo
   , nextPrime
@@ -229,6 +230,10 @@ primesTo = flip takeWhile primes . flip (<=)
 -- | First prime number greater than /n/.
 nextPrime :: Integer -> Integer
 nextPrime n = (head . dropWhile (<= n)) primes
+
+-- | Count of prime numbers less than or equal to /n/.
+approxPi :: (RealFrac a, Floating a, Integral b) => a -> b
+approxPi n = round $ n / (log n - 1)
 
 -- | Infinite list of all composite numbers.
 composites :: [Integer]
