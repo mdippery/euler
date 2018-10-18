@@ -83,6 +83,7 @@ module Euler.Math
 
     -- * Groups, classes, and sequences
   , abundantNumbers
+  , cubes
   , fibonacci
   , fibonaccis
   , numbersOfLength
@@ -599,6 +600,10 @@ isAbundant = (>) =<< (memoSumDivisors !)
 -- | List of all abundant numbers.
 abundantNumbers :: [Integer]
 abundantNumbers = filter (memoAbundantNumbers !) [1..28123]
+
+-- | List of all cubed numbers.
+cubes :: [Integer]
+cubes = map (^ 3) [1..]
 
 -- | True if the number is the sum of two abundant numbers
 isAbundantSum :: Integer -> Bool
