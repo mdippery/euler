@@ -149,3 +149,9 @@ spec = do
         approxPi 10000 `shouldBe` 1218
         approxPi 100000 `shouldBe` 9512
         approxPi 1000000 `shouldBe` 78030
+
+    describe "smallestPermutation" $ do
+      it "returns the smallest permutation of the digits of n" $ do
+        smallestPermutation 41063625 `shouldBe` 41063625
+        smallestPermutation 56623104 `shouldBe` 41063625
+        smallestPermutation 66430125 `shouldBe` 41063625

@@ -65,6 +65,7 @@ module Euler.Math
   , primeFactors
   , reverseNum
   , reverseNumIn
+  , smallestPermutation
   , sumDigitFactorial
   , sumDivisors
   , totient
@@ -632,6 +633,10 @@ truncateN n = n : go' tail n ++ go' init n
     go' f n = go f ((f . digits) n)
     go _ [] = []
     go f ns = unDigits ns : go f (f ns)
+
+-- | Finds the smallest permutations of the digits of /n/.
+smallestPermutation :: Integer -> Integer
+smallestPermutation n = (head . dropWhile ((< digitsIn n) . digitsIn) . sort . filter isCube . map unDigits . permutations . digits) n
 
 -- | Evaluates the result of the quadratic equation /n^2/ + /an/ + /b/.
 quadratic :: Num a
