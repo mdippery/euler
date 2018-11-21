@@ -45,10 +45,10 @@ problem1 = sum $ nub $ (enumFromThenTo 3 6 999) ++ (enumFromThenTo 5 10 999)
 problem2 = (sum . filter isEven . takeWhile (<= 4000000)) fibonaccis
 
 -- | Solves <https://projecteuler.net/problem=3 Project Euler Problem #3>
-problem3 = (head . reverse . primeFactors) 600851475143
+problem3 = (last . primeFactors) 600851475143
 
 -- | Solves <https://projecteuler.net/problem=4 Project Euler Problem #4>
-problem4 = (head . reverse . sort . filter isPalindrome) [x * y | x <- [100..999], y <- [100..999]]
+problem4 = (head . descendingSort . filter isPalindrome) [x * y | x <- [100..999], y <- [100..999]]
 
 -- | Solves <https://projecteuler.net/problem=5 Project Euler Problem #5>
 problem5 = head $ dropWhile (not . divisibleBy [1..20]) [20,40..]
@@ -85,7 +85,7 @@ problem8 =
            "84580156166097919133875499200524063689912560717606" ++
            "05886116467109405077541002256983155200055935729725" ++
            "71636269561882670428252483600823257530420752963450"
-   in (head . reverse . sort . map product . windows 13 . toInts) ds
+   in (head . descendingSort . map product . windows 13 . toInts) ds
 
 -- | Solves <https://projecteuler.net/problem=9 Project Euler Problem #9>
 problem9 =
@@ -121,7 +121,7 @@ problem11 =
                   ,20, 69, 36, 41, 72, 30, 23, 88, 34, 62, 99, 69, 82, 67, 59, 85, 74,  4, 36, 16
                   ,20, 73, 35, 29, 78, 31, 90,  1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57,  5, 54
                   , 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48]
-   in (head . reverse . sort . map product . gridLines 4) grid
+   in (head . descendingSort . map product . gridLines 4) grid
 
 -- | Solves <https://projecteuler.net/problem=12 Project Euler Problem #12>
 problem12 = (head . dropWhile ((<= 500) . numDivisors)) triangleNumbers

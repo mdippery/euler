@@ -33,13 +33,18 @@ module Euler.List
     -- * Searching
   , findConsecutive
 
+    -- * Sorting
+  , descendingSort
+
     -- * Zipping and unzipping
   , zipWithIndex
   , zipWithIndexFrom
   , unzipWithIndex
   ) where
 
-import Data.List (genericLength, genericSplitAt, genericTake)
+import Data.List (genericLength, genericSplitAt, genericTake, sortBy)
+import Data.Ord (Down(..), comparing)
+
 import Euler.Tuple (equalT)
 
 -- | Appends a value to a list.
@@ -226,3 +231,7 @@ findConsecutive n ls =
     ws -> Just (head ws)
   where
     f n ls = head ls == (last ls) - n + 1
+
+-- | Sorts a list in descending order.
+descendingSort :: Ord a => [a] -> [a]
+descendingSort = sortBy (comparing Down)
