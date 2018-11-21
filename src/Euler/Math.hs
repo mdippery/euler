@@ -636,7 +636,7 @@ truncateN n = n : go' tail n ++ go' init n
 
 -- | Finds the smallest permutations of the digits of /n/.
 smallestPermutation :: Integer -> Integer
-smallestPermutation = head . sort . filter isCube . map unDigits . filter ((/= 0) . head) . permutations . digits
+smallestPermutation = minimum . filter isCube . map unDigits . filter ((/= 0) . head) . permutations . digits
 
 -- | Evaluates the result of the quadratic equation /n^2/ + /an/ + /b/.
 quadratic :: Num a
