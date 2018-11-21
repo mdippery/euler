@@ -42,7 +42,8 @@ module Euler.List
   , unzipWithIndex
   ) where
 
-import Data.List (genericLength, genericSplitAt, genericTake, sortOn)
+import Data.Bool (bool)
+import Data.List (genericLength, genericSplitAt, genericTake, sortOn, unfoldr)
 import Data.Ord (Down(..))
 
 import Euler.Tuple (equalT)
@@ -180,10 +181,11 @@ windows :: Integral a
         => a      -- ^ Desired size of sublists
         -> [b]    -- ^ List
         -> [[b]]  -- ^ Sublists of the desired size
-windows n [] = []
-windows n ls
-  | genericLength ls >= n = genericTake n ls : windows n (tail ls)
-  | otherwise = []
+windows n = unfoldr go
+  where
+    go ls
+      | genericLength ls >= n = Just (genericTake n ls, tail ls)
+      | otherwise = Nothing
 
 -- | Moves the last element of a list to the front.
 --
