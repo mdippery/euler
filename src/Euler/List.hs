@@ -199,14 +199,9 @@ rotateOnce ls = last ls : init ls
 -- ==== Examples
 --
 -- >>> rotations [1,2,3]
--- [[1,2,3], [2,3,1], [3,1,2]]
+-- [[1,2,3], [3,1,2], [2,3,1]]
 rotations :: [a] -> [[a]]
-rotations ls = go ls (length ls) []
-  where
-    go _ 0 acc = acc
-    go ls n acc =
-      let ls' = rotateOnce ls
-       in go ls' (n - 1) (ls' : acc)
+rotations ls = take (length ls) $ iterate rotateOnce ls
 
 -- | Splits a list into /n/-sized chunks.
 splitEvery :: Integral a
