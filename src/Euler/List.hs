@@ -42,8 +42,8 @@ module Euler.List
   , unzipWithIndex
   ) where
 
-import Data.List (genericLength, genericSplitAt, genericTake, sortBy)
-import Data.Ord (Down(..), comparing)
+import Data.List (genericLength, genericSplitAt, genericTake, sortOn)
+import Data.Ord (Down(..))
 
 import Euler.Tuple (equalT)
 
@@ -234,4 +234,4 @@ findConsecutive n ls =
 
 -- | Sorts a list in descending order.
 descendingSort :: Ord a => [a] -> [a]
-descendingSort = sortBy (comparing Down)
+descendingSort = sortOn Down
