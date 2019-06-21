@@ -106,9 +106,9 @@ zipWithIndex = zipWithIndexFrom 0
 -- >>> zipWithIndexFrom 2 [10,20,30]
 -- [(2,10), (3,20), (4,30)]
 zipWithIndexFrom :: (Enum b, Num b)
-               => b         -- ^ Starting index
-               -> [a]       -- ^ List
-               -> [(b, a)]  -- ^ List elements combined with their index in the list
+                 => b         -- ^ Starting index
+                 -> [a]       -- ^ List
+                 -> [(b, a)]  -- ^ List elements combined with their index in the list
 zipWithIndexFrom = zip . enumFrom
 
 -- | Removes indexes from a list of elements.
