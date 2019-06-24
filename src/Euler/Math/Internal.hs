@@ -36,7 +36,7 @@ hasDivisibilityProperty :: Integral a => a -> Bool
 hasDivisibilityProperty x =
   let ixs = [2..8]
       ds  = [2,3,5,7,11,13,17]
-   in all (== 0) $ map (uncurry mod) $ zip (numericalSubstrings x ixs) ds
+   in all (== 0) $ zipWith mod (numericalSubstrings x ixs) ds
 
 -- | True if the fraction "cancels" according to the rules outlined in
 -- <https://projecteuler.net/problem=33 Euler Problem #33>.

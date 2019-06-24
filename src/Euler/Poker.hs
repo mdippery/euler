@@ -114,7 +114,7 @@ groupedCardValues = groupBy ((==) `on` cardValue) . sort . cards
 
 -- | Most valuable card in a set of cards
 highestCardOf :: [Card] -> Card
-highestCardOf = head . sort
+highestCardOf = minimum
 
 -- | True if all cards in the player's hand are of the same suit
 isSameSuit :: PlayerHand -> Bool
@@ -186,7 +186,7 @@ isStraightFlush ph = isStraight ph && isFlush ph && (not . isRoyalFlush) ph
 -- | True if the player's hand is a royal flush
 isRoyalFlush :: PlayerHand -> Bool
 isRoyalFlush ph =
-  let lowCard = (cardValue . head . sort . cards) ph
+  let lowCard = (cardValue . minimum . cards) ph
    in isStraight ph && isFlush ph && lowCard == Ten
 
 -- | Type of a player's hand
@@ -261,7 +261,7 @@ winner ph1 ph2
 -- Card strings are in the form "4D", where the first character is the
 -- value of the card, and the second is the value of the suit.
 parseCard :: String -> Card
-parseCard (v:s:[]) = Card (parseCardValue v) (parseCardSuit s)
+parseCard [v,s] = Card (parseCardValue v) (parseCardSuit s)
 
 -- | Parses a player's hand string into a hand.
 --
@@ -272,7 +272,7 @@ parseHand :: Player       -- ^ Player who owns the hand
           -> PlayerHand   -- ^ Parsed hand
 parseHand p ss =
   let cs = map parseCard ss
-   in PlayerHand p (cs !! 0) (cs !! 1) (cs !! 2) (cs !! 3) (cs !! 4)
+   in PlayerHand p (head cs) (cs !! 1) (cs !! 2) (cs !! 3) (cs !! 4)
 
 -- | Parses a poker game into a pair of hands.
 --

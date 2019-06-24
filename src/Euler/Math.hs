@@ -166,7 +166,7 @@ isCube = isPowerOf 3
 nthRoot :: Integer  -- ^ /nth/ root to calculate
         -> Integer  -- ^ Number
         -> Double   -- ^ /nth/ root of the number
-nthRoot r = (** (1 / (fromIntegral r))) . fromIntegral
+nthRoot r = (** (1 / fromIntegral r)) . fromIntegral
 
 -- | True if a number is the /nth/ power of another number.
 isPowerOf :: Integer  -- ^ /nth/ power
@@ -199,7 +199,7 @@ cycleLength x = go [] (numerator x) (denominator x)
   where
     go rs n d
       | r == 0 = 0
-      | r `elem` rs = 1 + (fromJust $ elemIndex r rs)
+      | r `elem` rs = 1 + fromJust (elemIndex r rs)
       | otherwise = go (r : rs) (r * 10) d
       where
         r = n `rem` d
@@ -209,7 +209,7 @@ isPrime :: Integral a => a -> Bool
 isPrime n
   | n < 2  = False
   | n == 2 = True
-  | n > 2  = null $ filter (flip divides n) [2..sqrtI n]
+  | n > 2  = not (any (`divides` n) [2..sqrtI n])
 
 -- | True if the number is a composite number.
 isComposite :: Integral a => a -> Bool
@@ -222,7 +222,7 @@ primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
 -- | All prime numbers less than the given number.
 primesBelow :: Integer    -- ^ Upper bound, exclusive
             -> [Integer]  -- ^ All prime numbers less than the upper bound
-primesBelow = primesTo . (flip (-) 1)
+primesBelow = primesTo . flip (-) 1
 
 -- | All prime numbers less than or equal to the given number.
 primesTo :: Integer     -- ^ Upper bound, inclusive
@@ -350,7 +350,7 @@ triangleNumbers = map tn [1..]
 -- | True if the given number is a <https://en.wikipedia.org/wiki/Triangular_number triangle number>.
 isTriangle :: Integer -> Bool
 isTriangle n =
-  let sqn = sqrt $ 8 * (fromInteger n) + 1
+  let sqn = sqrt $ 8 * fromInteger n + 1
       p = (sqn - 1) / 2
    in isInteger p
 
@@ -367,7 +367,7 @@ pentagonalNumber = genericIndex (0 : pentagonalNumbers)
 -- | True if a number is a <https://en.wikipedia.org/wiki/Pentagonal_number pentagonal number>.
 isPentagonal :: Integer -> Bool
 isPentagonal n =
-  let sqn = sqrt $ 24 * (fromInteger n) + 1
+  let sqn = sqrt $ 24 * fromInteger n + 1
       p = (sqn + 1) / 6
    in isInteger p
 
@@ -380,7 +380,7 @@ hexagonalNumbers = map hn [1..]
 -- | True if the given number is a <https://en.wikipedia.org/wiki/Hexagonal_number hexagonal number>.
 isHexagonal :: Integer -> Bool
 isHexagonal n =
-  let sqn = sqrt $ 8 * (fromInteger n) + 1
+  let sqn = sqrt $ 8 * fromInteger n + 1
       p = (sqn + 1) / 4
    in isInteger p
 
@@ -393,7 +393,7 @@ heptagonalNumbers = map hn [1..]
 -- | True if the given number is a <https://en.wikipedia.org/wiki/Heptagonal_number heptagonal number>.
 isHeptagonal :: Integer -> Bool
 isHeptagonal n =
-  let sqn = sqrt $ 40 * (fromInteger n) + 9
+  let sqn = sqrt $ 40 * fromInteger n + 9
       p = (sqn + 3) / 10
    in isInteger p
 
@@ -406,7 +406,7 @@ octagonalNumbers = map hn [1..]
 -- | True if the given number is an <https://en.wikipedia.org/wiki/Octagonal_number octagonal number>.
 isOctagonal :: Integer -> Bool
 isOctagonal n =
-  let sqn = sqrt $ 3 * (fromInteger n) + 1
+  let sqn = sqrt $ 3 * fromInteger n + 1
       p = (sqn + 1) / 3
    in isInteger p
 
@@ -441,7 +441,7 @@ reverseNumIn :: Integral a
              => a   -- ^ Base
              -> a   -- ^ /n/
              -> a   -- ^ Reversed representation of /n/ in the given base
-reverseNumIn base n = go 0 n
+reverseNumIn base = go 0
   where
     go acc n'
       | n' < base = base * acc + n'
@@ -516,7 +516,7 @@ divisibleBy :: Integral a
             => [a]    -- ^ List of numbers that the number in question /must/ be divisible by
             -> a      -- ^ Number
             -> Bool   -- ^ True if a number is divisible by the entire list of numbers
-divisibleBy = (. (flip divides)) . flip all
+divisibleBy = (. flip divides) . flip all
 
 -- | List of all factors of the given number.
 --
@@ -569,7 +569,7 @@ littleOmega = genericLength . primeFactors
 -- | Calculates pairs of numbers that can be multiplied together to produce
 -- the given number.
 multiplicands :: Integral a => a -> [(a, a)]
-multiplicands n = nub $ map zipT $ filter (flip divides n) $ enumFromTo 1 n
+multiplicands n = nub $ map zipT $ filter (`divides` n) $ enumFromTo 1 n
   where
     zipT = sortT . ap (,) (div n)
 
@@ -705,7 +705,7 @@ modAdd m a b = (a + b) `mod` m
 
 -- | A 'sum' function that uses modular addition.
 modSum :: Integral a => a -> [a] -> a
-modSum m = foldr (modAdd m) 0 . map (flip mod m)
+modSum m = foldr (modAdd m . flip mod m) 0
 
 -- | <https://en.wikipedia.org/wiki/Combination Combination> function.
 --
@@ -735,7 +735,7 @@ isCoprime a b = (null . uncurry intersect) (factorization a, factorization b)
 totient :: Integer -> Integer
 totient n =
   let ratio = foldr ((*) . (1 -) . (1 %)) (n % 1) $ primeFactors n
-   in (liftM2 div numerator denominator) ratio
+   in liftM2 div numerator denominator ratio
 
 -- | Calculates /n/ \/ 'totient'(n).
 totientRatio :: Fractional a => Integer -> a
@@ -784,7 +784,7 @@ isLychrel = go 0
     go i n =
       let n' = (unDigits . reverse . digits) n
           n'' = n + n'
-       in if isPalindrome n'' then False else go (succ i) n''
+       in (not (isPalindrome n'') && go (succ i) n'')
 
 -- | Number of digits in the base 10 representation of the number.
 digitsIn :: (Integral a, Integral b) => a -> b

@@ -25,12 +25,12 @@ module Euler.Pyramid
 import Euler.List (duplicate, fatten, splitEvery)
 
 -- | A single row in a pyramid
-data PyramidRow a = PyramidRow
+newtype PyramidRow a = PyramidRow
   { pyramidBricks :: [a]   -- ^ Value of each cell in the row
   } deriving Show
 
 -- | A pyramid
-data Pyramid a = Pyramid
+newtype Pyramid a = Pyramid
   { pyramidRows :: [PyramidRow a]  -- ^ Rows of the pyramid
   } deriving Show
 
@@ -49,7 +49,7 @@ maxR :: (Num a, Ord a)
 maxR (PyramidRow b) (PyramidRow t) =
   let t' = duplicate t
       b' = fatten b
-   in (PyramidRow . map maximum . splitEvery 2 . map (uncurry (+)) . zip t') b'
+   in (PyramidRow . map maximum . splitEvery 2 . zipWith (+) t') b'
 
 -- | Reduces a pyramid down to one row with one element containing the
 -- maximum path through the pyramid.

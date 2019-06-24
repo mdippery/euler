@@ -227,7 +227,7 @@ findConsecutive n ls =
     [] -> Nothing
     ws -> Just (head ws)
   where
-    f n ls = head ls == (last ls) - n + 1
+    f n ls = head ls == last ls - n + 1
 
 -- | Sorts a list in descending order.
 descendingSort :: Ord a => [a] -> [a]

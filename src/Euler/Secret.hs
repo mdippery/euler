@@ -36,7 +36,7 @@ import Euler.Text (toInt)
 
 -- | List of all possible three-letter encryption keys.
 allKeys :: [String]
-allKeys = [a : b : c : [] | a <- ['a'..'z'], b <- ['a'..'z'], c <- ['a'..'z']]
+allKeys = [[a, b, c] | a <- ['a'..'z'], b <- ['a'..'z'], c <- ['a'..'z']]
 
 -- | Decrypts a list of "bytes" (integers) into a string using the given
 -- encryption key.
@@ -49,7 +49,7 @@ decrypt key bytes = (map chr . zipWith xor bytes . (map ord . cycle)) key
 decryptFile :: FilePath     -- ^ Path to file
             -> String       -- ^ Encryption key
             -> IO String    -- ^ Decrypted message
-decryptFile path key = fmap (decrypt key) (loadFile path) >>= return
+decryptFile path key = fmap (decrypt key) (loadFile path)
 
 -- | Passes the encryped message through every key returned by 'allKeys'.
 tryDecrypt :: [Int]       -- ^ Encrypted message
@@ -62,7 +62,7 @@ tryDecrypt bytes = filter (all isValid) (msgs bytes)
 -- | Passes the contents of the encrypted file through every key returned by 'allKeys'.
 tryDecryptFile :: FilePath      -- ^ Path to the encrypted file
                -> IO [String]   -- ^ Result of decrypting the encryped message using every key in 'allKeys'
-tryDecryptFile path = fmap tryDecrypt (loadFile path) >>= return
+tryDecryptFile path = fmap tryDecrypt (loadFile path)
 
 -- | Loads an "encrypted" file into a list of "bytes" (integers).
 --
@@ -77,4 +77,4 @@ loadFile path =
      . splitOn ","
      . takeWhile (not . isSpace)
     )
-  (readFile path) >>= return
+  (readFile path)

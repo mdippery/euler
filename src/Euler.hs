@@ -16,6 +16,7 @@ import Control.Monad (ap, join, liftM2)
 import Data.Char (digitToInt, ord)
 import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort, sortOn, unfoldr)
+import Data.Maybe (fromMaybe)
 import Data.Ord (comparing)
 import Data.Ratio ((%), denominator, numerator)
 
@@ -39,7 +40,7 @@ import Euler.Triangle
 import Euler.Tuple
 
 -- | Solves <https://projecteuler.net/problem=1 Project Euler Problem #1>
-problem1 = sum $ nub $ (enumFromThenTo 3 6 999) ++ (enumFromThenTo 5 10 999)
+problem1 = sum $ nub $ enumFromThenTo 3 6 999 ++ enumFromThenTo 5 10 999
 
 -- | Solves <https://projecteuler.net/problem=2 Project Euler Problem #2>
 problem2 = (sum . filter isEven . takeWhile (<= 4000000)) fibonaccis
@@ -61,7 +62,7 @@ problem6 =
    in squareOfSums - sumOfSquares
 
 -- | Solves <https://projecteuler.net/problem=7 Project Euler Problem #7>
-problem7 = (head . drop 10000) primes
+problem7 = primes !! 10000
 
 -- | Solves <https://projecteuler.net/problem=8 Project Euler Problem #8>
 problem8 =
@@ -240,7 +241,7 @@ problem15 = binomialCoefficient 20
 problem16 = (sum . digits) (2 ^ 1000)
 
 -- | Solves <https://projecteuler.net/problem=17 Project Euler Problem #17>
-problem17 = (countLetters . foldr (++) "" . map toWord) [1..1000]
+problem17 = (countLetters . concatMap toWord) [1..1000]
 
 -- | Solves <https://projecteuler.net/problem=18 Project Euler Problem #18>
 problem18 =
@@ -283,7 +284,7 @@ problem22 =
      . sort
      . map (removeCharacters (CharacterSet "\""))
      . wordsBy (== ','))
-    (readFile "data/names.txt") >>= return
+    (readFile "data/names.txt")
 
 -- | Solves <https://projecteuler.net/problem=23 Project Euler Problem #23>
 problem23 = (sum . filter (not . isAbundantSum)) [1..28123]
@@ -292,7 +293,7 @@ problem23 = (sum . filter (not . isAbundantSum)) [1..28123]
 problem24 = ((!! 999999) . sort . permutations) "0123456789"
 
 -- | Solves <https://projecteuler.net/problem=25 Project Euler Problem #25>
-problem25 = (maybe (-1) id . elemIndex 1000 . map (length . show)) fibonaccis
+problem25 = (fromMaybe (-1) . elemIndex 1000 . map (length . show)) fibonaccis
 
 -- | Solves <https://projecteuler.net/problem=26 Project Euler Problem #26>
 problem26 = (fst . maximumBy (comparing snd) . ap (zip . enumFromTo 1) (map (cycleLength . (1 %)) . enumFromTo 1)) 999
@@ -352,8 +353,8 @@ problem39 = (fst . maximumBy (comparing snd) . zip [1..] . map (length . rightTr
 
 -- | Solves <https://projecteuler.net/problem=40 Project Euler Problem #40>
 problem40 =
-  let s = (foldr (++) "" . map show) [0..]
-   in (product . map digitToInt . map (s !!) . map (10 ^)) [0..6]
+  let s = concatMap show [0..]
+   in (product . map (digitToInt . (s !!) . (10 ^))) [0..6]
 
 -- | Solves <https://projecteuler.net/problem=41 Project Euler Problem #41>
 problem41 = (head . filter isPandigitalN . reverse . primesTo) 7654321
@@ -365,7 +366,7 @@ problem42 =
      . filter isTriangleWord
      . map (removeCharacters (CharacterSet "\""))
      . wordsBy (== ','))
-    (readFile "data/words.txt") >>= return
+    (readFile "data/words.txt")
 
 -- | Solves <https://projecteuler.net/problem=43 Project Euler Problem #43>
 problem43 = (sum . filter hasDivisibilityProperty) palindromes
@@ -373,8 +374,8 @@ problem43 = (sum . filter hasDivisibilityProperty) palindromes
 -- | Solves <https://projecteuler.net/problem=44 Project Euler Problem #44>
 problem44 = head [abs (a' - b')
                   | a  <- [1..],
-                    b' <- take a pentagonalNumbers,
                     let a' = pentagonalNumber a,
+                    b' <- take a pentagonalNumbers,
                     isPentagonal (a' + b'),
                     isPentagonal (a' - b')]
 
@@ -413,10 +414,9 @@ problem54 =
   fmap
     (length
      . filter (== PlayerOne)
-     . map (uncurry winner)
-     . map parseGame
+     . map (uncurry winner . parseGame)
      . lines)
-    (readFile "data/poker.txt") >>= return
+    (readFile "data/poker.txt")
 
 -- | Solves <https://projecteuler.net/problem=55 Project Euler Problem #55>
 problem55 = (length . filter isLychrel) [1..9999]
@@ -564,12 +564,12 @@ problem99 =
     (fst
      . maximumBy (comparing snd)
      . zip [1..]
-     . map (\(x,y) -> y * log x)
-     . map (\(a,b) -> (read a :: Double, read b :: Double))
-     . map (\(h,r) -> (h, tail r))
-     . map (span (/= ','))
+     . map ((\(x,y) -> y * log x)
+            . (\(a,b) -> (read a :: Double, read b :: Double))
+            . (\(h,r) -> (h, tail r))
+            . span (/= ','))
      . lines)
-    (readFile "data/base_exp.txt") >>= return
+    (readFile "data/base_exp.txt")
 
 -- | Solves <https://projecteuler.net/problem=100 Project Euler Problem #100>
 problem100 = (fst . until (( > 10 ^ 12) . snd) nextBN) (15,21)

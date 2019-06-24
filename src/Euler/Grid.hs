@@ -41,7 +41,7 @@ module Euler.Grid
 
 import Control.Monad (liftM2)
 import Data.List (nub, sort)
-import Data.Maybe (isJust)
+import Data.Maybe (fromMaybe, isJust)
 
 import Euler.List (splitEvery, zipWithIndex)
 
@@ -186,8 +186,8 @@ gridLine :: Int             -- ^ Desired length of grid line
 gridLine size at to g =
   let s = size - 1
       f = skipModifier to g
-      cell' = flip (flip cell to) g
-   in sequence $ cell at GCurrent g : (map cell' $ take s [at,f at..])
+      cell' = flip (`cell` to) g
+   in sequence $ cell at GCurrent g : map cell' (take s [at,f at..])
 
 -- | All grid lines of a given size that exist in the grid.
 gridLines :: Int          -- ^ Desired size of grid lines
@@ -197,4 +197,4 @@ gridLines size g@(Grid _ cs) =
   let is = (map fst . zipWithIndex) cs
       combos = [(i,d) | i <- is, d <- [GUp .. GUpLeft]]
       f (i,d) = gridLine size i d g
-   in (nub . map sort . maybe [] id . sequence . filter isJust . map f) combos
+   in (nub . map sort . fromMaybe [] . sequence . filter isJust . map f) combos

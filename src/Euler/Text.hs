@@ -36,7 +36,7 @@ module Euler.Text
 import Data.Char (ord)
 
 -- | A set of characters
-data CharacterSet = CharacterSet { characterSet :: [Char] } deriving Show
+newtype CharacterSet = CharacterSet { characterSet :: String } deriving Show
 
 -- | True if a set of characters contains the given character.
 contains :: CharacterSet -> Char -> Bool
