@@ -75,8 +75,8 @@ equalT = uncurry (==)
 -- | Sorts a 3-tuple so that the elements are ordered from least to greatest
 sort3 :: Ord a => (a,a,a) -> (a,a,a)
 sort3 (a,b,c) =
-  let ls = sort [a, b, c]
-   in (head ls, ls !! 1, ls !! 2)
+  case sort [a, b, c] of
+    [a', b', c'] -> (a', b', c')
 
 -- | Returns the first element of a 3-tuple.
 fst3 :: (a,b,c) -> a
