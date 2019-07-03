@@ -54,13 +54,13 @@ stringValue = sum . map letterValue
 removeCharacters :: CharacterSet  -- ^ Character set
                  -> String        -- ^ Original string
                  -> String        -- ^ String with characters removed
-removeCharacters cs = filter (not . contains cs)
+removeCharacters = filter . (not .) . contains
 
 -- | Keeps characters from the given character set that appear in a string.
 keepCharacters :: CharacterSet    -- ^ Character set
                -> String          -- ^ Original string
                -> String          -- ^ String retaining only the characters in the given set
-keepCharacters cs = filter (contains cs)
+keepCharacters = filter . contains
 
 -- | Number of /letters/ in a string.
 --
