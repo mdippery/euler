@@ -2,6 +2,8 @@
    For the full text of the license, see the file LICENSE.
    Additional licensing information may be found at http://unlicense.org. -}
 
+{-# OPTIONS_GHC -Wno-missing-signatures #-}
+
 {-|
   Module      : Euler
   Description : Solutions to Project Euler problems
@@ -14,7 +16,6 @@ module Euler where
 
 import Control.Monad (ap, join, liftM2)
 import Data.Char (digitToInt, ord)
-import Data.Function (on)
 import Data.List (elemIndex, intercalate, maximumBy, nub, permutations, sort, sortOn, unfoldr)
 import Data.Maybe (fromMaybe)
 import Data.Ord (comparing)
