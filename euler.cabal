@@ -1,5 +1,5 @@
 name:                euler
-version:             1.0.0
+version:             1.0.0.0
 synopsis:            Project Euler solutions
 description:         Project Euler solutions
 homepage:            https://github.com/mdippery/euler#readme
@@ -7,7 +7,7 @@ license:             PublicDomain
 license-file:        LICENSE
 author:              Michael Dippery
 maintainer:          michael@monkey-robot.com
-copyright:           2017 Michael Dippery
+copyright:           2019 Michael Dippery
 category:            Education
 build-type:          Simple
 cabal-version:       >=1.10
