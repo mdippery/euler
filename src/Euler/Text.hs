@@ -44,7 +44,7 @@ contains = flip elem . characterSet
 
 -- | Value of a letter, starting with 1 for 'A'.
 letterValue :: Char -> Int
-letterValue = flip (-) 64 . ord
+letterValue = subtract 64 . ord
 
 -- | Sum of the value of each letter in a string.
 stringValue :: String -> Int

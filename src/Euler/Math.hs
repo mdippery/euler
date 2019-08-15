@@ -222,7 +222,7 @@ primes = 2 : 3 : minus [5,7..] (unionAll [[p*p, p*p+2*p..] | p <- tail primes])
 -- | All prime numbers less than the given number.
 primesBelow :: Integer    -- ^ Upper bound, exclusive
             -> [Integer]  -- ^ All prime numbers less than the upper bound
-primesBelow = primesTo . flip (-) 1
+primesBelow = primesTo . subtract 1
 
 -- | All prime numbers less than or equal to the given number.
 primesTo :: Integer     -- ^ Upper bound, inclusive
