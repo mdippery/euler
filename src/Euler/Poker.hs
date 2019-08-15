@@ -273,8 +273,8 @@ parseHand :: Player       -- ^ Player who owns the hand
           -> [String]     -- ^ List of card values
           -> PlayerHand   -- ^ Parsed hand
 parseHand p ss =
-  case map parseCard ss of
-    [c1, c2, c3, c4, c5] -> PlayerHand p c1 c2 c3 c4 c5
+  let [c1, c2, c3, c4, c5] = map parseCard ss
+   in PlayerHand p c1 c2 c3 c4 c5
 
 -- | Parses a poker game into a pair of hands.
 --
