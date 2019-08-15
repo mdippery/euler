@@ -56,20 +56,21 @@ data Suit = Clubs | Diamonds | Hearts | Spades
   deriving (Eq, Show)
 
 -- | A playing card value
-data CardValue = Two
-               | Three
-               | Four
-               | Five
-               | Six
-               | Seven
-               | Eight
-               | Nine
-               | Ten
-               | Jack
-               | Queen
-               | King
-               | Ace
-               deriving (Enum, Eq, Ord, Show)
+data CardValue =
+    Two
+  | Three
+  | Four
+  | Five
+  | Six
+  | Seven
+  | Eight
+  | Nine
+  | Ten
+  | Jack
+  | Queen
+  | King
+  | Ace
+  deriving (Enum, Eq, Ord, Show)
 
 -- | A playing card
 data Card = Card
@@ -82,17 +83,18 @@ instance Ord Card where
   compare (Card left _) (Card right _) = left `compare` right
 
 -- | A type of poker hand
-data HandType = HighCard
-              | OnePair
-              | TwoPairs
-              | ThreeOfAKind
-              | Straight
-              | Flush
-              | FullHouse
-              | FourOfAKind
-              | StraightFlush
-              | RoyalFlush
-              deriving (Eq, Ord, Show)
+data HandType =
+    HighCard
+  | OnePair
+  | TwoPairs
+  | ThreeOfAKind
+  | Straight
+  | Flush
+  | FullHouse
+  | FourOfAKind
+  | StraightFlush
+  | RoyalFlush
+  deriving (Eq, Ord, Show)
 
 -- | Identifies a player
 data Player = PlayerOne | PlayerTwo deriving (Eq, Show)
@@ -119,16 +121,16 @@ highestCardOf = minimum
 -- | True if all cards in the player's hand are of the same suit
 isSameSuit :: PlayerHand -> Bool
 isSameSuit ph =
-  let cs = cards ph
+  let cs    = cards ph
       suits = map cardSuit cs
-      suit = head suits
+      suit  = head suits
    in all (== suit) suits
 
 -- | True if all the cards in the player's hand are of consecutive values
 isConsecutive :: PlayerHand -> Bool
 isConsecutive ph =
   let cs = cards ph
-      vals = (sort . map cardValue) cs
+      vals  = (sort . map cardValue) cs
       start = head vals
    in vals == take 5 [start..]
 
@@ -141,8 +143,8 @@ nKind n = elem n . map length . groupedCardValues
 -- | True if the best hand is a "high card"
 isHighCard :: PlayerHand -> Bool
 isHighCard ph =
-  let total = (length . cards) ph
-      unique = (length . groupedCardValues) ph
+  let total   = (length . cards) ph
+      unique  = (length . groupedCardValues) ph
    in unique == total && (not . isStraight) ph
 
 -- | True if the hand contains /n/ pairs
@@ -249,9 +251,9 @@ winner :: PlayerHand  -- ^ Player One's hand
        -> PlayerHand  -- ^ Player Two's hand
        -> Player      -- ^ Winning player
 winner ph1 ph2
-  | ht1 > ht2 = PlayerOne
-  | ht2 > ht1 = PlayerTwo
-  | ht1 == ht2 = resolveTie ph1 ph2
+  | ht1 > ht2   = PlayerOne
+  | ht2 > ht1   = PlayerTwo
+  | ht1 == ht2  = resolveTie ph1 ph2
   where
     ht1 = playerHandType ph1
     ht2 = playerHandType ph2
@@ -280,7 +282,7 @@ parseHand p ss =
 -- element is Player Two's hand.
 parseGame :: String -> (PlayerHand, PlayerHand)
 parseGame s =
-  let cs = words s
+  let cs  = words s
       p1s = take 5 cs
       p2s = drop 5 cs
    in (parseHand PlayerOne p1s, parseHand PlayerTwo p2s)
