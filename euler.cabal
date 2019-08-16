@@ -19,7 +19,7 @@ library
     Euler.Bool,
     Euler.Calendar,
     Euler.Currency,
-    Euler.Data,
+    Euler.Digits,
     Euler.Foldable,
     Euler.Grid,
     Euler.List,

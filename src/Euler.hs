@@ -26,7 +26,7 @@ import Data.List.Split (wordsBy)
 
 import Euler.Calendar
 import Euler.Currency
-import Euler.Data
+import Euler.Digits
 import Euler.Grid
 import Euler.List
 import Euler.Math

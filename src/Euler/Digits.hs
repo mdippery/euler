@@ -10,7 +10,7 @@
 
   Various functions for working with general datatypes.
 -}
-module Euler.Data
+module Euler.Digits
   (
     -- * Numbers
     allDigits
@@ -38,7 +38,7 @@ digits = D.digits 10
 --
 -- ==== Examples
 --
--- >>> (digits . undigits) [1,2,3]
+-- >>> (digits . unDigits) [1,2,3]
 -- [1,2,3]
 unDigits :: Integral a
          => [a]   -- ^ List of digits in base 10

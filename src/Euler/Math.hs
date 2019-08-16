@@ -129,7 +129,7 @@ import Data.Ratio ((%), Ratio, denominator, numerator)
 
 import Data.List.Ordered (minus, unionAll)
 
-import Euler.Data (allDigits, digits, unDigits)
+import Euler.Digits (allDigits, digits, unDigits)
 import Euler.List ((<:), longestPrefix)
 import Euler.Text (toInt)
 import Euler.Tuple (sortT)
