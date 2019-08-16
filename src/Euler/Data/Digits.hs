@@ -3,7 +3,7 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Data.Digits.Euler
+  Module      : Euler.Data.Digits
   Description : Various functions for working with digits of integral numbers
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
@@ -11,7 +11,7 @@
   Various functions for working with digits, including the conversion of
   integral numbers to and from individual digits.
 -}
-module Data.Digits.Euler
+module Euler.Data.Digits
   (
     -- * Numbers
     allDigits

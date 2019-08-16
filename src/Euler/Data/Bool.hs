@@ -3,14 +3,14 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Data.Bool.Euler
+  Module      : Euler.Data.Bool
   Description : Boolean functions
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
   Provides missing boolean functionality.
 -}
-module Data.Bool.Euler where
+module Euler.Data.Bool where
 
 -- | Chains the given foldable together using the '||' operator and returns
 -- the result.

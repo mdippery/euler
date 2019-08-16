@@ -2,9 +2,9 @@
    For the full text of the license, see the file LICENSE.
    Additional licensing information may be found at http://unlicense.org. -}
 
-module Data.List.EulerSpec where
+module Euler.Data.ListSpec where
 
-import Data.List.Euler
+import Euler.Data.List
 import Test.Hspec
 
 spec :: Spec

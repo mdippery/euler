@@ -15,25 +15,25 @@ cabal-version:       >=1.10
 
 library
   exposed-modules:
-    Data.Bool.Euler,
-    Data.Digits.Euler,
-    Data.Foldable.Euler,
-    Data.List.Euler,
-    Data.Text.Euler,
-    Data.Tuple.Euler,
     Euler,
     Euler.Calendar,
     Euler.Currency,
+    Euler.Data.Bool,
+    Euler.Data.Digits,
+    Euler.Data.Foldable,
+    Euler.Data.List,
+    Euler.Data.Tuple
     Euler.Grid,
     Euler.Math,
     Euler.Poker,
     Euler.Pyramid,
     Euler.Secret,
     Euler.Spiral,
+    Euler.Text,
     Euler.Triangle
   other-modules:
-    Data.Text.Euler.Internal,
-    Euler.Math.Internal
+    Euler.Math.Internal,
+    Euler.Text.Internal
   hs-source-dirs:      src
   ghc-options:
     -Wall
@@ -52,8 +52,8 @@ test-suite tests
   type:               exitcode-stdio-1.0
   main-is:            Spec.hs
   other-modules:
-    Data.List.EulerSpec,
     EulerSpec,
+    Euler.Data.ListSpec,
     Euler.GridSpec,
     Euler.MathSpec,
     Euler.PokerSpec

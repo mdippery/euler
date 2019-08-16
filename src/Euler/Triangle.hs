@@ -23,7 +23,7 @@ module Euler.Triangle
 import Control.Monad (liftM2)
 import Data.List (nub)
 
-import Data.Tuple.Euler (sortT3)
+import Euler.Data.Tuple (sortT3)
 
 -- | Generates triplets for a right triangle of the given perimeter.
 rightTriangles :: Integral a

@@ -31,7 +31,7 @@ import Data.List (cycle)
 
 import Data.List.Split (splitOn)
 
-import Data.Bool.Euler (($||))
+import Euler.Data.Bool (($||))
 
 -- | List of all possible three-letter encryption keys.
 allKeys :: [String]

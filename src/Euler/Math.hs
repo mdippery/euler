@@ -129,9 +129,9 @@ import Data.Ratio ((%), Ratio, denominator, numerator)
 
 import Data.List.Ordered (minus, unionAll)
 
-import Data.Digits.Euler (allDigits, digits, unDigits)
-import Data.List.Euler (longestPrefix)
-import Data.Tuple.Euler (sortT)
+import Euler.Data.Digits (allDigits, digits, unDigits)
+import Euler.Data.List (longestPrefix)
+import Euler.Data.Tuple (sortT)
 
 
 -- | True if a number is even.

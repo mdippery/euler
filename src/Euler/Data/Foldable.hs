@@ -3,14 +3,14 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Data.Foldable.Euler
+  Module      : Euler.Data.Foldable
   Description : Additional foldable functions
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
   Provides missing functionality for Haskell 'Foldable' types.
 -}
-module Data.Foldable.Euler
+module Euler.Data.Foldable
   (
     -- * Searching
     filterF
