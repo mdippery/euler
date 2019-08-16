@@ -24,21 +24,21 @@ import Data.Ratio ((%), denominator, numerator)
 import Data.Dates (DateTime(..))
 import Data.List.Split (wordsBy)
 
+import Data.Digits.Euler
+import Data.List.Euler hiding (head, init, tail)
+import Data.Text.Euler
+import Data.Text.Euler.Internal
+import Data.Tuple.Euler
 import Euler.Calendar
 import Euler.Currency
-import Euler.Digits
 import Euler.Grid
-import Euler.List hiding (head, init, tail)
 import Euler.Math
 import Euler.Math.Internal
 import Euler.Poker
 import Euler.Pyramid
 import Euler.Secret
 import Euler.Spiral
-import Euler.Text
-import Euler.Text.Internal
 import Euler.Triangle
-import Euler.Tuple
 
 -- | Solves <https://projecteuler.net/problem=1 Project Euler Problem #1>
 problem1 = sum $ nub $ enumFromThenTo 3 6 999 ++ enumFromThenTo 5 10 999

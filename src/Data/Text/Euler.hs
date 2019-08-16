@@ -3,14 +3,14 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Euler.Text
+  Module      : Data.Text.Euler
   Description : Utility functions for working with text
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
   Miscellaneous functions for working with text.
 -}
-module Euler.Text
+module Data.Text.Euler
   (
     -- * Data types
     CharacterSet (..)

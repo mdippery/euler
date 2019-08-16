@@ -3,14 +3,14 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Euler.Tuple
+  Module      : Data.Tuple.Euler
   Description : General functions for working with tuples
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
   Provides functions for working with tuples.
 -}
-module Euler.Tuple
+module Data.Tuple.Euler
   (
     -- * Pairs
 

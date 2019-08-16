@@ -2,14 +2,14 @@
    For the full text of the license, see the file LICENSE.
    Additional licensing information may be found at http://unlicense.org. -}
 
-module Euler.ListSpec where
+module Data.List.EulerSpec where
 
-import Euler.List
+import Data.List.Euler
 import Test.Hspec
 
 spec :: Spec
 spec = do
-  describe "Euler.List" $ do
+  describe "Data.List.Euler" $ do
     describe "zipWithIndex" $ do
       it "produces an empty list when given an empty list" $ do
         length (zipWithIndex []) `shouldBe` 0

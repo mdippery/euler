@@ -22,7 +22,7 @@ module Euler.Pyramid
   , maximumPath
   ) where
 
-import Euler.List (duplicate, fatten, splitEvery)
+import Data.List.Euler (duplicate, fatten, splitEvery)
 
 -- | A single row in a pyramid
 newtype PyramidRow a = PyramidRow

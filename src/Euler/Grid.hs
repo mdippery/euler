@@ -43,7 +43,7 @@ import Control.Monad (liftM2)
 import Data.List (nub, sort)
 import Data.Maybe (fromMaybe, isJust)
 
-import Euler.List (splitEvery, zipWithIndex)
+import Data.List.Euler (splitEvery, zipWithIndex)
 
 
 -- | A general data type that can indicate movement

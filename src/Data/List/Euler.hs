@@ -3,14 +3,14 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Euler.List
+  Module      : Data.List.Euler
   Description : Additional list functions
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
 
   Provides missing functionality for Haskell lists.
 -}
-module Euler.List
+module Data.List.Euler
   (
     -- * Basic functions
     (<:)

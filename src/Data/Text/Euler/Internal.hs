@@ -3,7 +3,7 @@
    Additional licensing information may be found at http://unlicense.org. -}
 
 {-|
-  Module      : Euler.Text.Internal
+  Module      : Data.Text.Euler.Internal
   Description : Utility functions for working with text
   License     : UNLICENSE
   Maintainer  : michael@monkey-robot.com
@@ -11,10 +11,10 @@
   Miscellaneous functions for working with text; specifically for solving
   certain Project Euler problems.
 -}
-module Euler.Text.Internal where
+module Data.Text.Euler.Internal where
 
+import Data.Text.Euler (stringValue)
 import Euler.Math (isTriangle)
-import Euler.Text (stringValue)
 
 -- | True if the word is a triangle word.
 --
