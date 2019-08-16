@@ -130,8 +130,7 @@ import Data.Ratio ((%), Ratio, denominator, numerator)
 import Data.List.Ordered (minus, unionAll)
 
 import Euler.Digits (allDigits, digits, unDigits)
-import Euler.List ((<:), longestPrefix)
-import Euler.Text (toInt)
+import Euler.List (longestPrefix)
 import Euler.Tuple (sortT)
 
 
@@ -182,7 +181,7 @@ numbersOfLength n = enumFromTo (10 ^ (n - 1)) (10 ^ n - 1)
 
 -- | List of all 0-9 palindromic numbers.
 palindromes :: [Int]
-palindromes = filter (>= 1000000000) $ map toInt $ permutations "0123456789"
+palindromes = filter (>= 1000000000) $ map read $ permutations "0123456789"
 
 -- | Returns the length of the recurring cycle of a fraction.
 --
@@ -726,7 +725,7 @@ choose n r = factorial n `div` (factorial r * factorial (n - r))
 -- Two integers are <https://en.wikipedia.org/wiki/Coprime_integers coprime>
 -- if their greatest common divisor is 1.
 isCoprime :: Integer -> Integer -> Bool
-isCoprime a b = (null . uncurry intersect) (factorization a, factorization b)
+isCoprime a b = null $ intersect (factorization a) (factorization b)
 
 -- | <https://en.wikipedia.org/wiki/Euler's_totient_function Euler's totient function>.
 --

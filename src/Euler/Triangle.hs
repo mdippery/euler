@@ -23,13 +23,13 @@ module Euler.Triangle
 import Control.Monad (liftM2)
 import Data.List (nub)
 
-import Euler.Tuple (sort3)
+import Euler.Tuple (sortT3)
 
 -- | Generates triplets for a right triangle of the given perimeter.
 rightTriangles :: Integral a
                => a           -- ^ Perimeter
                -> [(a,a,a)]   -- ^ Solutions for right triangles of the given perimeter
-rightTriangles p = nub $ map sort3 $ filter (liftM2 (&&) sqfits pfits) [(a, b a, c a) | a <- [1..u]]
+rightTriangles p = nub $ map sortT3 $ filter (liftM2 (&&) sqfits pfits) [(a, b a, c a) | a <- [1..u]]
   where
     u = p `div` 3
     b a = (p ^ 2 - 2 * p * a) `div` (2 * p - 2 * a)

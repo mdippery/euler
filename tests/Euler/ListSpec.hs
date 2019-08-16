@@ -31,22 +31,22 @@ spec = do
       it "drops the correct elements from a list" $ do
         dropNth 2 [0..10] `shouldBe` [1,3..10]
 
-    describe "replaceAt" $ do
+    describe "replace" $ do
       it "replaces the element at the given index" $ do
-        replaceAt 4 100 [0..9] `shouldBe` [0,1,2,3,100,5,6,7,8,9]
+        replace 4 100 [0..9] `shouldBe` [0,1,2,3,100,5,6,7,8,9]
 
       it "does nothing if an index is out of bounds" $ do
-        replaceAt 100 100 [0..9] `shouldBe` [0..9]
+        replace 100 100 [0..9] `shouldBe` [0..9]
 
       it "replaces the first element of a list" $ do
-        replaceAt 0 100 [0..9] `shouldBe` [100,1,2,3,4,5,6,7,8,9]
+        replace 0 100 [0..9] `shouldBe` [100,1,2,3,4,5,6,7,8,9]
 
       it "replaces the last element of a list" $ do
-        replaceAt 9 100 [0..9] `shouldBe` [0,1,2,3,4,5,6,7,8,100]
+        replace 9 100 [0..9] `shouldBe` [0,1,2,3,4,5,6,7,8,100]
 
       it "does nothing to an empty list" $ do
-        replaceAt 0 100 [] `shouldBe` []
-        replaceAt 10 100 [] `shouldBe` []
+        replace 0 100 [] `shouldBe` []
+        replace 10 100 [] `shouldBe` []
 
     describe "windows" $ do
       it "produces an empty list when given an empty list" $ do

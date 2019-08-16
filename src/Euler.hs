@@ -28,7 +28,7 @@ import Euler.Calendar
 import Euler.Currency
 import Euler.Digits
 import Euler.Grid
-import Euler.List
+import Euler.List hiding (head, init, tail)
 import Euler.Math
 import Euler.Math.Internal
 import Euler.Poker
@@ -283,7 +283,7 @@ problem22 =
      . map (\(i, s) -> i * stringValue s)
      . zipWithIndexFrom 1
      . sort
-     . map (removeCharacters (CharacterSet "\""))
+     . map (remove (CharacterSet "\""))
      . wordsBy (== ','))
     (readFile "data/names.txt")
 
@@ -365,7 +365,7 @@ problem42 =
   fmap
     (length
      . filter isTriangleWord
-     . map (removeCharacters (CharacterSet "\""))
+     . map (remove (CharacterSet "\""))
      . wordsBy (== ','))
     (readFile "data/words.txt")
 

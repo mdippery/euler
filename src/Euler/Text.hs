@@ -20,29 +20,32 @@ module Euler.Text
   , countLetters
 
     -- * Transformations
-  , keepCharacters
-  , removeCharacters
+  , keep
+  , remove
 
     -- * Calculations
   , letterValue
   , stringValue
 
     -- * Conversions
-  , toInt
   , toInts
   , toWord
   ) where
 
 import Data.Char (ord)
+import Data.List (nub)
 
--- | A set of characters
+-- | A set of characters.
 newtype CharacterSet = CharacterSet { characterSet :: String } deriving Show
+
+instance Read CharacterSet where
+  readsPrec _ s = [(CharacterSet (nub s), "")]
 
 -- | True if a set of characters contains the given character.
 contains :: CharacterSet -> Char -> Bool
 contains = flip elem . characterSet
 
--- | Value of a letter, starting with 1 for 'A'.
+-- | Value of a letter, starting with 1 for @A@.
 letterValue :: Char -> Int
 letterValue = subtract 64 . ord
 
@@ -51,26 +54,22 @@ stringValue :: String -> Int
 stringValue = sum . map letterValue
 
 -- | Removes characters in the given character set from a string.
-removeCharacters :: CharacterSet  -- ^ Character set
-                 -> String        -- ^ Original string
-                 -> String        -- ^ String with characters removed
-removeCharacters = filter . (not .) . contains
+remove
+  :: CharacterSet  -- ^ Character set
+  -> String        -- ^ Original string
+  -> String        -- ^ String with characters removed
+remove = filter . (not .) . contains
 
--- | Keeps characters from the given character set that appear in a string.
-keepCharacters :: CharacterSet    -- ^ Character set
-               -> String          -- ^ Original string
-               -> String          -- ^ String retaining only the characters in the given set
-keepCharacters = filter . contains
+-- | Keeps characters in the given character set that occur in the string.
+keep
+  :: CharacterSet    -- ^ Character set
+  -> String          -- ^ Original string
+  -> String          -- ^ String with only the given characters retained
+keep = filter . contains
 
--- | Number of /letters/ in a string.
---
--- This excludes non-alpha characters.
+-- | Number of /letters/ (alphabetic characters) in a string.
 countLetters :: String -> Int
-countLetters = length . keepCharacters (CharacterSet ['a'..'z'])
-
--- | Converts a string to an integer.
-toInt :: String -> Int
-toInt = read
+countLetters = length . keep (CharacterSet ['a'..'z'])
 
 -- | Converts a string to a list of integers.
 toInts :: String -> [Int]

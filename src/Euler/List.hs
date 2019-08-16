@@ -14,20 +14,23 @@ module Euler.List
   (
     -- * Basic functions
     (<:)
+  , head
+  , init
   , middle
   , penultimate
+  , tail
 
     -- * Transformations
   , duplicate
   , fatten
-  , replaceAt
+  , replace
   , rotateOnce
   , rotations
+  , splitEvery
 
     -- * Sublists
   , dropNth
   , longestPrefix
-  , splitEvery
   , windows
 
     -- * Searching
@@ -37,24 +40,46 @@ module Euler.List
   , descendingSort
 
     -- * Zipping and unzipping
+  , unzipWithIndex
   , zipWithIndex
   , zipWithIndexFrom
-  , unzipWithIndex
   ) where
 
+import Prelude hiding (head, init, tail)
+import qualified Prelude as P (head, init, tail)
+
+import Control.Monad (ap, liftM2)
 import Data.Bool (bool)
 import Data.List (genericLength, genericSplitAt, genericTake, sortOn, unfoldr)
 import Data.Ord (Down(..))
 
-import Euler.Tuple (equalT)
-
 -- | Appends a value to a list.
 (<:) :: [a] -> a -> [a]
-as <: b = as ++ [b]
+xs <: x = xs ++ [x]
+
+-- | Returns the first element of a list, or 'Nothing' if the list is empty.
+--
+-- This is a "safe" version of 'P.head'.
+head :: [a] -> Maybe a
+head = ap (bool Nothing . Just . P.head) (not . null)
+
+-- | Returns the tail of a list, or an empty list if the list is empty.
+--
+-- This is a "safe" version of 'P.tail'.
+tail :: [a] -> [a]
+tail = ap (bool [] . P.tail) (not . null)
+
+-- | Returns all elements of a list except the last one, or an empty
+-- list if the list is empty.
+--
+-- This is a "safe" version of P.init
+init :: [a] -> [a]
+init = ap (bool [] . P.init) (not . null)
 
 -- | Returns the middle elements of a list.
 --
--- The middle of a list is all the elements except for the first and the last.
+-- The middle of a list comprises all the elements of the list minus the first
+-- and last elements.
 --
 -- ==== Examples
 --
@@ -63,11 +88,11 @@ as <: b = as ++ [b]
 middle :: [a] -> [a]
 middle = init . tail
 
--- | Next-to-last element of a list.
-penultimate :: [a] -> a
-penultimate = last . init
+-- | Next-to-last element of a list, or 'Nothing' if the list is empty.
+penultimate :: [a] -> Maybe a
+penultimate = ap (bool Nothing . Just . last . init) (not . null)
 
--- | Duplicates each element of the list.
+-- | Duplicates each element of a list.
 --
 -- ==== Examples
 --
@@ -83,7 +108,7 @@ duplicate = foldr (\e memo -> e : e : memo) []
 -- >>> fatten [1,2,3,4,5]
 -- [1,2,2,3,3,4,4,5]
 fatten :: [a] -> [a]
-fatten ls = head ls : duplicate (middle ls) <: last ls
+fatten = init . tail . duplicate
 
 -- | Combines all elements with their index in the list, starting with 0.
 --
@@ -105,10 +130,11 @@ zipWithIndex = zipWithIndexFrom 0
 --
 -- >>> zipWithIndexFrom 2 [10,20,30]
 -- [(2,10), (3,20), (4,30)]
-zipWithIndexFrom :: (Enum b, Num b)
-                 => b         -- ^ Starting index
-                 -> [a]       -- ^ List
-                 -> [(b, a)]  -- ^ List elements combined with their index in the list
+zipWithIndexFrom
+  :: (Enum b, Num b)
+  => b         -- ^ Starting index
+  -> [a]       -- ^ List
+  -> [(b, a)]  -- ^ List elements combined with their index in the list
 zipWithIndexFrom = zip . enumFrom
 
 -- | Removes indexes from a list of elements.
@@ -120,7 +146,7 @@ zipWithIndexFrom = zip . enumFrom
 unzipWithIndex :: [(b, a)] -> [a]
 unzipWithIndex = map snd
 
--- | Removes every /nth/ element from a list.
+-- | Removes every /nth/ element from the list.
 --
 -- ==== Examples
 --
@@ -141,11 +167,12 @@ dropNth n =
 --
 -- >>> longestPrefix "124" "123456789"
 -- "12"
-longestPrefix :: Eq a
-              => [a]      -- ^ First list
-              -> [a]      -- ^ Second list
-              -> [a]      -- ^ Prefix common to both lists
-longestPrefix = ((map fst . filter equalT) .) . zip
+longestPrefix
+  :: Eq a
+  => [a]      -- ^ First list
+  -> [a]      -- ^ Second list
+  -> [a]      -- ^ Prefix common to both lists
+longestPrefix = ((map fst . filter (uncurry (==))) .) . zip
 
 -- | Replaces an element at the given index.
 --
@@ -156,19 +183,22 @@ longestPrefix = ((map fst . filter equalT) .) . zip
 --
 -- >>> replaceAt 3 20 [1..10]
 -- [1,2,3,20,5,6,7,8,9,10]
+--
 -- >>> replaceAt 100 20 [1..10]
 -- [1,2,3,4,5,6,7,8,9,10]
+--
 -- >>> replaceAt 0 20 []
 -- []
-replaceAt :: Integral a
-          => a    -- ^ Index to replace
-          -> b    -- ^ Replacement element
-          -> [b]  -- ^ List
-          -> [b]  -- ^ List with the /nth/ element replaced by the given value
-replaceAt i e ls =
+replace
+  :: Integral a
+  => a    -- ^ Index to replace
+  -> b    -- ^ Replacement element
+  -> [b]  -- ^ List
+  -> [b]  -- ^ List with the /nth/ element replaced by the given value
+replace i e ls =
   case genericSplitAt i ls of
-    ([], []) -> []
-    (h, []) -> ls
+    ([], [])  -> []
+    (_, [])   -> ls
     (h, rest) -> h ++ [e] ++ tail rest
 
 -- | Returns all sublists of the given size.
@@ -177,24 +207,25 @@ replaceAt i e ls =
 --
 -- >>> windows 4 [1..6]
 -- [[1,2,3,4], [2,3,4,5], [3,4,5,6]]
-windows :: Integral a
-        => a      -- ^ Desired size of sublists
-        -> [b]    -- ^ List
-        -> [[b]]  -- ^ Sublists of the desired size
+windows
+  :: Integral a
+  => a      -- ^ Desired size of sublists
+  -> [b]    -- ^ List
+  -> [[b]]  -- ^ Sublists of the desired size
 windows n = unfoldr go
   where
     go ls
       | genericLength ls >= n = Just (genericTake n ls, tail ls)
-      | otherwise = Nothing
+      | otherwise             = Nothing
 
--- | Moves the last element of a list to the front.
+-- | Moves the last element of the list to the front.
 --
 -- ==== Examples
 --
 -- >>> rotateOnce [1..5]
 -- [5,1,2,3,4]
 rotateOnce :: [a] -> [a]
-rotateOnce ls = last ls : init ls
+rotateOnce = ap (bool [] . liftM2 (:) last P.init) (not . null)
 
 -- | All possible rotations of a list.
 --
@@ -203,31 +234,33 @@ rotateOnce ls = last ls : init ls
 -- >>> rotations [1,2,3]
 -- [[1,2,3], [3,1,2], [2,3,1]]
 rotations :: [a] -> [[a]]
-rotations ls = take (length ls) $ iterate rotateOnce ls
+rotations = liftM2 genericTake genericLength (iterate rotateOnce)
 
 -- | Splits a list into /n/-sized chunks.
-splitEvery :: Integral a
-           => a       -- ^ Desired size of chunks
-           -> [b]     -- ^ List
-           -> [[b]]   -- ^ List of lists of size /n/
+splitEvery
+  :: Integral a
+  => a       -- ^ Desired size of chunks
+  -> [b]     -- ^ List
+  -> [[b]]   -- ^ List of lists of size /n/
 splitEvery _ [] = []
 splitEvery n ls =
   let (h,rest) = genericSplitAt n ls
    in h : splitEvery n rest
 
--- | Finds a sublist of consecutive elements of length /n/. Returns the
--- first sublist found, or @Nothing@ if there is not a consecutive
--- subsquence of length /n/.
-findConsecutive :: Integral a
-                => a          -- ^ Length of desired subsequence
-                -> [a]        -- ^ List to search
-                -> Maybe [a]  -- ^ Subsequence of consecutive elements of length /n/
+-- | Finds a sublist of consecutive elements of length /n/. Returns the first
+-- sublist found, or 'Nothing' if there is not a consecutive subsquence of
+-- length /n/.
+findConsecutive
+  :: Integral a
+  => a          -- ^ Length of desired subsequence
+  -> [a]        -- ^ List to search
+  -> Maybe [a]  -- ^ Subsequence of consecutive elements of length /n/
 findConsecutive n ls =
-  case dropWhile (not . f n) (windows n ls) of
+  case dropWhile (not . isConsecutive) (windows n ls) of
     [] -> Nothing
-    ws -> Just (head ws)
+    ws -> Just (P.head ws)
   where
-    f n ls = head ls == last ls - n + 1
+    isConsecutive = ap (==) (genericTake n . enumFrom . P.head)
 
 -- | Sorts a list in descending order.
 descendingSort :: Ord a => [a] -> [a]

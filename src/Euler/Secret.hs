@@ -27,12 +27,11 @@ module Euler.Secret
 
 import Data.Bits (xor)
 import Data.Char (chr, ord, isLetter, isNumber, isPunctuation, isSeparator, isSpace)
-import Data.List (cycle, words)
+import Data.List (cycle)
 
 import Data.List.Split (splitOn)
 
 import Euler.Bool (($||))
-import Euler.Text (toInt)
 
 -- | List of all possible three-letter encryption keys.
 allKeys :: [String]
@@ -73,7 +72,7 @@ loadFile :: FilePath    -- ^ File to open
          -> IO [Int]    -- ^ Contents of file as a list of ASCII code points
 loadFile path =
   fmap
-    (map toInt
+    (map read
      . splitOn ","
      . takeWhile (not . isSpace)
     )
