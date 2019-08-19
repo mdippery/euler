@@ -230,7 +230,10 @@ parseCardSuit 'S' = Spades
 
 -- | Return's a player's cards, ordered by value
 orderedCards :: PlayerHand -> [Card]
-orderedCards = map head . reverse . sortBy (compare `on` length) . groupedCardValues
+orderedCards = map head
+             . reverse
+             . sortBy (compare `on` length)
+             . groupedCardValues
 
 -- | Resolves a tie between two player hands.
 --
