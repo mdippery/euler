@@ -2,6 +2,8 @@
    For the full text of the license, see the file LICENSE.
    Additional licensing information may be found at http://unlicense.org. -}
 
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
+
 {-|
   Module      : Euler.Poker
   Description : Poker game simulation
@@ -113,10 +115,6 @@ cards (PlayerHand _ c1 c2 c3 c4 c5) = [c1, c2, c3, c4, c5]
 -- | Groups a player's card by the value of the card
 groupedCardValues :: PlayerHand -> [[Card]]
 groupedCardValues = groupBy ((==) `on` cardValue) . sort . cards
-
--- | Most valuable card in a set of cards
-highestCardOf :: [Card] -> Card
-highestCardOf = minimum
 
 -- | True if all cards in the player's hand are of the same suit
 isSameSuit :: PlayerHand -> Bool
