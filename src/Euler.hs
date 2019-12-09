@@ -21,8 +21,9 @@ import Data.Maybe (fromMaybe)
 import Data.Ord (comparing)
 import Data.Ratio ((%), denominator, numerator)
 
-import Data.Dates (DateTime(..))
+import Data.Dates hiding (second)
 import Data.List.Split (wordsBy)
+import Data.Tuple.Extra (both, second)
 
 import Euler.Calendar
 import Euler.Currency
@@ -565,9 +566,9 @@ problem99 =
     (fst
      . maximumBy (comparing snd)
      . zip [1..]
-     . map ((\(x,y) -> y * log x)
-            . (\(a,b) -> (read a :: Double, read b :: Double))
-            . (\(h,r) -> (h, tail r))
+     . map (uncurry ((*) . log)
+            . both read
+            . second tail
             . span (/= ','))
      . lines)
     (readFile "data/base_exp.txt")

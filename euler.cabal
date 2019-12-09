@@ -45,6 +45,7 @@ library
     data-ordlist >= 0.4.7.0,
     dates >= 0.2.2.1,
     digits >= 0.3.1,
+    extra >= 1.6.14,
     split >= 0.2.3.2,
     unordered-containers >= 0.2.9.0
 
