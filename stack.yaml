@@ -1,5 +1,5 @@
-resolver: lts-12.26
+resolver: lts-14.16
 packages:
   - .
 extra-deps:
-  - dates-0.2.2.2
+  - dates-0.2.3.0
