@@ -5,15 +5,19 @@
 
 packages:
 - completed:
-    hackage: dates-0.2.3.0@sha256:915a2fc85ea818542851ed54a85abe6a042e7d78f470a5a6db032768f6c6415a,2179
+    commit: a9bfaf0248aca1e3d3b872838ea74ecc54f04ed1
+    git: https://github.com/mdippery/dates.git
+    name: dates
     pantry-tree:
-      size: 443
-      sha256: 010c2b73848cb519ea9677eaedd03bfcd7f32735000d870e6dc763b9be15e12c
+      sha256: 2a540faa34c89c5850c77da07f042ca956be27b87b36ac1b480dc24f96d6427b
+      size: 748
+    version: 0.2.3.3
   original:
-    hackage: dates-0.2.3.0
+    commit: a9bfaf0248aca1e3d3b872838ea74ecc54f04ed1
+    git: https://github.com/mdippery/dates.git
 snapshots:
 - completed:
-    size: 524804
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/14/16.yaml
-    sha256: 4d1519a4372d051d47a5eae2241cf3fb54e113d7475f89707ddb6ec06add2888
-  original: lts-14.16
+    sha256: fc39d8afc97531d53d87b10abdef593bce503c0c1e46c2e9a84ebcbc78bf8470
+    size: 648432
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/2.yaml
+  original: lts-20.2

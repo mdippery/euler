@@ -1,5 +1,6 @@
-resolver: lts-14.16
+resolver: lts-20.2
 packages:
   - .
 extra-deps:
-  - dates-0.2.3.0
+  - git: https://github.com/mdippery/dates.git
+    commit: a9bfaf0248aca1e3d3b872838ea74ecc54f04ed1
